@@ -7,7 +7,7 @@ import { DateUtility } from './date-utility';
 import { circularToJSON, textToSnakeCase } from './helpers';
 import { RepositoryModule } from './repository.module';
 
-export abstract class Repository<T extends Model<T>> extends Model<T> {
+export abstract class Repository<T extends Model<T>> {
   private cacheModel = null
   private model: any
   private cacheStore = null;
@@ -15,7 +15,6 @@ export abstract class Repository<T extends Model<T>> extends Model<T> {
 
   private MEDIUM_TTL = RepositoryModule.defaultTTL
   constructor(model: any, cacheModel: string) {
-    super()
     this.model = model
     this.cacheModel = cacheModel
 
@@ -140,7 +139,7 @@ export abstract class Repository<T extends Model<T>> extends Model<T> {
     this.invalidateCache(modelClass)
 
     // invalidate cache by Id, karena bentuk keynya beda sendiri
-    const key = CacheUtility.setKey(this.getCacheModel(), this.id)
+    const key = CacheUtility.setKey(this.getCacheModel(), this.model.id)
     CacheUtility.invalidate(key, this.getCacheStore())
   }
 
