@@ -1,8 +1,8 @@
 {
   "name": "base-repo",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">   <a href=\"http://nestjs.com/\" target=\"blank\"><img src=\"https://nestjs.com/img/logo_text.svg\" width=\"320\" alt=\"Nest Logo\" /></a> </p>",
+  "author": "Fauzi Fadhillah",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -28,7 +28,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
-    "sequelize": "^6.3.5",
+    "sequelize": "^5.22.3",
     "sequelize-typescript": "^1.1.0"
   },
   "devDependencies": {
@@ -67,5 +67,14 @@
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FauziFadhi/base-repo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FauziFadhi/base-repo/issues"
+  },
+  "homepage": "https://github.com/FauziFadhi/base-repo#readme"
 }
