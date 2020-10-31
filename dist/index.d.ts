@@ -1,2 +1,2 @@
-export { Repository } from './base-repository';
+export { Repository, getOptionsCache, GetOptions, ListGetOptions } from './base-repository';
 export { RepositoryModule } from './repository.module';

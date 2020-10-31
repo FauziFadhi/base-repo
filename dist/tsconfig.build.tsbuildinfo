@@ -1947,8 +1947,8 @@
         "affectsGlobalScope": false
       },
       "../src/index.ts": {
-        "version": "908c44e1696610486c05876a8edd3659b08040e77542ab6610cd1c1324b23895",
-        "signature": "7620d294e7b0c03577939ba1b965185c0504ae3599167ee5efbe830cfe4aceca",
+        "version": "850e6fcb6a328e92e4669425e9c06a22ed404e805fef8b803cae24193338f2a5",
+        "signature": "3722a2178bb99cb19005d2704d228e9e75eb86a45613afc6315e7d97edcaa355",
         "affectsGlobalScope": false
       },
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts": {
