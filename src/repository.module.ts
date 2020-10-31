@@ -22,5 +22,8 @@ export class RepositoryModule {
     RepositoryModule.cachePrefix = useFactory.cachePrefix
     RepositoryModule.defaultTTL = useFactory.defaultTTL || 7 * 24 * 3600
 
+    return {
+      module: RepositoryModule
+    }
   }
 }
