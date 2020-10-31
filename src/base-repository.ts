@@ -15,8 +15,17 @@ import {
   UpdateOptions,
 } from 'sequelize/types';
 
-class GetOptions {
+export class GetOptions {
   isThrow?: boolean = false
+  includeDeleted?: boolean = false
+}
+
+export class getOptionsCache extends GetOptions {
+  ttl: number = RepositoryModule.defaultTTL
+}
+
+export class ListGetOptions {
+  ttl: number = RepositoryModule.defaultTTL
   includeDeleted?: boolean = false
 }
 
@@ -25,7 +34,6 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
   private model: any
   private cacheStore = null;
   private db = null;
-  private DEFAULT_TTL = RepositoryModule.defaultTTL
   constructor(model: any, cacheModel: string) {
     super()
     Model.findAll
@@ -177,7 +185,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
    * @param options `query` query select
    * @param includeDeleted @default false `boolean' if `true` return model even attribute isDeleted true
    */
-  async listCache(options: FindOptions = {}, includeDeleted: boolean = false): Promise<T[]> {
+  async listCache(options: FindOptions = {}, { includeDeleted, ttl }: ListGetOptions): Promise<T[]> {
     // get max updatedAt on model
     const [maxUpdatedAt, count] = await Promise.all([
       this.model.max('updatedAt', { where: options.where }),
@@ -195,7 +203,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
 
     // set time cache if timeCached is null
     if (!timeCached) {
-      await this.getCacheStore().set(keyTime, max, 'EX', this.DEFAULT_TTL)
+      await this.getCacheStore().set(keyTime, max, 'EX', ttl)
       timeCached = max
     }
     // set key for get model
@@ -206,7 +214,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
     // if max updated model > time cache then invalidate cache
     if (max != timeCached) {
       canFetch = await CacheUtility.invalidate(key, this.getCacheStore())
-      this.getCacheStore().set(keyTime, max, 'EX', this.DEFAULT_TTL)
+      this.getCacheStore().set(keyTime, max, 'EX', ttl)
     }
 
     // get the model result based on key
@@ -221,7 +229,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
 
       // set cache model based on new key
       const newKey = CacheUtility.setKey(this.cacheModel, max, keyOpts)
-      await this.getCacheStore().set(newKey, result, 'EX', this.DEFAULT_TTL)
+      await this.getCacheStore().set(newKey, result, 'EX', ttl)
     }
 
     if (!includeDeleted) { // `false` filter yang deleted false aja
@@ -275,7 +283,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
    * @param id id of Model
    * @param isThrow @default false if `true` throw exception when data null from db
    */
-  findByIdCache = async (id: number, getOptions?: GetOptions): Promise<T> => {
+  findByIdCache = async (id: number, getOptions?: getOptionsCache): Promise<T> => {
     return await this.findByOneAttributeCache({ name: 'id', value: id }, getOptions)
   }
 
@@ -284,7 +292,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
    * @param attribute main `attribute`
    * @param isThrow @default false if `true` throw exception when data null from db
    */
-  protected async findByOneAttributeCache({ name, value }, getOptions?: GetOptions): Promise<T> {
+  protected async findByOneAttributeCache({ name, value }, { ttl, ...getOptions }: getOptionsCache): Promise<T> {
     const key = this.setKeyOneAttribute(name, value);
 
     let result = await this.getCacheStore().get(key)
@@ -301,7 +309,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
           where: this.getDbConfig().literal(`${snakeCaseName} = ${value}`),
         }, { includeDeleted: true })
 
-      if (model) await this.getCacheStore().set(key, JSON.stringify(model), 'EX', this.DEFAULT_TTL)
+      if (model) await this.getCacheStore().set(key, JSON.stringify(model), 'EX')
 
       result = JSON.stringify(model)
     }
@@ -309,7 +317,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
     return this.getDataOrThrowFromCache(result, getOptions)
   }
 
-  protected async findByMultiAttributeCache(key: string, options: FindOptions, getOptions?: GetOptions): Promise<T> {
+  protected async findByMultiAttributeCache(key: string, options: FindOptions, { ttl, ...getOptions }: getOptionsCache): Promise<T> {
 
     let result = await this.getCacheStore().get(key)
 
@@ -317,7 +325,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
       // biar cache ambil yang deleted, biar cachenya satu aja. tinggal filter pake logic
       const model = await this.findOne(options, { includeDeleted: true })
 
-      if (model) await this.getCacheStore().set(key, JSON.stringify(model), 'EX', this.DEFAULT_TTL)
+      if (model) await this.getCacheStore().set(key, JSON.stringify(model), 'EX', ttl)
 
       result = JSON.stringify(model)
     }
