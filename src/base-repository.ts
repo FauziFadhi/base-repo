@@ -1,49 +1,70 @@
 import { HttpException } from '@nestjs/common';
+import CacheUtility from 'cache-utilty';
+import { DateUtility } from 'date-utility';
+import { circularToJSON, textToSnakeCase } from 'helpers';
+import { RepositoryModule } from 'repository.module';
 import { Model, Sequelize } from 'sequelize-typescript';
-import { BuildOptions, FindAndCountOptions, FindOptions, Transaction } from 'sequelize/types';
+import {
+  BuildOptions,
+  BulkCreateOptions,
+  CountOptions,
+  FindAndCountOptions,
+  FindOptions,
+  FindOrCreateOptions,
+  Transaction,
+  UpdateOptions,
+} from 'sequelize/types';
 
-import CacheUtility from './cache-utilty';
-import { DateUtility } from './date-utility';
-import { circularToJSON, textToSnakeCase } from './helpers';
-import { RepositoryModule } from './repository.module';
+class GetOptions {
+  isThrow?: boolean = false
+  includeDeleted?: boolean = false
+}
 
-export abstract class Repository<T extends Model<T>> {
+export abstract class BaseService<T extends Model<T>> extends Model<T> {
   private cacheModel = null
   private model: any
   private cacheStore = null;
   private db = null;
-
-  private MEDIUM_TTL = RepositoryModule.defaultTTL
+  private DEFAULT_TTL = RepositoryModule.defaultTTL
   constructor(model: any, cacheModel: string) {
+    super()
+    Model.findAll
     this.model = model
     this.cacheModel = cacheModel
+
 
     this.setDbConfig(RepositoryModule.sequelize)
 
     // set hook everytime get data from service, when ever update from service or not automatically invalidate all cache
     this.model.afterUpdate((model, options) => {
-      this.cacheInvalidation(model, options, 'update')
+      const previousModel = { ...circularToJSON(model), ...circularToJSON(model._previousDataValues) }
+      console.log(previousModel, 'invalidatedModel');
+      if (options.transaction) {
+        options.transaction.afterCommit(() => {
+          this.invalidateAllCache(previousModel)
+          console.log('invalidate update transaction');
+        })
+        return model;
+      }
+      console.log('invalidate update');
+      this.invalidateAllCache(previousModel)
     })
     this.model.afterDestroy((model, options) => {
-      this.cacheInvalidation(model, options, 'destroy')
+      const previousModel = { ...circularToJSON(model), ...circularToJSON(model._previousDataValues) }
+      console.log(previousModel, 'invalidatedModel');
+      if (options.transaction) {
+        options.transaction.afterCommit(() => {
+          this.invalidateAllCache(previousModel)
+          console.log('invalidate destroy transaction');
+        })
+        return model;
+      }
+      console.log('invalidate destroy');
+      this.invalidateAllCache(previousModel)
     })
   }
 
-  cacheInvalidation(model: any, options: any, onWhat: string) {
-    const previousModel = { ...circularToJSON(model), ...circularToJSON(model._previousDataValues) }
-    console.log(previousModel, 'invalidatedModel');
-    if (options.transaction) {
-      options.transaction.afterCommit(() => {
-        this.invalidateAllCache(previousModel)
-        console.log(`invalidate ${onWhat} transaction`);
-      })
-      return model;
-    }
-    console.log(`invalidate ${onWhat}`);
-    this.invalidateAllCache(previousModel)
-  }
-
-  protected abstract async invalidateCache(model: T): Promise<void>;
+  protected abstract async invalidateCache(model: T)
 
   protected setKeyMultiAttribute(key: any) {
     const keyOpts = CacheUtility.setQueryOptions(key)
@@ -112,7 +133,7 @@ export abstract class Repository<T extends Model<T>> {
     const allFindByCacheName = this.getAllFindByCacheName()
     console.log(allFindByCacheName);
 
-    for (const func of allFindByCacheName) {
+    for await (const func of allFindByCacheName) {
 
       const findByTextLength = 6
       const cacheTextLength = 5
@@ -139,7 +160,7 @@ export abstract class Repository<T extends Model<T>> {
     this.invalidateCache(modelClass)
 
     // invalidate cache by Id, karena bentuk keynya beda sendiri
-    const key = CacheUtility.setKey(this.getCacheModel(), this.model.id)
+    const key = CacheUtility.setKey(this.getCacheModel(), modelClass.id)
     CacheUtility.invalidate(key, this.getCacheStore())
   }
 
@@ -174,7 +195,7 @@ export abstract class Repository<T extends Model<T>> {
 
     // set time cache if timeCached is null
     if (!timeCached) {
-      await this.getCacheStore().set(keyTime, max, 'EX', this.MEDIUM_TTL)
+      await this.getCacheStore().set(keyTime, max, 'EX', this.DEFAULT_TTL)
       timeCached = max
     }
     // set key for get model
@@ -185,7 +206,7 @@ export abstract class Repository<T extends Model<T>> {
     // if max updated model > time cache then invalidate cache
     if (max != timeCached) {
       canFetch = await CacheUtility.invalidate(key, this.getCacheStore())
-      this.getCacheStore().set(keyTime, max, 'EX', this.MEDIUM_TTL)
+      this.getCacheStore().set(keyTime, max, 'EX', this.DEFAULT_TTL)
     }
 
     // get the model result based on key
@@ -200,7 +221,7 @@ export abstract class Repository<T extends Model<T>> {
 
       // set cache model based on new key
       const newKey = CacheUtility.setKey(this.cacheModel, max, keyOpts)
-      await this.getCacheStore().set(newKey, result, 'EX', this.MEDIUM_TTL)
+      await this.getCacheStore().set(newKey, result, 'EX', this.DEFAULT_TTL)
     }
 
     if (!includeDeleted) { // `false` filter yang deleted false aja
@@ -210,7 +231,7 @@ export abstract class Repository<T extends Model<T>> {
     return CacheUtility.setResult(result)
   }
 
-  private getDataOrThrow(dataModel: any, isThrow: boolean, includeDeleted: boolean) {
+  private getDataOrThrow(dataModel: any, { isThrow, includeDeleted }: GetOptions) {
 
     // if Object data softDeleted, and throw it when want to throw, if not return data althought softDeleted
     this.throwNullOrDeleted(dataModel, isThrow)
@@ -222,11 +243,11 @@ export abstract class Repository<T extends Model<T>> {
     return dataModel
   }
 
-  private getDataOrThrowFromCache(resultCache: any, isThrow: boolean, includeDeleted: boolean) {
+  private getDataOrThrowFromCache(resultCache: any, getOptions: GetOptions) {
     // parse data dan bikin object model baru biar bisa di chaining di fungsi sequelize
     const model = this.getDataModelFromCache(resultCache)
 
-    return this.getDataOrThrow(model, isThrow, includeDeleted)
+    return this.getDataOrThrow(model, getOptions)
   }
 
   /**
@@ -234,10 +255,10 @@ export abstract class Repository<T extends Model<T>> {
    * @param options query options
    * @param isThrow `boolean` if true and result null throw exception
    */
-  async findOne(options?: FindOptions, isThrow: boolean = false, includeDeleted: boolean = false): Promise<T> {
+  async findOne(options?: FindOptions, getOptions?: GetOptions): Promise<T> {
     const model = await this.model.findOne(options)
 
-    return this.getDataOrThrow(model, isThrow, includeDeleted)
+    return this.getDataOrThrow(model, getOptions)
   }
 
   /**
@@ -245,8 +266,8 @@ export abstract class Repository<T extends Model<T>> {
    * @param isThrow @default false if `true` throw exception when data null from db
    * @return Model
    */
-  async findById(id: number, isThrow: boolean = false, includeDeleted: boolean = false): Promise<T> {
-    return await this.findOne({ where: { id } }, isThrow, includeDeleted)
+  async findById(id: number, getOptions?: GetOptions): Promise<T> {
+    return await this.findOne({ where: { id } }, getOptions)
   }
 
   /**
@@ -254,8 +275,8 @@ export abstract class Repository<T extends Model<T>> {
    * @param id id of Model
    * @param isThrow @default false if `true` throw exception when data null from db
    */
-  findByIdCache = async (id: number, isThrow: boolean = false, includeDeleted: boolean = false): Promise<T> => {
-    return await this.findByOneAttributeCache({ name: 'id', value: id }, isThrow, includeDeleted)
+  findByIdCache = async (id: number, getOptions?: GetOptions): Promise<T> => {
+    return await this.findByOneAttributeCache({ name: 'id', value: id }, getOptions)
   }
 
   /**
@@ -263,7 +284,7 @@ export abstract class Repository<T extends Model<T>> {
    * @param attribute main `attribute`
    * @param isThrow @default false if `true` throw exception when data null from db
    */
-  protected async findByOneAttributeCache({ name, value }, isThrow: boolean = false, includeDeleted: boolean = false): Promise<T> {
+  protected async findByOneAttributeCache({ name, value }, getOptions?: GetOptions): Promise<T> {
     const key = this.setKeyOneAttribute(name, value);
 
     let result = await this.getCacheStore().get(key)
@@ -274,34 +295,33 @@ export abstract class Repository<T extends Model<T>> {
       if (typeof value === 'string')
         model = await this.findOne({
           where: this.getDbConfig().literal(`${snakeCaseName} = '${value}'`),
-        }, false, true)
+        }, { includeDeleted: true })
       else
         model = await this.findOne({
           where: this.getDbConfig().literal(`${snakeCaseName} = ${value}`),
-        }, false, true)
+        }, { includeDeleted: true })
 
-      if (model) await this.getCacheStore().set(key, JSON.stringify(model), 'EX', this.MEDIUM_TTL)
+      if (model) await this.getCacheStore().set(key, JSON.stringify(model), 'EX', this.DEFAULT_TTL)
 
       result = JSON.stringify(model)
     }
 
-    return this.getDataOrThrowFromCache(result, isThrow, includeDeleted)
+    return this.getDataOrThrowFromCache(result, getOptions)
   }
 
-  protected async findByMultiAttributeCache(key: string, options: FindOptions, isThrow: boolean = false,
-    includeDeleted: boolean = false): Promise<T> {
+  protected async findByMultiAttributeCache(key: string, options: FindOptions, getOptions?: GetOptions): Promise<T> {
 
     let result = await this.getCacheStore().get(key)
 
     if (!result) {
       // biar cache ambil yang deleted, biar cachenya satu aja. tinggal filter pake logic
-      const model = await this.findOne(options, false, true)
+      const model = await this.findOne(options, { includeDeleted: true })
 
-      if (model) await this.getCacheStore().set(key, JSON.stringify(model), 'EX', this.MEDIUM_TTL)
+      if (model) await this.getCacheStore().set(key, JSON.stringify(model), 'EX', this.DEFAULT_TTL)
 
       result = JSON.stringify(model)
     }
-    return this.getDataOrThrowFromCache(result, isThrow, includeDeleted)
+    return this.getDataOrThrowFromCache(result, getOptions)
   }
 
   /**
@@ -331,5 +351,29 @@ export abstract class Repository<T extends Model<T>> {
       throw new HttpException('data model null, nothing to update', 500)
 
     return await dataModel.update({ isDeleted: true }, transaction)
+  }
+
+  async createModel(values: object, transaction?: Transaction): Promise<T> {
+    return await this.model.create(values, { transaction })
+  }
+
+  async bulkUpdate(values: object, options: UpdateOptions, transaction?: Transaction): Promise<[number, T[]]> {
+    return await this.model.update(values, { ...options, transaction, individualHooks: true })
+  }
+
+  async bulkCreate(values: object[], options?: BulkCreateOptions, transaction?: Transaction): Promise<T[]> {
+    return await this.model.bulkCreate(values, { ...options, transaction })
+  }
+
+  async findOrCreate(options: FindOrCreateOptions, transaction: Transaction): Promise<[T, boolean]> {
+    return await this.model.findOrCreate({ ...options, transaction })
+  }
+
+  async findOrBuild(options: FindOrCreateOptions, transaction?: Transaction): Promise<[T, boolean]> {
+    return await this.model.findOrBuild({ ...options, transaction })
+  }
+
+  async count(options: CountOptions): Promise<number> {
+    return await this.model.count(options)
   }
 }
