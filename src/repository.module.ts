@@ -7,9 +7,11 @@ import { DynamicModule, Module } from '@nestjs/common';
 })
 export class RepositoryModule {
   static sequelize
+  static cachePrefix
   static defaultTTL: number
-  static forRoot(sequelize, defaultTTL?: number): DynamicModule {
+  static forRoot(sequelize, cachePrefix, defaultTTL?: number): DynamicModule {
     RepositoryModule.sequelize = sequelize
+    RepositoryModule.cachePrefix = cachePrefix
     RepositoryModule.defaultTTL = defaultTTL || 7 * 24 * 3600
     return {
       module: RepositoryModule
