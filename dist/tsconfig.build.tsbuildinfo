@@ -166,6 +166,11 @@
         "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "affectsGlobalScope": false
       },
+      "../node_modules/reflect-metadata/index.d.ts": {
+        "version": "8d6d51a5118d000ed3bfe6e1dd1335bebfff3fef23cd2af2f84a24d30f90cc90",
+        "signature": "8d6d51a5118d000ed3bfe6e1dd1335bebfff3fef23cd2af2f84a24d30f90cc90",
+        "affectsGlobalScope": true
+      },
       "../node_modules/@nestjs/common/cache/cache.constants.d.ts": {
         "version": "3346a737f29b700e7c6c2a694973ceb70a738c3ac5212ffbefac8a27048fa8d6",
         "signature": "3346a737f29b700e7c6c2a694973ceb70a738c3ac5212ffbefac8a27048fa8d6",
@@ -2999,7 +3004,8 @@
         "../node_modules/@nestjs/common/pipes/index.d.ts",
         "../node_modules/@nestjs/common/serializer/index.d.ts",
         "../node_modules/@nestjs/common/services/index.d.ts",
-        "../node_modules/@nestjs/common/utils/index.d.ts"
+        "../node_modules/@nestjs/common/utils/index.d.ts",
+        "../node_modules/reflect-metadata/index.d.ts"
       ],
       "../node_modules/@nestjs/common/interfaces/exceptions/exception-filter.interface.d.ts": [
         "../node_modules/@nestjs/common/interfaces/features/arguments-host.interface.d.ts"
@@ -3277,7 +3283,8 @@
         "../node_modules/@nestjs/core/nest-application.d.ts",
         "../node_modules/@nestjs/core/nest-factory.d.ts",
         "../node_modules/@nestjs/core/router/index.d.ts",
-        "../node_modules/@nestjs/core/services/index.d.ts"
+        "../node_modules/@nestjs/core/services/index.d.ts",
+        "../node_modules/reflect-metadata/index.d.ts"
       ],
       "../node_modules/@nestjs/core/injector/container.d.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
@@ -4256,6 +4263,7 @@
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/associations/shared/association-service.d.ts": [
+        "../node_modules/reflect-metadata/index.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
       ],
@@ -4308,6 +4316,7 @@
         "../node_modules/sequelize/types/lib/hooks.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/hooks/shared/hooks-service.d.ts": [
+        "../node_modules/reflect-metadata/index.d.ts",
         "../node_modules/sequelize-typescript/dist/hooks/shared/hook-meta.d.ts",
         "../node_modules/sequelize-typescript/dist/hooks/shared/hook-options.d.ts",
         "../node_modules/sequelize-typescript/dist/model/model/model.d.ts",
@@ -4534,6 +4543,7 @@
         "../node_modules/sequelize-typescript/dist/model/index/index-service.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/model/index/index-service.d.ts": [
+        "../node_modules/reflect-metadata/index.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/model/model/association/association-count-options.d.ts": [
@@ -4996,7 +5006,8 @@
         "../node_modules/@nestjs/common/pipes/index.d.ts",
         "../node_modules/@nestjs/common/serializer/index.d.ts",
         "../node_modules/@nestjs/common/services/index.d.ts",
-        "../node_modules/@nestjs/common/utils/index.d.ts"
+        "../node_modules/@nestjs/common/utils/index.d.ts",
+        "../node_modules/reflect-metadata/index.d.ts"
       ],
       "../node_modules/@nestjs/common/interfaces/exceptions/exception-filter.interface.d.ts": [
         "../node_modules/@nestjs/common/interfaces/features/arguments-host.interface.d.ts"
@@ -5274,7 +5285,8 @@
         "../node_modules/@nestjs/core/nest-application.d.ts",
         "../node_modules/@nestjs/core/nest-factory.d.ts",
         "../node_modules/@nestjs/core/router/index.d.ts",
-        "../node_modules/@nestjs/core/services/index.d.ts"
+        "../node_modules/@nestjs/core/services/index.d.ts",
+        "../node_modules/reflect-metadata/index.d.ts"
       ],
       "../node_modules/@nestjs/core/injector/container.d.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
@@ -6253,6 +6265,7 @@
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/associations/shared/association-service.d.ts": [
+        "../node_modules/reflect-metadata/index.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
       ],
@@ -6305,6 +6318,7 @@
         "../node_modules/sequelize/types/lib/hooks.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/hooks/shared/hooks-service.d.ts": [
+        "../node_modules/reflect-metadata/index.d.ts",
         "../node_modules/sequelize-typescript/dist/hooks/shared/hook-meta.d.ts",
         "../node_modules/sequelize-typescript/dist/hooks/shared/hook-options.d.ts",
         "../node_modules/sequelize-typescript/dist/model/model/model.d.ts",
@@ -6531,6 +6545,7 @@
         "../node_modules/sequelize-typescript/dist/model/index/index-service.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/model/index/index-service.d.ts": [
+        "../node_modules/reflect-metadata/index.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/model/model/association/association-count-options.d.ts": [
