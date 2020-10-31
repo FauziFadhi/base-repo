@@ -29,14 +29,12 @@ export class ListGetOptions {
   includeDeleted?: boolean = false
 }
 
-export abstract class BaseService<T extends Model<T>> extends Model<T> {
+export abstract class Repository<T extends Model<T>> {
   private cacheModel = null
   private model: any
   private cacheStore = null;
   private db = null;
   constructor(model: any, cacheModel: string) {
-    super()
-    Model.findAll
     this.model = model
     this.cacheModel = cacheModel
 
@@ -185,7 +183,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
    * @param options `query` query select
    * @param includeDeleted @default false `boolean' if `true` return model even attribute isDeleted true
    */
-  async listCache(options: FindOptions = {}, { includeDeleted, ttl }: ListGetOptions): Promise<T[]> {
+  async listCache(options: FindOptions = {}, { includeDeleted, ttl }: ListGetOptions = new ListGetOptions): Promise<T[]> {
     // get max updatedAt on model
     const [maxUpdatedAt, count] = await Promise.all([
       this.model.max('updatedAt', { where: options.where }),
@@ -263,7 +261,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
    * @param options query options
    * @param isThrow `boolean` if true and result null throw exception
    */
-  async findOne(options?: FindOptions, getOptions?: GetOptions): Promise<T> {
+  async findOne(options?: FindOptions, getOptions: GetOptions = new GetOptions): Promise<T> {
     const model = await this.model.findOne(options)
 
     return this.getDataOrThrow(model, getOptions)
@@ -274,7 +272,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
    * @param isThrow @default false if `true` throw exception when data null from db
    * @return Model
    */
-  async findById(id: number, getOptions?: GetOptions): Promise<T> {
+  async findById(id: number, getOptions: GetOptions = new GetOptions): Promise<T> {
     return await this.findOne({ where: { id } }, getOptions)
   }
 
@@ -283,7 +281,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
    * @param id id of Model
    * @param isThrow @default false if `true` throw exception when data null from db
    */
-  findByIdCache = async (id: number, getOptions?: getOptionsCache): Promise<T> => {
+  findByIdCache = async (id: number, getOptions: getOptionsCache = new getOptionsCache): Promise<T> => {
     return await this.findByOneAttributeCache({ name: 'id', value: id }, getOptions)
   }
 
@@ -292,7 +290,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
    * @param attribute main `attribute`
    * @param isThrow @default false if `true` throw exception when data null from db
    */
-  protected async findByOneAttributeCache({ name, value }, { ttl, ...getOptions }: getOptionsCache): Promise<T> {
+  protected async findByOneAttributeCache({ name, value }, { ttl, ...getOptions }: getOptionsCache = new getOptionsCache): Promise<T> {
     const key = this.setKeyOneAttribute(name, value);
 
     let result = await this.getCacheStore().get(key)
@@ -317,7 +315,7 @@ export abstract class BaseService<T extends Model<T>> extends Model<T> {
     return this.getDataOrThrowFromCache(result, getOptions)
   }
 
-  protected async findByMultiAttributeCache(key: string, options: FindOptions, { ttl, ...getOptions }: getOptionsCache): Promise<T> {
+  protected async findByMultiAttributeCache(key: string, options: FindOptions, { ttl, ...getOptions }: getOptionsCache = new getOptionsCache): Promise<T> {
 
     let result = await this.getCacheStore().get(key)
 
