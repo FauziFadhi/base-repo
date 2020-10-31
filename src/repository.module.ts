@@ -17,4 +17,10 @@ export class RepositoryModule {
       module: RepositoryModule
     };
   }
+  static forRootAsync({ useFactory }) {
+    RepositoryModule.sequelize = useFactory.sequelize
+    RepositoryModule.cachePrefix = useFactory.cachePrefix
+    RepositoryModule.defaultTTL = useFactory.defaultTTL || 7 * 24 * 3600
+
+  }
 }
