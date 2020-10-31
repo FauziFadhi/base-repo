@@ -10,9 +10,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RepositoryModule = void 0;
 const common_1 = require("@nestjs/common");
 let RepositoryModule = RepositoryModule_1 = class RepositoryModule {
-    static forRoot(sequelize, defaultTTL) {
+    static forRoot(sequelize, cachePrefix, defaultTTL) {
         RepositoryModule_1.sequelize = sequelize;
+        RepositoryModule_1.cachePrefix = cachePrefix;
         RepositoryModule_1.defaultTTL = defaultTTL || 7 * 24 * 3600;
+        return {
+            module: RepositoryModule_1
+        };
+    }
+    static forRootAsync({ useFactory }) {
+        RepositoryModule_1.sequelize = useFactory.sequelize;
+        RepositoryModule_1.cachePrefix = useFactory.cachePrefix;
+        RepositoryModule_1.defaultTTL = useFactory.defaultTTL || 7 * 24 * 3600;
         return {
             module: RepositoryModule_1
         };
