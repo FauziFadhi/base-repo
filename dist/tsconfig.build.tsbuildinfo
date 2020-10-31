@@ -1951,6 +1951,11 @@
         "signature": "f5d364ba93c82b70920448bc5bb9f61a60dd64127dca239fd20404befc0e7f7e",
         "affectsGlobalScope": false
       },
+      "../src/index.ts": {
+        "version": "850e6fcb6a328e92e4669425e9c06a22ed404e805fef8b803cae24193338f2a5",
+        "signature": "3722a2178bb99cb19005d2704d228e9e75eb86a45613afc6315e7d97edcaa355",
+        "affectsGlobalScope": false
+      },
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts": {
         "version": "748dc5e30576ac07af1121893bb1beaafb0d7d0000142b69fae2b2995fc7f7f4",
         "signature": "748dc5e30576ac07af1121893bb1beaafb0d7d0000142b69fae2b2995fc7f7f4",
@@ -4748,6 +4753,10 @@
         "../node_modules/sequelize/types/index.d.ts",
         "../src/repository.module.ts"
       ],
+      "../src/index.ts": [
+        "../src/base-repository.ts",
+        "../src/repository.module.ts"
+      ],
       "../src/main.ts": [
         "../node_modules/@nestjs/core/index.d.ts",
         "../src/repository.module.ts"
@@ -6738,6 +6747,10 @@
       ],
       "../src/cache-utilty.ts": [
         "../node_modules/sequelize/types/index.d.ts"
+      ],
+      "../src/index.ts": [
+        "../src/base-repository.ts",
+        "../src/repository.module.ts"
       ],
       "../src/repository.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts"
