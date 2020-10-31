@@ -161,11 +161,6 @@
         "signature": "d2f31f19e1ba6ed59be9259d660a239d9a3fcbbc8e038c6b2009bde34b175fed",
         "affectsGlobalScope": false
       },
-      "../index.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "affectsGlobalScope": false
-      },
       "../node_modules/reflect-metadata/index.d.ts": {
         "version": "8d6d51a5118d000ed3bfe6e1dd1335bebfff3fef23cd2af2f84a24d30f90cc90",
         "signature": "8d6d51a5118d000ed3bfe6e1dd1335bebfff3fef23cd2af2f84a24d30f90cc90",
@@ -1954,11 +1949,6 @@
       "../src/base-repository.ts": {
         "version": "fe1905164715d55852eb6b8cff00a3a358f3759db77a4f8aff264b250d8cded0",
         "signature": "f5d364ba93c82b70920448bc5bb9f61a60dd64127dca239fd20404befc0e7f7e",
-        "affectsGlobalScope": false
-      },
-      "../src/index.ts": {
-        "version": "850e6fcb6a328e92e4669425e9c06a22ed404e805fef8b803cae24193338f2a5",
-        "signature": "3722a2178bb99cb19005d2704d228e9e75eb86a45613afc6315e7d97edcaa355",
         "affectsGlobalScope": false
       },
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts": {
@@ -4758,10 +4748,6 @@
         "../node_modules/sequelize/types/index.d.ts",
         "../src/repository.module.ts"
       ],
-      "../src/index.ts": [
-        "../src/base-repository.ts",
-        "../src/repository.module.ts"
-      ],
       "../src/main.ts": [
         "../node_modules/@nestjs/core/index.d.ts",
         "../src/repository.module.ts"
@@ -6752,10 +6738,6 @@
       ],
       "../src/cache-utilty.ts": [
         "../node_modules/sequelize/types/index.d.ts"
-      ],
-      "../src/index.ts": [
-        "../src/base-repository.ts",
-        "../src/repository.module.ts"
       ],
       "../src/repository.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts"
