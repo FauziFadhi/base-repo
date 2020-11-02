@@ -170,11 +170,21 @@ export abstract class Repository<T extends Model<T>> {
     CacheUtility.invalidate(key, this.getCacheStore())
   }
 
-  async paginate(options: FindAndCountOptions = {}): Promise<{ rows: T[]; count: number }> {
+  async paginate(options: FindAndCountOptions & { includeDeleted: boolean } = { includeDeleted: false }): Promise<{ rows: T[]; count: number }> {
+    options.where = {
+      isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined,
+      ...options.where
+    }
+
     return await this.model.findAndCountAll({ ...options, order: options?.order || [[this.model.primaryKeyAttribute, 'asc']] })
   }
 
-  async list(options: FindOptions = {}): Promise<T[]> {
+  async list(options: FindOptions & { includeDeleted: boolean } = { includeDeleted: false }): Promise<T[]> {
+    options.where = {
+      isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined,
+      ...options.where
+    }
+
     return await this.model.findAll({ ...options, order: options?.order || [[this.model.primaryKeyAttribute, 'asc']] })
   }
 
@@ -222,7 +232,7 @@ export abstract class Repository<T extends Model<T>> {
     // then can fetch row on database
     if (canFetch || !result) {
       // fetch row on models
-      const model = await this.list(options)
+      const model = await this.list({ ...options, includeDeleted: true })
       result = JSON.stringify(model)
 
       // set cache model based on new key
