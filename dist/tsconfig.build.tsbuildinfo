@@ -1947,8 +1947,8 @@
         "affectsGlobalScope": false
       },
       "../src/base-repository.ts": {
-        "version": "fe1905164715d55852eb6b8cff00a3a358f3759db77a4f8aff264b250d8cded0",
-        "signature": "f5d364ba93c82b70920448bc5bb9f61a60dd64127dca239fd20404befc0e7f7e",
+        "version": "2270aefa8bb8e05121fb2a515daa05fb274f2a47095cdc6cb919c59075f6c367",
+        "signature": "bdc2e8f554ce58bfa480817cd0b324f9a71ce358d4b6aac8ef81f8e697ff5437",
         "affectsGlobalScope": false
       },
       "../src/index.ts": {

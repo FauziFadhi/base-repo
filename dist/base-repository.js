@@ -163,10 +163,12 @@ class Repository {
         const key = cache_utilty_1.default.setKey(this.getCacheModel(), modelClass.id);
         cache_utilty_1.default.invalidate(key, this.getCacheStore());
     }
-    async paginate(options = {}) {
+    async paginate(options = { includeDeleted: false }) {
+        options.where = Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where);
         return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
     }
-    async list(options = {}) {
+    async list(options = { includeDeleted: false }) {
+        options.where = Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where);
         return await this.model.findAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
     }
     async listCache(options = {}, { includeDeleted, ttl } = new ListGetOptions) {
@@ -190,7 +192,7 @@ class Repository {
         }
         let result = await this.getCacheStore().get(key);
         if (canFetch || !result) {
-            const model = await this.list(options);
+            const model = await this.list(Object.assign(Object.assign({}, options), { includeDeleted: true }));
             result = JSON.stringify(model);
             const newKey = cache_utilty_1.default.setKey(this.cacheModel, max, keyOpts);
             await this.getCacheStore().set(newKey, result, 'EX', ttl);
