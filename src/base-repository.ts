@@ -317,7 +317,7 @@ export abstract class Repository<T extends Model<T>> {
           where: this.getDbConfig().literal(`${snakeCaseName} = ${value}`),
         }, { includeDeleted: true })
 
-      if (model) await this.getCacheStore().set(key, JSON.stringify(model), 'EX')
+      if (model) await this.getCacheStore().set(key, JSON.stringify(model), 'EX', ttl)
 
       result = JSON.stringify(model)
     }
