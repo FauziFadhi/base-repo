@@ -1947,7 +1947,7 @@
         "affectsGlobalScope": false
       },
       "../src/base-repository.ts": {
-        "version": "2270aefa8bb8e05121fb2a515daa05fb274f2a47095cdc6cb919c59075f6c367",
+        "version": "ec1ed0294b78aaaa2d88ef93f0497a3a651898b0e2b2a993e315828d93c3294b",
         "signature": "bdc2e8f554ce58bfa480817cd0b324f9a71ce358d4b6aac8ef81f8e697ff5437",
         "affectsGlobalScope": false
       },
@@ -2139,16 +2139,6 @@
       "../src/main.ts": {
         "version": "8d791117fbbc0c740d0dc546ecf2b5ef8dfda516a77fafd10f1e5a3ef99ec869",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
-        "affectsGlobalScope": false
-      },
-      "../src/test/Approval.ts": {
-        "version": "3d8fc4b3936544ac2e6f37c2ddeed7d489da9843d1e4048efe879d369c60619b",
-        "signature": "50c6ce2719d15e526ba39b9a887e95e720a7801007d8a662d1819b1eba89df99",
-        "affectsGlobalScope": false
-      },
-      "../src/test/_default.services.ts": {
-        "version": "e8b8186ffbff0f11fd9f2e935bb4301792920cc83682a3428c725aa5e9ded71a",
-        "signature": "9fc663d75e7be15a93d20fcbaf5064cccda441ac091d10092a1512b4c1f87e41",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/anymatch/index.d.ts": {
@@ -4763,14 +4753,6 @@
       ],
       "../src/repository.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts"
-      ],
-      "../src/test/Approval.ts": [
-        "../node_modules/sequelize-typescript/dist/index.d.ts"
-      ],
-      "../src/test/_default.services.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../src/base-repository.ts",
-        "../src/test/Approval.ts"
       ]
     },
     "exportedModulesMap": {
@@ -6754,13 +6736,6 @@
       ],
       "../src/repository.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts"
-      ],
-      "../src/test/Approval.ts": [
-        "../node_modules/sequelize-typescript/dist/index.d.ts"
-      ],
-      "../src/test/_default.services.ts": [
-        "../src/base-repository.ts",
-        "../src/test/Approval.ts"
       ]
     },
     "semanticDiagnosticsPerFile": []

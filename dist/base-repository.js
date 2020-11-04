@@ -235,7 +235,7 @@ class Repository {
                     where: this.getDbConfig().literal(`${snakeCaseName} = ${value}`),
                 }, { includeDeleted: true });
             if (model)
-                await this.getCacheStore().set(key, JSON.stringify(model), 'EX');
+                await this.getCacheStore().set(key, JSON.stringify(model), 'EX', ttl);
             result = JSON.stringify(model);
         }
         return this.getDataOrThrowFromCache(result, getOptions);
