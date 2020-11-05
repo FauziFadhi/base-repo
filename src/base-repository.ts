@@ -21,11 +21,11 @@ export class GetOptions {
 }
 
 export class getOptionsCache extends GetOptions {
-  ttl: number = RepositoryModule.defaultTTL
+  ttl?: number = RepositoryModule.defaultTTL
 }
 
-export class ListGetOptions {
-  ttl: number = RepositoryModule.defaultTTL
+export class ListGetOptionsCache {
+  ttl?: number = RepositoryModule.defaultTTL
   includeDeleted?: boolean = false
 }
 
@@ -193,7 +193,7 @@ export abstract class Repository<T extends Model<T>> {
    * @param options `query` query select
    * @param includeDeleted @default false `boolean' if `true` return model even attribute isDeleted true
    */
-  async listCache(options: FindOptions = {}, { includeDeleted, ttl }: ListGetOptions = new ListGetOptions): Promise<T[]> {
+  async listCache(options: FindOptions = {}, { includeDeleted, ttl }: ListGetOptionsCache = new ListGetOptionsCache): Promise<T[]> {
     // get max updatedAt on model
     const [maxUpdatedAt, count] = await Promise.all([
       this.model.max('updatedAt', { where: options.where }),
