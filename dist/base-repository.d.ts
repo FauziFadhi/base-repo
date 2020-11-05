@@ -5,10 +5,10 @@ export declare class GetOptions {
     includeDeleted?: boolean;
 }
 export declare class getOptionsCache extends GetOptions {
-    ttl: number;
+    ttl?: number;
 }
-export declare class ListGetOptions {
-    ttl: number;
+export declare class ListGetOptionsCache {
+    ttl?: number;
     includeDeleted?: boolean;
 }
 export declare abstract class Repository<T extends Model<T>> {
@@ -41,7 +41,7 @@ export declare abstract class Repository<T extends Model<T>> {
     list(options?: FindOptions & {
         includeDeleted: boolean;
     }): Promise<T[]>;
-    listCache(options?: FindOptions, { includeDeleted, ttl }?: ListGetOptions): Promise<T[]>;
+    listCache(options?: FindOptions, { includeDeleted, ttl }?: ListGetOptionsCache): Promise<T[]>;
     private getDataOrThrow;
     private getDataOrThrowFromCache;
     findOne(options?: FindOptions, getOptions?: GetOptions): Promise<T>;

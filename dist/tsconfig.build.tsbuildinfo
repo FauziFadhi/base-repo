@@ -1947,13 +1947,13 @@
         "affectsGlobalScope": false
       },
       "../src/base-repository.ts": {
-        "version": "ec1ed0294b78aaaa2d88ef93f0497a3a651898b0e2b2a993e315828d93c3294b",
-        "signature": "bdc2e8f554ce58bfa480817cd0b324f9a71ce358d4b6aac8ef81f8e697ff5437",
+        "version": "f89212e30b8e3824949e7cfc942731ab3d2006d614b5c7e151e9ac9358440177",
+        "signature": "444a13a8654442e540563b79b77eb8dbb70da2e572035bef6e6d5da12ff9eb99",
         "affectsGlobalScope": false
       },
       "../src/index.ts": {
-        "version": "850e6fcb6a328e92e4669425e9c06a22ed404e805fef8b803cae24193338f2a5",
-        "signature": "3722a2178bb99cb19005d2704d228e9e75eb86a45613afc6315e7d97edcaa355",
+        "version": "15d58f6f902a6de8de54741823ab02b295a4ec539f40a356ac2276e8a5c89cd3",
+        "signature": "3a05b462c5b5456f209d02bc6977fba965e9b34bc9c11d0d1618d7d77e6c37de",
         "affectsGlobalScope": false
       },
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts": {
@@ -2139,6 +2139,11 @@
       "../src/main.ts": {
         "version": "8d791117fbbc0c740d0dc546ecf2b5ef8dfda516a77fafd10f1e5a3ef99ec869",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "affectsGlobalScope": false
+      },
+      "../src/test/Approval.ts": {
+        "version": "0d9a36b078fea4de83f292c37e7bd23f8d288e78c64c0b8c7de968f4b8cc4650",
+        "signature": "c2d822848ff0b9778cbc9ebc737de4ea436e9602bd3a93c025debdd2ca48f87f",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/anymatch/index.d.ts": {
@@ -4753,6 +4758,9 @@
       ],
       "../src/repository.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts"
+      ],
+      "../src/test/Approval.ts": [
+        "../node_modules/sequelize-typescript/dist/index.d.ts"
       ]
     },
     "exportedModulesMap": {
@@ -6736,6 +6744,9 @@
       ],
       "../src/repository.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts"
+      ],
+      "../src/test/Approval.ts": [
+        "../node_modules/sequelize-typescript/dist/index.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": []

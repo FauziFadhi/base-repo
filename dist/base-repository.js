@@ -18,7 +18,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Repository = exports.ListGetOptions = exports.getOptionsCache = exports.GetOptions = void 0;
+exports.Repository = exports.ListGetOptionsCache = exports.getOptionsCache = exports.GetOptions = void 0;
 const common_1 = require("@nestjs/common");
 const cache_utilty_1 = require("./cache-utilty");
 const date_utility_1 = require("./date-utility");
@@ -38,13 +38,13 @@ class getOptionsCache extends GetOptions {
     }
 }
 exports.getOptionsCache = getOptionsCache;
-class ListGetOptions {
+class ListGetOptionsCache {
     constructor() {
         this.ttl = repository_module_1.RepositoryModule.defaultTTL;
         this.includeDeleted = false;
     }
 }
-exports.ListGetOptions = ListGetOptions;
+exports.ListGetOptionsCache = ListGetOptionsCache;
 class Repository {
     constructor(model, cacheModel) {
         this.cacheModel = null;
@@ -171,7 +171,7 @@ class Repository {
         options.where = Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where);
         return await this.model.findAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
     }
-    async listCache(options = {}, { includeDeleted, ttl } = new ListGetOptions) {
+    async listCache(options = {}, { includeDeleted, ttl } = new ListGetOptionsCache) {
         const [maxUpdatedAt, count] = await Promise.all([
             this.model.max('updatedAt', { where: options.where }),
             this.model.count({ where: options.where }),
