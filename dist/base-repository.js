@@ -23,6 +23,7 @@ const common_1 = require("@nestjs/common");
 const cache_utilty_1 = require("./cache-utilty");
 const date_utility_1 = require("./date-utility");
 const helpers_1 = require("./helpers");
+const lodash_1 = require("lodash");
 const repository_module_1 = require("./repository.module");
 class GetOptions {
     constructor() {
@@ -164,11 +165,11 @@ class Repository {
         cache_utilty_1.default.invalidate(key, this.getCacheStore());
     }
     async paginate(options = { includeDeleted: false }) {
-        options.where = Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where);
+        options.where = Object.assign(Object.assign({}, lodash_1.pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined })), options.where);
         return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
     }
     async list(options = { includeDeleted: false }) {
-        options.where = Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where);
+        options.where = Object.assign(Object.assign({}, lodash_1.pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined })), options.where);
         return await this.model.findAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
     }
     async listCache(options = {}, { includeDeleted, ttl } = new ListGetOptionsCache) {

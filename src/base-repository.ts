@@ -2,6 +2,7 @@ import { HttpException } from '@nestjs/common';
 import CacheUtility from 'cache-utilty';
 import { DateUtility } from 'date-utility';
 import { circularToJSON, textToSnakeCase } from 'helpers';
+import { pickBy } from 'lodash';
 import { RepositoryModule } from 'repository.module';
 import { Model, Sequelize } from 'sequelize-typescript';
 import {
@@ -172,7 +173,7 @@ export abstract class Repository<T extends Model<T>> {
 
   async paginate(options: FindAndCountOptions & { includeDeleted: boolean } = { includeDeleted: false }): Promise<{ rows: T[]; count: number }> {
     options.where = {
-      isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined,
+      ...pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }),
       ...options.where
     }
 
@@ -181,7 +182,7 @@ export abstract class Repository<T extends Model<T>> {
 
   async list(options: FindOptions & { includeDeleted: boolean } = { includeDeleted: false }): Promise<T[]> {
     options.where = {
-      isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined,
+      ...pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }),
       ...options.where
     }
 
