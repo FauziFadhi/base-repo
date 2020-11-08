@@ -9,10 +9,10 @@ export class RepositoryModule {
   static sequelize
   static cachePrefix
   static defaultTTL: number
-  static forRoot(sequelize, cachePrefix, defaultTTL?: number): DynamicModule {
+  static forRoot(sequelize, cachePrefix, defaultTTL: number = 7 * 24 * 3600): DynamicModule {
     RepositoryModule.sequelize = sequelize
     RepositoryModule.cachePrefix = cachePrefix
-    RepositoryModule.defaultTTL = defaultTTL || 7 * 24 * 3600
+    RepositoryModule.defaultTTL = defaultTTL
     return {
       module: RepositoryModule
     };
