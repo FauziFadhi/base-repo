@@ -172,7 +172,8 @@ class Repository {
         options.where = Object.assign(Object.assign({}, lodash_1.pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined })), options.where);
         return await this.model.findAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
     }
-    async listCache(options = {}, { includeDeleted, ttl } = new ListGetOptionsCache) {
+    async listCache(_a = Object.assign({}, new ListGetOptionsCache)) {
+        var { ttl, includeDeleted } = _a, options = __rest(_a, ["ttl", "includeDeleted"]);
         const [maxUpdatedAt, count] = await Promise.all([
             this.model.max('updatedAt', { where: options.where }),
             this.model.count({ where: options.where }),
@@ -213,44 +214,41 @@ class Repository {
         const model = this.getDataModelFromCache(resultCache);
         return this.getDataOrThrow(model, getOptions);
     }
-    async findOne(options, getOptions = new GetOptions) {
+    async findOne(_a = Object.assign({}, new GetOptions)) {
+        var { includeDeleted, isThrow } = _a, options = __rest(_a, ["includeDeleted", "isThrow"]);
         const model = await this.model.findOne(options);
-        return this.getDataOrThrow(model, getOptions);
+        return this.getDataOrThrow(model, { includeDeleted, isThrow });
     }
     async findById(id, getOptions = new GetOptions) {
-        return await this.findOne({ where: { id } }, getOptions);
+        return await this.findOne(Object.assign(Object.assign({}, getOptions), { where: { id } }));
     }
-    async findByOneAttributeCache({ name, value }, _a = new getOptionsCache) {
-        var { ttl } = _a, getOptions = __rest(_a, ["ttl"]);
+    async findByOneAttributeCache({ name, value }, _a = Object.assign({}, new getOptionsCache)) {
+        var { ttl, includeDeleted, isThrow } = _a, options = __rest(_a, ["ttl", "includeDeleted", "isThrow"]);
         const key = this.setKeyOneAttribute(name, value);
         let result = await this.getCacheStore().get(key);
         if (!result) {
             const snakeCaseName = helpers_1.textToSnakeCase(name);
             let model = null;
             if (typeof value === 'string')
-                model = await this.findOne({
-                    where: this.getDbConfig().literal(`${snakeCaseName} = '${value}'`),
-                }, { includeDeleted: true });
+                model = await this.findOne(Object.assign(Object.assign({}, options), { where: this.getDbConfig().literal(`${snakeCaseName} = '${value}'`), includeDeleted: true }));
             else
-                model = await this.findOne({
-                    where: this.getDbConfig().literal(`${snakeCaseName} = ${value}`),
-                }, { includeDeleted: true });
+                model = await this.findOne(Object.assign(Object.assign({}, options), { where: this.getDbConfig().literal(`${snakeCaseName} = ${value}`), includeDeleted: true }));
             if (model)
                 await this.getCacheStore().set(key, JSON.stringify(model), 'EX', ttl);
             result = JSON.stringify(model);
         }
-        return this.getDataOrThrowFromCache(result, getOptions);
+        return this.getDataOrThrowFromCache(result, { includeDeleted, isThrow });
     }
-    async findByMultiAttributeCache(key, options, _a = new getOptionsCache) {
-        var { ttl } = _a, getOptions = __rest(_a, ["ttl"]);
+    async findByMultiAttributeCache(key, _a = Object.assign({}, new getOptionsCache)) {
+        var { ttl, includeDeleted, isThrow } = _a, options = __rest(_a, ["ttl", "includeDeleted", "isThrow"]);
         let result = await this.getCacheStore().get(key);
         if (!result) {
-            const model = await this.findOne(options, { includeDeleted: true });
+            const model = await this.findOne(Object.assign(Object.assign({}, options), { includeDeleted: true }));
             if (model)
                 await this.getCacheStore().set(key, JSON.stringify(model), 'EX', ttl);
             result = JSON.stringify(model);
         }
-        return this.getDataOrThrowFromCache(result, getOptions);
+        return this.getDataOrThrowFromCache(result, { includeDeleted, isThrow });
     }
     getDataModelFromCache(dataCache) {
         const model = JSON.parse(dataCache);
