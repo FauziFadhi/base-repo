@@ -51,7 +51,7 @@ class Repository {
         this.cacheModel = null;
         this.cacheStore = null;
         this.db = null;
-        this.findByIdCache = async (id, getOptions = new getOptionsCache) => {
+        this.findByIdCache = async (id, getOptions = new getOptionsCache()) => {
             return await this.findByOneAttributeCache({ name: 'id', value: id }, getOptions);
         };
         this.model = model;
@@ -172,7 +172,7 @@ class Repository {
         options.where = Object.assign(Object.assign({}, lodash_1.pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined })), options.where);
         return await this.model.findAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
     }
-    async listCache(_a = Object.assign({}, new ListGetOptionsCache)) {
+    async listCache(_a = Object.assign({}, new ListGetOptionsCache())) {
         var { ttl, includeDeleted } = _a, options = __rest(_a, ["ttl", "includeDeleted"]);
         const [maxUpdatedAt, count] = await Promise.all([
             this.model.max('updatedAt', { where: options.where }),
@@ -214,7 +214,7 @@ class Repository {
         const model = this.getDataModelFromCache(resultCache);
         return this.getDataOrThrow(model, getOptions);
     }
-    async findOne(_a = Object.assign({}, new GetOptions)) {
+    async findOne(_a = Object.assign({}, new GetOptions())) {
         var { includeDeleted, isThrow } = _a, options = __rest(_a, ["includeDeleted", "isThrow"]);
         const model = await this.model.findOne(options);
         return this.getDataOrThrow(model, { includeDeleted, isThrow });
@@ -222,7 +222,7 @@ class Repository {
     async findById(id, getOptions = new GetOptions) {
         return await this.findOne(Object.assign(Object.assign({}, getOptions), { where: { id } }));
     }
-    async findByOneAttributeCache({ name, value }, _a = Object.assign({}, new getOptionsCache)) {
+    async findByOneAttributeCache({ name, value }, _a = Object.assign({}, new getOptionsCache())) {
         var { ttl, includeDeleted, isThrow } = _a, options = __rest(_a, ["ttl", "includeDeleted", "isThrow"]);
         const key = this.setKeyOneAttribute(name, value);
         let result = await this.getCacheStore().get(key);
@@ -239,7 +239,7 @@ class Repository {
         }
         return this.getDataOrThrowFromCache(result, { includeDeleted, isThrow });
     }
-    async findByMultiAttributeCache(key, _a = Object.assign({}, new getOptionsCache)) {
+    async findByMultiAttributeCache(key, _a = Object.assign({}, new getOptionsCache())) {
         var { ttl, includeDeleted, isThrow } = _a, options = __rest(_a, ["ttl", "includeDeleted", "isThrow"]);
         let result = await this.getCacheStore().get(key);
         if (!result) {
