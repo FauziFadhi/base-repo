@@ -33,13 +33,13 @@ export declare abstract class Repository<T extends Model<T>> {
     private invalidateAllFindByCache;
     private invalidateAllCache;
     paginate(options: FindAndCountOptions & {
-        includeDeleted: boolean;
+        includeDeleted?: boolean;
     }): Promise<{
         rows: T[];
         count: number;
     }>;
     list(options: FindOptions & {
-        includeDeleted: boolean;
+        includeDeleted?: boolean;
     }): Promise<T[]>;
     listCache(option?: FindOptions & ListGetOptionsCache): Promise<T[]>;
     private getDataOrThrow;

@@ -171,7 +171,7 @@ export abstract class Repository<T extends Model<T>> {
     CacheUtility.invalidate(key, this.getCacheStore())
   }
 
-  async paginate(options: FindAndCountOptions & { includeDeleted: boolean }): Promise<{ rows: T[]; count: number }> {
+  async paginate(options: FindAndCountOptions & { includeDeleted?: boolean }): Promise<{ rows: T[]; count: number }> {
     options.includeDeleted = options.includeDeleted || false
     options.where = {
       ...pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }),
@@ -181,7 +181,7 @@ export abstract class Repository<T extends Model<T>> {
     return await this.model.findAndCountAll({ ...options, order: options?.order || [[this.model.primaryKeyAttribute, 'asc']] })
   }
 
-  async list(options: FindOptions & { includeDeleted: boolean }): Promise<T[]> {
+  async list(options: FindOptions & { includeDeleted?: boolean }): Promise<T[]> {
     options.includeDeleted = options.includeDeleted || false
     options.where = {
       ...pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }),
