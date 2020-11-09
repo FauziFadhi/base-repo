@@ -164,11 +164,13 @@ class Repository {
         const key = cache_utilty_1.default.setKey(this.getCacheModel(), modelClass.id);
         cache_utilty_1.default.invalidate(key, this.getCacheStore());
     }
-    async paginate(options = { includeDeleted: false }) {
+    async paginate(options) {
+        options.includeDeleted = options.includeDeleted || false;
         options.where = Object.assign(Object.assign({}, lodash_1.pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined })), options.where);
         return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
     }
-    async list(options = { includeDeleted: false }) {
+    async list(options) {
+        options.includeDeleted = options.includeDeleted || false;
         options.where = Object.assign(Object.assign({}, lodash_1.pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined })), options.where);
         return await this.model.findAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
     }

@@ -2012,8 +2012,8 @@
         "affectsGlobalScope": false
       },
       "../src/base-repository.ts": {
-        "version": "09f68271984b0263d16dcef3ad4f48936c200863c283af3d142b929122a9f38b",
-        "signature": "854eea4f8e7151c419303861cc4135f6d488d7e1805dcd61150abf090c130695",
+        "version": "7b439a4f66d8d4000ff31ba4d38fb3e045a25ff3fb6669729f4fe61974bac097",
+        "signature": "aa7baeabac41c68efac754da35b3a72afcea13c905fe9c20029ab90d86550e43",
         "affectsGlobalScope": false
       },
       "../src/index.ts": {
