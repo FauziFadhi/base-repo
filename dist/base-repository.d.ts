@@ -41,17 +41,17 @@ export declare abstract class Repository<T extends Model<T>> {
     list(options?: FindOptions & {
         includeDeleted: boolean;
     }): Promise<T[]>;
-    listCache({ ttl, includeDeleted, ...options }?: FindOptions & ListGetOptionsCache): Promise<T[]>;
+    listCache(option?: FindOptions & ListGetOptionsCache): Promise<T[]>;
     private getDataOrThrow;
     private getDataOrThrowFromCache;
-    findOne({ includeDeleted, isThrow, ...options }?: FindOptions & GetOptions): Promise<T>;
+    findOne(options: FindOptions & GetOptions): Promise<T>;
     findById(id: number, getOptions?: GetOptions): Promise<T>;
     findByIdCache: (id: number, getOptions?: getOptionsCache) => Promise<T>;
     protected findByOneAttributeCache({ name, value }: {
         name: any;
         value: any;
-    }, { ttl, includeDeleted, isThrow, ...options }?: FindOptions & getOptionsCache): Promise<T>;
-    protected findByMultiAttributeCache(key: string, { ttl, includeDeleted, isThrow, ...options }?: FindOptions & getOptionsCache): Promise<T>;
+    }, getOptionsCaches: FindOptions & getOptionsCache): Promise<T>;
+    protected findByMultiAttributeCache(key: string, getOptionsCaches: FindOptions & getOptionsCache): Promise<T>;
     private getDataModelFromCache;
     protected softDelete(dataModel: any, transaction?: Transaction): Promise<T>;
     createModel(values: object, transaction?: Transaction): Promise<T>;

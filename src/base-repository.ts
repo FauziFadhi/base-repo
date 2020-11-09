@@ -194,7 +194,9 @@ export abstract class Repository<T extends Model<T>> {
    * @param options `query` query select
    * @param includeDeleted @default false `boolean' if `true` return model even attribute isDeleted true
    */
-  async listCache({ ttl, includeDeleted, ...options }: FindOptions & ListGetOptionsCache = { ...new ListGetOptionsCache() }): Promise<T[]> {
+  async listCache(option: FindOptions & ListGetOptionsCache = {}): Promise<T[]> {
+    const { ttl, includeDeleted, ...options } = { ... new ListGetOptionsCache(), ...option }
+
     // get max updatedAt on model
     const [maxUpdatedAt, count] = await Promise.all([
       this.model.max('updatedAt', { where: options.where }),
@@ -272,8 +274,9 @@ export abstract class Repository<T extends Model<T>> {
    * @param options query options
    * @param isThrow `boolean` if true and result null throw exception
    */
-  async findOne({ includeDeleted, isThrow, ...options }: FindOptions & GetOptions = { ...new GetOptions() }): Promise<T> {
-    const model = await this.model.findOne(options)
+  async findOne(options: FindOptions & GetOptions): Promise<T> {
+    const { includeDeleted, isThrow, ...option } = { ...new GetOptions(), ...options }
+    const model = await this.model.findOne(option)
 
     return this.getDataOrThrow(model, { includeDeleted, isThrow })
   }
@@ -283,8 +286,8 @@ export abstract class Repository<T extends Model<T>> {
    * @param isThrow @default false if `true` throw exception when data null from db
    * @return Model
    */
-  async findById(id: number, getOptions: GetOptions = new GetOptions): Promise<T> {
-    return await this.findOne({ ...getOptions, where: { id } })
+  async findById(id: number, getOptions: GetOptions = {}): Promise<T> {
+    return await this.findOne({ ...new GetOptions(), ...getOptions, where: { id } })
   }
 
   /**
@@ -292,8 +295,8 @@ export abstract class Repository<T extends Model<T>> {
    * @param id id of Model
    * @param isThrow @default false if `true` throw exception when data null from db
    */
-  findByIdCache = async (id: number, getOptions: getOptionsCache = new getOptionsCache()): Promise<T> => {
-    return await this.findByOneAttributeCache({ name: 'id', value: id }, getOptions)
+  findByIdCache = async (id: number, getOptions: getOptionsCache = {}): Promise<T> => {
+    return await this.findByOneAttributeCache({ name: 'id', value: id }, { ...new getOptionsCache(), ...getOptions })
   }
 
   /**
@@ -301,7 +304,8 @@ export abstract class Repository<T extends Model<T>> {
    * @param attribute main `attribute`
    * @param isThrow @default false if `true` throw exception when data null from db
    */
-  protected async findByOneAttributeCache({ name, value }, { ttl, includeDeleted, isThrow, ...options }: FindOptions & getOptionsCache = { ...new getOptionsCache() }): Promise<T> {
+  protected async findByOneAttributeCache({ name, value }, getOptionsCaches: FindOptions & getOptionsCache): Promise<T> {
+    const { ttl, includeDeleted, isThrow, ...options } = { ...new getOptionsCache(), ...getOptionsCaches }
     const key = this.setKeyOneAttribute(name, value);
 
     let result = await this.getCacheStore().get(key)
@@ -330,7 +334,8 @@ export abstract class Repository<T extends Model<T>> {
     return this.getDataOrThrowFromCache(result, { includeDeleted, isThrow })
   }
 
-  protected async findByMultiAttributeCache(key: string, { ttl, includeDeleted, isThrow, ...options }: FindOptions & getOptionsCache = { ...new getOptionsCache() }): Promise<T> {
+  protected async findByMultiAttributeCache(key: string, getOptionsCaches: FindOptions & getOptionsCache): Promise<T> {
+    const { ttl, includeDeleted, isThrow, ...options } = { ...new getOptionsCache(), ...getOptionsCaches }
 
     let result = await this.getCacheStore().get(key)
 
