@@ -222,7 +222,7 @@ class Repository {
     async findById(id, getOptions = {}) {
         return await this.findOne(Object.assign(Object.assign(Object.assign({}, new GetOptions()), getOptions), { where: { id } }));
     }
-    async findByOneAttributeCache({ name, value }, getOptionsCaches) {
+    async findByOneAttributeCache({ name, value }, getOptionsCaches = {}) {
         const _a = Object.assign(Object.assign({}, new getOptionsCache()), getOptionsCaches), { ttl, includeDeleted, isThrow } = _a, options = __rest(_a, ["ttl", "includeDeleted", "isThrow"]);
         const key = this.setKeyOneAttribute(name, value);
         let result = await this.getCacheStore().get(key);

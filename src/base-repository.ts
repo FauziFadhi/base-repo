@@ -304,7 +304,7 @@ export abstract class Repository<T extends Model<T>> {
    * @param attribute main `attribute`
    * @param isThrow @default false if `true` throw exception when data null from db
    */
-  protected async findByOneAttributeCache({ name, value }, getOptionsCaches: FindOptions & getOptionsCache): Promise<T> {
+  protected async findByOneAttributeCache({ name, value }, getOptionsCaches: FindOptions & getOptionsCache = {}): Promise<T> {
     const { ttl, includeDeleted, isThrow, ...options } = { ...new getOptionsCache(), ...getOptionsCaches }
     const key = this.setKeyOneAttribute(name, value);
 

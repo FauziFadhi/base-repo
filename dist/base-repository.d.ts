@@ -50,7 +50,7 @@ export declare abstract class Repository<T extends Model<T>> {
     protected findByOneAttributeCache({ name, value }: {
         name: any;
         value: any;
-    }, getOptionsCaches: FindOptions & getOptionsCache): Promise<T>;
+    }, getOptionsCaches?: FindOptions & getOptionsCache): Promise<T>;
     protected findByMultiAttributeCache(key: string, getOptionsCaches: FindOptions & getOptionsCache): Promise<T>;
     private getDataModelFromCache;
     protected softDelete(dataModel: any, transaction?: Transaction): Promise<T>;
