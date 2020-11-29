@@ -2,11 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CacheUtility = void 0;
 const crypto = require("crypto");
-const repository_module_1 = require("./repository.module");
 class CacheUtility {
     static setKey(name, key, options) {
         const opt = (options) ? ':' + options : '';
-        return repository_module_1.RepositoryModule.cachePrefix + ':' + name + opt + '_' + key;
+        return ':' + name + opt + '_' + key;
     }
     static setQueryOptions(options) {
         const hash = crypto.createHash('md5');

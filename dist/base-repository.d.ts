@@ -1,4 +1,4 @@
-import { Model } from 'sequelize-typescript';
+import { Model, Sequelize } from 'sequelize-typescript';
 import { BulkCreateOptions, CountOptions, FindAndCountOptions, FindOptions, FindOrCreateOptions, Transaction, UpdateOptions } from 'sequelize/types';
 export declare class GetOptions {
     isThrow?: boolean;
@@ -24,8 +24,7 @@ export declare abstract class Repository<T extends Model<T>> {
     protected defaultThrow(): void;
     protected setCacheStore(cacheStore: any): void;
     protected getCacheStore(): any;
-    protected getDbConfig(): any;
-    private setDbConfig;
+    protected getDbConfig(): typeof Sequelize;
     protected getCacheModel(): string;
     private throwNullOrDeleted;
     protected setKeyOneAttribute(attributeName: string, attributeValue: any): string;

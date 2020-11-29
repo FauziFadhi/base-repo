@@ -25,6 +25,7 @@ const date_utility_1 = require("./date-utility");
 const helpers_1 = require("./helpers");
 const lodash_1 = require("lodash");
 const repository_module_1 = require("./repository.module");
+const sequelize_typescript_1 = require("sequelize-typescript");
 class GetOptions {
     constructor() {
         this.isThrow = false;
@@ -50,13 +51,12 @@ class Repository {
     constructor(model, cacheModel) {
         this.cacheModel = null;
         this.cacheStore = null;
-        this.db = null;
+        this.db = sequelize_typescript_1.Sequelize;
         this.findByIdCache = async (id, getOptions = {}) => {
             return await this.findByOneAttributeCache({ name: 'id', value: id }, Object.assign(Object.assign({}, new getOptionsCache()), getOptions));
         };
         this.model = model;
         this.cacheModel = cacheModel;
-        this.setDbConfig(repository_module_1.RepositoryModule.sequelize);
         this.model.afterUpdate((model, options) => {
             const previousModel = Object.assign(Object.assign({}, helpers_1.circularToJSON(model)), helpers_1.circularToJSON(model._previousDataValues));
             console.log(previousModel, 'invalidatedModel');
@@ -110,9 +110,6 @@ class Repository {
         if (!this.db)
             throw new common_1.HttpException('base DB Config at service is null', 500);
         return this.db;
-    }
-    setDbConfig(db) {
-        this.db = db;
     }
     getCacheModel() {
         if (!this.cacheModel)

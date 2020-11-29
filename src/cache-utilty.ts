@@ -1,6 +1,5 @@
 import * as crypto from 'crypto';
 import * as Redis from 'ioredis';
-import { RepositoryModule } from 'repository.module';
 import { FindOptions } from 'sequelize';
 
 export class CacheUtility {
@@ -9,7 +8,7 @@ export class CacheUtility {
     // tslint:disable-next-line:prefer-template
     const opt = (options) ? ':' + options : '';
     // tslint:disable-next-line:prefer-template
-    return RepositoryModule.cachePrefix + ':' + name + opt + '_' + key;
+    return ':' + name + opt + '_' + key;
   }
 
   static setQueryOptions(options?: FindOptions) {

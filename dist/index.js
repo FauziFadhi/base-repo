@@ -7,4 +7,6 @@ Object.defineProperty(exports, "GetOptions", { enumerable: true, get: function (
 Object.defineProperty(exports, "ListGetOptionsCache", { enumerable: true, get: function () { return base_repository_1.ListGetOptionsCache; } });
 var repository_module_1 = require("./repository.module");
 Object.defineProperty(exports, "RepositoryModule", { enumerable: true, get: function () { return repository_module_1.RepositoryModule; } });
+var base_model_1 = require("./base-model");
+Object.defineProperty(exports, "BaseModel", { enumerable: true, get: function () { return base_model_1.BaseModel; } });
 //# sourceMappingURL=index.js.map
