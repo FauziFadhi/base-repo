@@ -2,7 +2,7 @@ import { HttpException } from '@nestjs/common';
 import CacheUtility from 'cache-utilty';
 import { DateUtility } from 'date-utility';
 import { circularToJSON, textToSnakeCase } from 'helpers';
-import { pickBy } from 'lodash';
+import { isUndefined, omitBy } from 'lodash';
 import { RepositoryModule } from 'repository.module';
 import { Model, Sequelize } from 'sequelize-typescript';
 import {
@@ -173,20 +173,23 @@ export abstract class Repository<T extends Model<T>> {
 
   async paginate(options: FindAndCountOptions & { includeDeleted?: boolean }): Promise<{ rows: T[]; count: number }> {
     options.includeDeleted = options.includeDeleted || false
-    options.where = {
-      ...pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }),
-      ...options.where
-    }
+    options.where = omitBy({
+      isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined,
+      ...options.where,
+    }, isUndefined)
+
+    console.log(this.model.rawAttributes.isDeleted && !options.includeDeleted);
+    console.log(options.where);
 
     return await this.model.findAndCountAll({ ...options, order: options?.order || [[this.model.primaryKeyAttribute, 'asc']] })
   }
 
   async list(options: FindOptions & { includeDeleted?: boolean }): Promise<T[]> {
     options.includeDeleted = options.includeDeleted || false
-    options.where = {
-      ...pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }),
-      ...options.where
-    }
+    options.where = omitBy({
+      isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined,
+      ...options.where,
+    }, isUndefined)
 
     return await this.model.findAll({ ...options, order: options?.order || [[this.model.primaryKeyAttribute, 'asc']] })
   }

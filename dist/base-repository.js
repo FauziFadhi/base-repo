@@ -166,12 +166,14 @@ class Repository {
     }
     async paginate(options) {
         options.includeDeleted = options.includeDeleted || false;
-        options.where = Object.assign(Object.assign({}, lodash_1.pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined })), options.where);
+        options.where = lodash_1.omitBy(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
+        console.log(this.model.rawAttributes.isDeleted && !options.includeDeleted);
+        console.log(options.where);
         return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
     }
     async list(options) {
         options.includeDeleted = options.includeDeleted || false;
-        options.where = Object.assign(Object.assign({}, lodash_1.pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined })), options.where);
+        options.where = lodash_1.omitBy(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
         return await this.model.findAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
     }
     async listCache(option = {}) {
