@@ -180,8 +180,9 @@ export abstract class Repository<T extends Model<T>> {
 
     console.log(this.model.rawAttributes.isDeleted && !options.includeDeleted);
     console.log(options.where);
+    console.log(options.order.valueOf(), 'options.order');
 
-    return await this.model.findAndCountAll({ ...options, order: options?.order || [[this.model.primaryKeyAttribute, 'asc']] })
+    return await this.model.findAndCountAll({ ...options, order: (options?.order as [])?.length || [[this.model?.primaryKeyAttribute, 'asc']] })
   }
 
   async list(options: FindOptions & { includeDeleted?: boolean }): Promise<T[]> {
@@ -191,7 +192,7 @@ export abstract class Repository<T extends Model<T>> {
       ...options.where,
     }, isUndefined)
 
-    return await this.model.findAll({ ...options, order: options?.order || [[this.model.primaryKeyAttribute, 'asc']] })
+    return await this.model.findAll({ ...options, order: (options?.order as [])?.length || [[this.model?.primaryKeyAttribute, 'asc']] })
   }
 
   /**

@@ -165,16 +165,19 @@ class Repository {
         cache_utilty_1.default.invalidate(key, this.getCacheStore());
     }
     async paginate(options) {
+        var _a, _b;
         options.includeDeleted = options.includeDeleted || false;
         options.where = lodash_1.omitBy(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
         console.log(this.model.rawAttributes.isDeleted && !options.includeDeleted);
         console.log(options.where);
-        return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
+        console.log(options.order.valueOf(), 'options.order');
+        return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: ((_a = options === null || options === void 0 ? void 0 : options.order) === null || _a === void 0 ? void 0 : _a.length) || [[(_b = this.model) === null || _b === void 0 ? void 0 : _b.primaryKeyAttribute, 'asc']] }));
     }
     async list(options) {
+        var _a, _b;
         options.includeDeleted = options.includeDeleted || false;
         options.where = lodash_1.omitBy(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
-        return await this.model.findAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
+        return await this.model.findAll(Object.assign(Object.assign({}, options), { order: ((_a = options === null || options === void 0 ? void 0 : options.order) === null || _a === void 0 ? void 0 : _a.length) || [[(_b = this.model) === null || _b === void 0 ? void 0 : _b.primaryKeyAttribute, 'asc']] }));
     }
     async listCache(option = {}) {
         const _a = Object.assign(Object.assign({}, new ListGetOptionsCache()), option), { ttl, includeDeleted } = _a, options = __rest(_a, ["ttl", "includeDeleted"]);
