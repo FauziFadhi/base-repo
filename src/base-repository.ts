@@ -2,7 +2,7 @@ import { HttpException } from '@nestjs/common';
 import CacheUtility from 'cache-utilty';
 import { DateUtility } from 'date-utility';
 import { circularToJSON, textToSnakeCase } from 'helpers';
-import { isUndefined, omitBy } from 'lodash';
+import { isEmpty, isUndefined, omitBy } from 'lodash';
 import { RepositoryModule } from 'repository.module';
 import { Model, Sequelize } from 'sequelize-typescript';
 import {
@@ -12,6 +12,7 @@ import {
   FindAndCountOptions,
   FindOptions,
   FindOrCreateOptions,
+  OrderItem,
   Transaction,
   UpdateOptions,
 } from 'sequelize/types';
@@ -182,7 +183,7 @@ export abstract class Repository<T extends Model<T>> {
     console.log(options.where);
     console.log(options.order.valueOf(), 'options.order');
 
-    return await this.model.findAndCountAll({ ...options, order: (options?.order as [])?.length || [[this.model?.primaryKeyAttribute, 'asc']] })
+    return await this.model.findAndCountAll({ ...options, order: !isEmpty(options.order) && options?.order || [[this.model?.primaryKeyAttribute, 'asc']] })
   }
 
   async list(options: FindOptions & { includeDeleted?: boolean }): Promise<T[]> {
@@ -192,7 +193,10 @@ export abstract class Repository<T extends Model<T>> {
       ...options.where,
     }, isUndefined)
 
-    return await this.model.findAll({ ...options, order: (options?.order as [])?.length || [[this.model?.primaryKeyAttribute, 'asc']] })
+    const isAnyOrder = (options?.order as OrderItem[])?.length || options?.order || false
+
+
+    return await this.model.findAll({ ...options, order: !isEmpty(options.order) && options?.order || [[this.model?.primaryKeyAttribute, 'asc']] })
   }
 
   /**
