@@ -12,7 +12,6 @@ import {
   FindAndCountOptions,
   FindOptions,
   FindOrCreateOptions,
-  OrderItem,
   Transaction,
   UpdateOptions,
 } from 'sequelize/types';
@@ -179,11 +178,7 @@ export abstract class Repository<T extends Model<T>> {
       ...options.where,
     }, isUndefined)
 
-    console.log(this.model.rawAttributes.isDeleted && !options.includeDeleted);
-    console.log(options.where);
-    console.log(options.order.valueOf(), 'options.order');
-
-    return await this.model.findAndCountAll({ ...options, order: !isEmpty(options.order) && options?.order || [[this.model?.primaryKeyAttribute, 'asc']] })
+    return await this.model.findAndCountAll({ ...options, order: !isEmpty(options?.order) && options?.order || [[this.model?.primaryKeyAttribute, 'asc']] })
   }
 
   async list(options: FindOptions & { includeDeleted?: boolean }): Promise<T[]> {
@@ -193,10 +188,7 @@ export abstract class Repository<T extends Model<T>> {
       ...options.where,
     }, isUndefined)
 
-    const isAnyOrder = (options?.order as OrderItem[])?.length || options?.order || false
-
-
-    return await this.model.findAll({ ...options, order: !isEmpty(options.order) && options?.order || [[this.model?.primaryKeyAttribute, 'asc']] })
+    return await this.model.findAll({ ...options, order: !isEmpty(options?.order) && options?.order || [[this.model?.primaryKeyAttribute, 'asc']] })
   }
 
   /**

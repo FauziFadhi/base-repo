@@ -168,17 +168,13 @@ class Repository {
         var _a;
         options.includeDeleted = options.includeDeleted || false;
         options.where = lodash_1.omitBy(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
-        console.log(this.model.rawAttributes.isDeleted && !options.includeDeleted);
-        console.log(options.where);
-        console.log(options.order.valueOf(), 'options.order');
-        return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: !lodash_1.isEmpty(options.order) && (options === null || options === void 0 ? void 0 : options.order) || [[(_a = this.model) === null || _a === void 0 ? void 0 : _a.primaryKeyAttribute, 'asc']] }));
+        return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: !lodash_1.isEmpty(options === null || options === void 0 ? void 0 : options.order) && (options === null || options === void 0 ? void 0 : options.order) || [[(_a = this.model) === null || _a === void 0 ? void 0 : _a.primaryKeyAttribute, 'asc']] }));
     }
     async list(options) {
-        var _a, _b;
+        var _a;
         options.includeDeleted = options.includeDeleted || false;
         options.where = lodash_1.omitBy(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
-        const isAnyOrder = ((_a = options === null || options === void 0 ? void 0 : options.order) === null || _a === void 0 ? void 0 : _a.length) || (options === null || options === void 0 ? void 0 : options.order) || false;
-        return await this.model.findAll(Object.assign(Object.assign({}, options), { order: !lodash_1.isEmpty(options.order) && (options === null || options === void 0 ? void 0 : options.order) || [[(_b = this.model) === null || _b === void 0 ? void 0 : _b.primaryKeyAttribute, 'asc']] }));
+        return await this.model.findAll(Object.assign(Object.assign({}, options), { order: !lodash_1.isEmpty(options === null || options === void 0 ? void 0 : options.order) && (options === null || options === void 0 ? void 0 : options.order) || [[(_a = this.model) === null || _a === void 0 ? void 0 : _a.primaryKeyAttribute, 'asc']] }));
     }
     async listCache(option = {}) {
         const _a = Object.assign(Object.assign({}, new ListGetOptionsCache()), option), { ttl, includeDeleted } = _a, options = __rest(_a, ["ttl", "includeDeleted"]);
