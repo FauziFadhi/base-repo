@@ -2012,7 +2012,7 @@
         "affectsGlobalScope": false
       },
       "../src/base-repository.ts": {
-        "version": "386b0e8df35971363330b1c0a77e6fc0378155b06d05e5b100d2ff679cd80bff",
+        "version": "fa20fec85f1018b861d247da00a280619166da1966d3e82d23a8176b63dd05b5",
         "signature": "fdca6b1a8cd4734ac71a186359ff548d5c4732fdd37102e1e34aaae69b3f378f",
         "affectsGlobalScope": false
       },
@@ -2204,11 +2204,6 @@
       "../src/main.ts": {
         "version": "8d791117fbbc0c740d0dc546ecf2b5ef8dfda516a77fafd10f1e5a3ef99ec869",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
-        "affectsGlobalScope": false
-      },
-      "../src/test/TestMode.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/anymatch/index.d.ts": {

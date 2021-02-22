@@ -274,16 +274,16 @@ class Repository {
         return await this.model.create(values, { transaction });
     }
     async bulkUpdate(values, options, transaction) {
-        return await this.model.update(values, Object.assign(Object.assign({}, options), { transaction, individualHooks: true }));
+        return await this.model.update(values, Object.assign(Object.assign({}, options), { transaction: (options === null || options === void 0 ? void 0 : options.transaction) || transaction, individualHooks: true }));
     }
     async bulkCreate(values, options, transaction) {
-        return await this.model.bulkCreate(values, Object.assign(Object.assign({}, options), { transaction }));
+        return await this.model.bulkCreate(values, Object.assign(Object.assign({}, options), { transaction: (options === null || options === void 0 ? void 0 : options.transaction) || transaction }));
     }
     async findOrCreate(options, transaction) {
-        return await this.model.findOrCreate(Object.assign(Object.assign({}, options), { transaction }));
+        return await this.model.findOrCreate(Object.assign(Object.assign({}, options), { transaction: (options === null || options === void 0 ? void 0 : options.transaction) || transaction }));
     }
     async findOrBuild(options, transaction) {
-        return await this.model.findOrBuild(Object.assign(Object.assign({}, options), { transaction }));
+        return await this.model.findOrBuild(Object.assign(Object.assign({}, options), { transaction: (options === null || options === void 0 ? void 0 : options.transaction) || transaction }));
     }
     async count(options) {
         return await this.model.count(options);
