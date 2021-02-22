@@ -386,19 +386,19 @@ export abstract class Repository<T extends Model<T>> {
   }
 
   async bulkUpdate(values: object, options: UpdateOptions, transaction?: Transaction): Promise<[number, T[]]> {
-    return await this.model.update(values, { ...options, transaction, individualHooks: true })
+    return await this.model.update(values, { ...options, transaction: options?.transaction || transaction, individualHooks: true })
   }
 
   async bulkCreate(values: object[], options?: BulkCreateOptions, transaction?: Transaction): Promise<T[]> {
-    return await this.model.bulkCreate(values, { ...options, transaction })
+    return await this.model.bulkCreate(values, { ...options, transaction: options?.transaction || transaction })
   }
 
   async findOrCreate(options: FindOrCreateOptions, transaction: Transaction): Promise<[T, boolean]> {
-    return await this.model.findOrCreate({ ...options, transaction })
+    return await this.model.findOrCreate({ ...options, transaction: options?.transaction || transaction })
   }
 
   async findOrBuild(options: FindOrCreateOptions, transaction?: Transaction): Promise<[T, boolean]> {
-    return await this.model.findOrBuild({ ...options, transaction })
+    return await this.model.findOrBuild({ ...options, transaction: options?.transaction || transaction })
   }
 
   async count(options: CountOptions): Promise<number> {
