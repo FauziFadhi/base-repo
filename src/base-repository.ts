@@ -71,7 +71,7 @@ export abstract class Repository<T extends Model<T>> {
     })
   }
 
-  protected abstract async invalidateCache(model: T)
+  protected abstract invalidateCache(model: T)
 
   protected setKeyMultiAttribute(key: any) {
     const keyOpts = CacheUtility.setQueryOptions(key)
@@ -88,7 +88,7 @@ export abstract class Repository<T extends Model<T>> {
   }
 
   protected defaultThrow() {
-    throw new HttpException(`${new this.model().constructor.name} data not Found`, 400)
+    throw new HttpException(`${new this.model().constructor.name} data not Found`, 404)
   }
 
   protected setCacheStore(cacheStore: any) {

@@ -96,7 +96,7 @@ class Repository {
         return new this.model(values, options);
     }
     defaultThrow() {
-        throw new common_1.HttpException(`${new this.model().constructor.name} data not Found`, 400);
+        throw new common_1.HttpException(`${new this.model().constructor.name} data not Found`, 404);
     }
     setCacheStore(cacheStore) {
         this.cacheStore = cacheStore;
