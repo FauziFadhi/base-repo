@@ -2,7 +2,7 @@ import { HttpException } from '@nestjs/common';
 import CacheUtility from 'cache-utilty';
 import { DateUtility } from 'date-utility';
 import { circularToJSON, textToSnakeCase } from 'helpers';
-import { pickBy } from 'lodash';
+import { isEmpty, isUndefined, omitBy } from 'lodash';
 import { RepositoryModule } from 'repository.module';
 import { Model, Sequelize } from 'sequelize-typescript';
 import {
@@ -68,7 +68,7 @@ export abstract class Repository<T extends Model<T>> {
     })
   }
 
-  protected abstract async invalidateCache(model: T)
+  protected abstract invalidateCache(model: T)
 
   protected setKeyMultiAttribute(key: any) {
     const keyOpts = CacheUtility.setQueryOptions(key)
@@ -85,7 +85,7 @@ export abstract class Repository<T extends Model<T>> {
   }
 
   protected defaultThrow() {
-    throw new HttpException(`${new this.model().constructor.name} data not Found`, 400)
+    throw new HttpException(`${new this.model().constructor.name} data not Found`, 404)
   }
 
   protected setCacheStore(cacheStore: any) {
@@ -166,22 +166,22 @@ export abstract class Repository<T extends Model<T>> {
 
   async paginate(options: FindAndCountOptions & { includeDeleted?: boolean }): Promise<{ rows: T[]; count: number }> {
     options.includeDeleted = options.includeDeleted || false
-    options.where = {
-      ...pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }),
-      ...options.where
-    }
+    options.where = omitBy({
+      isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined,
+      ...options.where,
+    }, isUndefined)
 
-    return await this.model.findAndCountAll({ ...options, order: options?.order || [[this.model.primaryKeyAttribute, 'asc']] })
+    return await this.model.findAndCountAll({ ...options, order: !isEmpty(options?.order) && options?.order || [[this.model?.primaryKeyAttribute, 'asc']] })
   }
 
   async list(options: FindOptions & { includeDeleted?: boolean }): Promise<T[]> {
     options.includeDeleted = options.includeDeleted || false
-    options.where = {
-      ...pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }),
-      ...options.where
-    }
+    options.where = omitBy({
+      isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined,
+      ...options.where,
+    }, isUndefined)
 
-    return await this.model.findAll({ ...options, order: options?.order || [[this.model.primaryKeyAttribute, 'asc']] })
+    return await this.model.findAll({ ...options, order: !isEmpty(options?.order) && options?.order || [[this.model?.primaryKeyAttribute, 'asc']] })
   }
 
   /**
@@ -379,19 +379,19 @@ export abstract class Repository<T extends Model<T>> {
   }
 
   async bulkUpdate(values: object, options: UpdateOptions, transaction?: Transaction): Promise<[number, T[]]> {
-    return await this.model.update(values, { ...options, transaction, individualHooks: true })
+    return await this.model.update(values, { ...options, transaction: options?.transaction || transaction, individualHooks: true })
   }
 
   async bulkCreate(values: object[], options?: BulkCreateOptions, transaction?: Transaction): Promise<T[]> {
-    return await this.model.bulkCreate(values, { ...options, transaction })
+    return await this.model.bulkCreate(values, { ...options, transaction: options?.transaction || transaction })
   }
 
   async findOrCreate(options: FindOrCreateOptions, transaction: Transaction): Promise<[T, boolean]> {
-    return await this.model.findOrCreate({ ...options, transaction })
+    return await this.model.findOrCreate({ ...options, transaction: options?.transaction || transaction })
   }
 
   async findOrBuild(options: FindOrCreateOptions, transaction?: Transaction): Promise<[T, boolean]> {
-    return await this.model.findOrBuild({ ...options, transaction })
+    return await this.model.findOrBuild({ ...options, transaction: options?.transaction || transaction })
   }
 
   async count(options: CountOptions): Promise<number> {

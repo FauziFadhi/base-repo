@@ -96,7 +96,7 @@ class Repository {
         return new this.model(values, options);
     }
     defaultThrow() {
-        throw new common_1.HttpException(`${new this.model().constructor.name} data not Found`, 400);
+        throw new common_1.HttpException(`${new this.model().constructor.name} data not Found`, 404);
     }
     setCacheStore(cacheStore) {
         this.cacheStore = cacheStore;
@@ -162,14 +162,16 @@ class Repository {
         cache_utilty_1.default.invalidate(key, this.getCacheStore());
     }
     async paginate(options) {
+        var _a;
         options.includeDeleted = options.includeDeleted || false;
-        options.where = Object.assign(Object.assign({}, lodash_1.pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined })), options.where);
-        return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
+        options.where = lodash_1.omitBy(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
+        return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: !lodash_1.isEmpty(options === null || options === void 0 ? void 0 : options.order) && (options === null || options === void 0 ? void 0 : options.order) || [[(_a = this.model) === null || _a === void 0 ? void 0 : _a.primaryKeyAttribute, 'asc']] }));
     }
     async list(options) {
+        var _a;
         options.includeDeleted = options.includeDeleted || false;
-        options.where = Object.assign(Object.assign({}, lodash_1.pickBy({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined })), options.where);
-        return await this.model.findAll(Object.assign(Object.assign({}, options), { order: (options === null || options === void 0 ? void 0 : options.order) || [[this.model.primaryKeyAttribute, 'asc']] }));
+        options.where = lodash_1.omitBy(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
+        return await this.model.findAll(Object.assign(Object.assign({}, options), { order: !lodash_1.isEmpty(options === null || options === void 0 ? void 0 : options.order) && (options === null || options === void 0 ? void 0 : options.order) || [[(_a = this.model) === null || _a === void 0 ? void 0 : _a.primaryKeyAttribute, 'asc']] }));
     }
     async listCache(option = {}) {
         const _a = Object.assign(Object.assign({}, new ListGetOptionsCache()), option), { ttl, includeDeleted } = _a, options = __rest(_a, ["ttl", "includeDeleted"]);
@@ -269,16 +271,16 @@ class Repository {
         return await this.model.create(values, { transaction });
     }
     async bulkUpdate(values, options, transaction) {
-        return await this.model.update(values, Object.assign(Object.assign({}, options), { transaction, individualHooks: true }));
+        return await this.model.update(values, Object.assign(Object.assign({}, options), { transaction: (options === null || options === void 0 ? void 0 : options.transaction) || transaction, individualHooks: true }));
     }
     async bulkCreate(values, options, transaction) {
-        return await this.model.bulkCreate(values, Object.assign(Object.assign({}, options), { transaction }));
+        return await this.model.bulkCreate(values, Object.assign(Object.assign({}, options), { transaction: (options === null || options === void 0 ? void 0 : options.transaction) || transaction }));
     }
     async findOrCreate(options, transaction) {
-        return await this.model.findOrCreate(Object.assign(Object.assign({}, options), { transaction }));
+        return await this.model.findOrCreate(Object.assign(Object.assign({}, options), { transaction: (options === null || options === void 0 ? void 0 : options.transaction) || transaction }));
     }
     async findOrBuild(options, transaction) {
-        return await this.model.findOrBuild(Object.assign(Object.assign({}, options), { transaction }));
+        return await this.model.findOrBuild(Object.assign(Object.assign({}, options), { transaction: (options === null || options === void 0 ? void 0 : options.transaction) || transaction }));
     }
     async count(options) {
         return await this.model.count(options);

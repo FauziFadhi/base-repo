@@ -161,10 +161,785 @@
         "signature": "d2f31f19e1ba6ed59be9259d660a239d9a3fcbbc8e038c6b2009bde34b175fed",
         "affectsGlobalScope": false
       },
+      "../node_modules/sequelize/types/lib/data-types.d.ts": {
+        "version": "90f0eb36d6cca7e856726c478d061c40c869d184012e2912098269ffc904417f",
+        "signature": "90f0eb36d6cca7e856726c478d061c40c869d184012e2912098269ffc904417f",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/deferrable.d.ts": {
+        "version": "c0f575e9f7005738c3470854fa23817120457d870b1a58eadb3b3212d38aaa80",
+        "signature": "c0f575e9f7005738c3470854fa23817120457d870b1a58eadb3b3212d38aaa80",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/operators.d.ts": {
+        "version": "f64a696104d96d1bbf022949dd6276504ea98b1dd470ec12eddf9042e7e93855",
+        "signature": "f64a696104d96d1bbf022949dd6276504ea98b1dd470ec12eddf9042e7e93855",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/query-types.d.ts": {
+        "version": "0c098f6d249616469e6d9e2c584145c8e9299297b472d77ca348d293fe3ffd80",
+        "signature": "0c098f6d249616469e6d9e2c584145c8e9299297b472d77ca348d293fe3ffd80",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/table-hints.d.ts": {
+        "version": "fd7d0017b5f33a8a58e07d0c15a93387250ae1d627170ecec68f0a93960cc02b",
+        "signature": "fd7d0017b5f33a8a58e07d0c15a93387250ae1d627170ecec68f0a93960cc02b",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/index-hints.d.ts": {
+        "version": "334236475f89849f4373639c9053809ec3ee48f20f859f96e3cd3f0eff770921",
+        "signature": "334236475f89849f4373639c9053809ec3ee48f20f859f96e3cd3f0eff770921",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/associations/base.d.ts": {
+        "version": "63751196a413d53618aa3819ee39c957a4bd0c8b0b0cadf5201ae85c8c02ded3",
+        "signature": "63751196a413d53618aa3819ee39c957a4bd0c8b0b0cadf5201ae85c8c02ded3",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/associations/belongs-to.d.ts": {
+        "version": "9d00ccc37aa1dc7da29e5e2009c33db6177e3551f481be4687e512d5916a4664",
+        "signature": "9d00ccc37aa1dc7da29e5e2009c33db6177e3551f481be4687e512d5916a4664",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/associations/has-one.d.ts": {
+        "version": "9cd5e6b023e25421d14e8f0fde49b258f0db5e89c48cc71d0524ff1a06d5da39",
+        "signature": "9cd5e6b023e25421d14e8f0fde49b258f0db5e89c48cc71d0524ff1a06d5da39",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/associations/has-many.d.ts": {
+        "version": "fee714d79d176aa62bdc016aa0bcf00c6d1a6d1f0a3933076def39d3031b1c5a",
+        "signature": "fee714d79d176aa62bdc016aa0bcf00c6d1a6d1f0a3933076def39d3031b1c5a",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/associations/belongs-to-many.d.ts": {
+        "version": "e7ee4c14d55c72f3f96db22196670b47e863fae9d9fc071f71f513ba84039bbc",
+        "signature": "e7ee4c14d55c72f3f96db22196670b47e863fae9d9fc071f71f513ba84039bbc",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/associations/index.d.ts": {
+        "version": "47d01ed73d26a694589ea1e020f8edf31cb0640d82096203672bb603d82e7166",
+        "signature": "47d01ed73d26a694589ea1e020f8edf31cb0640d82096203672bb603d82e7166",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/instance-validator.d.ts": {
+        "version": "2501f0aaf3650774a9f7bf18340d2a04cbdc013c4ebac4572666c214411c4196",
+        "signature": "2501f0aaf3650774a9f7bf18340d2a04cbdc013c4ebac4572666c214411c4196",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/model-manager.d.ts": {
+        "version": "8945026bbc531fd9e4cb3b3ab9ae3931ee988b8b08609b9884512b4b8ea54350",
+        "signature": "8945026bbc531fd9e4cb3b3ab9ae3931ee988b8b08609b9884512b4b8ea54350",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/transaction.d.ts": {
+        "version": "d7ecf0a9c702347d1994dea6d682df8695b9c0c43d3b37ce06208ec50ed3fb5f",
+        "signature": "d7ecf0a9c702347d1994dea6d682df8695b9c0c43d3b37ce06208ec50ed3fb5f",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/type-helpers/set-required.d.ts": {
+        "version": "4b2007ffacc248d92dcee289b18043050de29f979cd1e11c9fef97c0a8ea287d",
+        "signature": "4b2007ffacc248d92dcee289b18043050de29f979cd1e11c9fef97c0a8ea287d",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/query-interface.d.ts": {
+        "version": "79a954dd11f8dcb561eb6cbb85438bb56b45c8ce9ef0ea854b9870a6d4231d21",
+        "signature": "79a954dd11f8dcb561eb6cbb85438bb56b45c8ce9ef0ea854b9870a6d4231d21",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/connection-manager.d.ts": {
+        "version": "c5c489ade4246228fe543cb09ae9b834b7e415f4e6497e03c5bdbfa338a00bd5",
+        "signature": "c5c489ade4246228fe543cb09ae9b834b7e415f4e6497e03c5bdbfa338a00bd5",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/sequelize.d.ts": {
+        "version": "7244aca07e0aa01e3de42a0af338c03046d251ca160993acce49d06bebe321ba",
+        "signature": "7244aca07e0aa01e3de42a0af338c03046d251ca160993acce49d06bebe321ba",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/hooks.d.ts": {
+        "version": "939e79ac806c30a353a8e4f235153b8cfd3b48bf8a1e6a3c504abfb24b627ebe",
+        "signature": "939e79ac806c30a353a8e4f235153b8cfd3b48bf8a1e6a3c504abfb24b627ebe",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/model.d.ts": {
+        "version": "2603cfa5719b807dafd1b9534462ebf72424a75337664576714e127a0dd81c7c",
+        "signature": "2603cfa5719b807dafd1b9534462ebf72424a75337664576714e127a0dd81c7c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/utils.d.ts": {
+        "version": "386cfe0ea446603f5f25ece294b0575a5d2a72c1b87d834426e552e8b73de0c8",
+        "signature": "386cfe0ea446603f5f25ece294b0575a5d2a72c1b87d834426e552e8b73de0c8",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/errors.d.ts": {
+        "version": "586de92120969ae9bf47a848d8d72a726559a3c5295ab4cfd886405e73eb9859",
+        "signature": "586de92120969ae9bf47a848d8d72a726559a3c5295ab4cfd886405e73eb9859",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/validator/index.d.ts": {
+        "version": "d51dd1eeec95fbe192e6dfeee8f982b3d6115a0ff6059cafc879330d94367fb0",
+        "signature": "d51dd1eeec95fbe192e6dfeee8f982b3d6115a0ff6059cafc879330d94367fb0",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/lib/utils/validator-extras.d.ts": {
+        "version": "3b9e650cf228a1d63f90e018be93b4e77e2250c563006559a77a617a3d5bae2e",
+        "signature": "3b9e650cf228a1d63f90e018be93b4e77e2250c563006559a77a617a3d5bae2e",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize/types/index.d.ts": {
+        "version": "d24299347fbdeb89097ebaa5acd9ead460c6a9228778fdb50cfdf4f592af4258",
+        "signature": "d24299347fbdeb89097ebaa5acd9ead460c6a9228778fdb50cfdf4f592af4258",
+        "affectsGlobalScope": false
+      },
+      "../src/cache-utilty.ts": {
+        "version": "a762d6715707b87adfff3420ad4201b530972cf2af56019f425ec4c766e4fcd3",
+        "signature": "8d4db7b0a43fdcb2b06c5453e38af7a1a09c69f6a76b063ce8f6c4ef258cb130",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/model/association/association-get-options.d.ts": {
+        "version": "8e2dd4721ff5a28ab131d49d15f97883ec6d19f6d1d2566ad05d3ecb6131fc92",
+        "signature": "8e2dd4721ff5a28ab131d49d15f97883ec6d19f6d1d2566ad05d3ecb6131fc92",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/model/association/association-count-options.d.ts": {
+        "version": "631e45a2165666f67b592180e0946861e6c955fad042d09843c69c0806ff96e9",
+        "signature": "631e45a2165666f67b592180e0946861e6c955fad042d09843c69c0806ff96e9",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/model/association/association-action-options.d.ts": {
+        "version": "08eeedef29a6e4401989a1b306f391a18414b2e8599d49d9ac8022629e60dfda",
+        "signature": "08eeedef29a6e4401989a1b306f391a18414b2e8599d49d9ac8022629e60dfda",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/model/association/association-create-options.d.ts": {
+        "version": "cc1a4477b7b72f29007226564719271b325a3008883cb3a676a89490ddb7a479",
+        "signature": "cc1a4477b7b72f29007226564719271b325a3008883cb3a676a89490ddb7a479",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/shared/types.d.ts": {
+        "version": "bde06478ff53d600e9c12c0e4ee2b4fbbd32219a9dc8f3bc50fd5cfd297c5b93",
+        "signature": "bde06478ff53d600e9c12c0e4ee2b4fbbd32219a9dc8f3bc50fd5cfd297c5b93",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/sequelize/repository/repository.d.ts": {
+        "version": "caeef3bbfe6942c66ba09e35d63a8770178cac92b91ae3088515638ff7367498",
+        "signature": "caeef3bbfe6942c66ba09e35d63a8770178cac92b91ae3088515638ff7367498",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/model/model.d.ts": {
+        "version": "6424ff938815d442c7eaa5252dbeca5883c9862c2b4be90643b5670f1c30b31d",
+        "signature": "6424ff938815d442c7eaa5252dbeca5883c9862c2b4be90643b5670f1c30b31d",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/shared/model-class-getter.d.ts": {
+        "version": "f3359ef54f2b5d8da20b0bc4a1a82b2321eb2e76c4310afe5bf33a97682fc93c",
+        "signature": "f3359ef54f2b5d8da20b0bc4a1a82b2321eb2e76c4310afe5bf33a97682fc93c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/belongs-to/belongs-to.d.ts": {
+        "version": "e59c41ea516d178c41efdab05892ee7a2dbe543bfc5bbff81f1a6274f94e40d6",
+        "signature": "e59c41ea516d178c41efdab05892ee7a2dbe543bfc5bbff81f1a6274f94e40d6",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/shared/union-association-options.d.ts": {
+        "version": "a331a6263556bf5eca5516a8628e40e0e867c5617e9afabdd668dd9def7919ec",
+        "signature": "a331a6263556bf5eca5516a8628e40e0e867c5617e9afabdd668dd9def7919ec",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/shared/association.d.ts": {
+        "version": "1394912ef3f2355f73fd037d59e7f7ff5ba6e20f4de3e315362c47965dd44cc2",
+        "signature": "1394912ef3f2355f73fd037d59e7f7ff5ba6e20f4de3e315362c47965dd44cc2",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/sequelize/sequelize/sequelize-options.d.ts": {
+        "version": "f62d29224182978f4477bd630a9ebe49483a7c953b58d028a6b57a46e2e96125",
+        "signature": "f62d29224182978f4477bd630a9ebe49483a7c953b58d028a6b57a46e2e96125",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/sequelize/sequelize/sequelize.d.ts": {
+        "version": "5e0c414f73b38563fb3240779c20090e7702d1b913b6b21a927ac5a6a507d6d6",
+        "signature": "5e0c414f73b38563fb3240779c20090e7702d1b913b6b21a927ac5a6a507d6d6",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts": {
+        "version": "4cac0e46a956419ea15a380cad54e37a8bee79170aa5c8e4152465b31cd76efe",
+        "signature": "4cac0e46a956419ea15a380cad54e37a8bee79170aa5c8e4152465b31cd76efe",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/belongs-to/belongs-to-association.d.ts": {
+        "version": "ae5fdb7acf546c8abd6883af0d5c24dacd4edbf8411c7546765c12d03837bfaf",
+        "signature": "ae5fdb7acf546c8abd6883af0d5c24dacd4edbf8411c7546765c12d03837bfaf",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/through/through-options.d.ts": {
+        "version": "16394530a70d4e231ee6af0516be15549455bf133a52c44015317dd9ac29378d",
+        "signature": "16394530a70d4e231ee6af0516be15549455bf133a52c44015317dd9ac29378d",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/belongs-to-many/belongs-to-many-options.d.ts": {
+        "version": "33a73f71ab443b240bb51d67a596ab76d8986f1f4bdd32c03d4c85f969cba46c",
+        "signature": "33a73f71ab443b240bb51d67a596ab76d8986f1f4bdd32c03d4c85f969cba46c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/belongs-to-many/belongs-to-many.d.ts": {
+        "version": "fa85a9cf7cc81e19f41b8e81544ab2a3863522be884b54aa7f45d945fa5716d3",
+        "signature": "fa85a9cf7cc81e19f41b8e81544ab2a3863522be884b54aa7f45d945fa5716d3",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/belongs-to-many/belongs-to-many-association.d.ts": {
+        "version": "fd4c1212f8f432da77cca6870dbf2517210c3db8d7338fb94ba7e392cb513830",
+        "signature": "fd4c1212f8f432da77cca6870dbf2517210c3db8d7338fb94ba7e392cb513830",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/foreign-key/foreign-key.d.ts": {
+        "version": "3a1a02fae6a295f300bec569d67494c1af614bba5bbbc76307988e8b9351a89c",
+        "signature": "3a1a02fae6a295f300bec569d67494c1af614bba5bbbc76307988e8b9351a89c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/has/has-association.d.ts": {
+        "version": "d6e91e03a024162658601813902962f362718b463b19023d93fbb689a5e09d7c",
+        "signature": "d6e91e03a024162658601813902962f362718b463b19023d93fbb689a5e09d7c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/has/has-one.d.ts": {
+        "version": "6173fd72b62d7712391c8b9b0c90c3469bcd675bf7b017a91f991332065cf1f5",
+        "signature": "6173fd72b62d7712391c8b9b0c90c3469bcd675bf7b017a91f991332065cf1f5",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/associations/has/has-many.d.ts": {
+        "version": "29abd1e10512e578c5cab49bc2637704192f7812bc98d642226ca94a29759ed6",
+        "signature": "29abd1e10512e578c5cab49bc2637704192f7812bc98d642226ca94a29759ed6",
+        "affectsGlobalScope": false
+      },
       "../node_modules/reflect-metadata/index.d.ts": {
         "version": "8d6d51a5118d000ed3bfe6e1dd1335bebfff3fef23cd2af2f84a24d30f90cc90",
         "signature": "8d6d51a5118d000ed3bfe6e1dd1335bebfff3fef23cd2af2f84a24d30f90cc90",
         "affectsGlobalScope": true
+      },
+      "../node_modules/sequelize-typescript/dist/associations/shared/association-service.d.ts": {
+        "version": "b092019690d80bda59855789636301e6b16681420dfb4aec606a8370717dbe86",
+        "signature": "b092019690d80bda59855789636301e6b16681420dfb4aec606a8370717dbe86",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/shared/hook-options.d.ts": {
+        "version": "d60c72243b056608064b85bc16bbcc7782cd26e367908992b2a9d2601ddbbf51",
+        "signature": "d60c72243b056608064b85bc16bbcc7782cd26e367908992b2a9d2601ddbbf51",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/bulk/after/after-bulk-create.d.ts": {
+        "version": "c559ccbc8040f5d68600350cd9d869c9da72745f321f87ba3cca564cb1cf9ab2",
+        "signature": "c559ccbc8040f5d68600350cd9d869c9da72745f321f87ba3cca564cb1cf9ab2",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/bulk/after/after-bulk-destroy.d.ts": {
+        "version": "db394a0483d61c4d5c4aadb18a93af2682340889e40543e039620ee7f6c0d3f9",
+        "signature": "db394a0483d61c4d5c4aadb18a93af2682340889e40543e039620ee7f6c0d3f9",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/bulk/after/after-bulk-restore.d.ts": {
+        "version": "61fd1cd9782d52eb2f09615a9ca29f9a78389601238ad069e6996d1c87c06c90",
+        "signature": "61fd1cd9782d52eb2f09615a9ca29f9a78389601238ad069e6996d1c87c06c90",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/bulk/after/after-bulk-sync.d.ts": {
+        "version": "f112b5406f1d58075fd6c2e0bf8dbd01af2857e11892154809710455e67a4d2a",
+        "signature": "f112b5406f1d58075fd6c2e0bf8dbd01af2857e11892154809710455e67a4d2a",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/bulk/after/after-bulk-update.d.ts": {
+        "version": "da999c5d6325705481cb5791ddbf340d85d8495695ee631313d7cc051eee2654",
+        "signature": "da999c5d6325705481cb5791ddbf340d85d8495695ee631313d7cc051eee2654",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/bulk/before/before-bulk-create.d.ts": {
+        "version": "69300c6bafaa5add785aafa8197f10a2eb38b56a7e504bd407628d1a3fa9b170",
+        "signature": "69300c6bafaa5add785aafa8197f10a2eb38b56a7e504bd407628d1a3fa9b170",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/bulk/before/before-bulk-destroy.d.ts": {
+        "version": "83fa6c5e414dfeeb3619bed8e09db67a38a5e2248f168af0a4a768f6eba401af",
+        "signature": "83fa6c5e414dfeeb3619bed8e09db67a38a5e2248f168af0a4a768f6eba401af",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/bulk/before/before-bulk-restore.d.ts": {
+        "version": "471cd16c1e950f8d137a8693e41c96101f093e61caf34150a3433d5b8e5cb87f",
+        "signature": "471cd16c1e950f8d137a8693e41c96101f093e61caf34150a3433d5b8e5cb87f",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/bulk/before/before-bulk-sync.d.ts": {
+        "version": "b5b136c10b2de71a48795dd2fefc3fa8ae425e9cb147158483162dfaf1ff7799",
+        "signature": "b5b136c10b2de71a48795dd2fefc3fa8ae425e9cb147158483162dfaf1ff7799",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/bulk/before/before-bulk-update.d.ts": {
+        "version": "3009e68cea716566804d42ff2f56ebdcd7bcbc080efe7ec89737a46992085b18",
+        "signature": "3009e68cea716566804d42ff2f56ebdcd7bcbc080efe7ec89737a46992085b18",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-connect.d.ts": {
+        "version": "9e6b856f1660a2584b756228db5b5cc49d076e7e41d8a77f93543d6e0b1d2921",
+        "signature": "9e6b856f1660a2584b756228db5b5cc49d076e7e41d8a77f93543d6e0b1d2921",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-create.d.ts": {
+        "version": "ad049039b742cfecf408a909d97d53304f31952d6e1cb9455891f8400d9a296b",
+        "signature": "ad049039b742cfecf408a909d97d53304f31952d6e1cb9455891f8400d9a296b",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-define.d.ts": {
+        "version": "e3d20f1df6a739d9463b6e8a8a8b5ccdf03ec3bfa839cc1a63471895df6e0041",
+        "signature": "e3d20f1df6a739d9463b6e8a8a8b5ccdf03ec3bfa839cc1a63471895df6e0041",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-destroy.d.ts": {
+        "version": "a8531388539742511395837eea1d0d18c7dd39e1ff8ae9fdd368bcdd38ce5658",
+        "signature": "a8531388539742511395837eea1d0d18c7dd39e1ff8ae9fdd368bcdd38ce5658",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-find.d.ts": {
+        "version": "a1304e98d5a622e6c1b22fd3f9e62ec4ecbfb818e76c8094441a4d29d09e1f0b",
+        "signature": "a1304e98d5a622e6c1b22fd3f9e62ec4ecbfb818e76c8094441a4d29d09e1f0b",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-init.d.ts": {
+        "version": "c2ab91b573f4ec8ffb0f5b4afe5281cbbf8e7d6efb2d553b17d94a14c36ea9a3",
+        "signature": "c2ab91b573f4ec8ffb0f5b4afe5281cbbf8e7d6efb2d553b17d94a14c36ea9a3",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-restore.d.ts": {
+        "version": "243ad1119f0dcf12a169d2ca766c07d026ae7f9b5db8f147ca28c8d171b2839f",
+        "signature": "243ad1119f0dcf12a169d2ca766c07d026ae7f9b5db8f147ca28c8d171b2839f",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-save.d.ts": {
+        "version": "09ea0e3167bda9b8c9f43d446cb2ca7f7ac7fc15de74500edea812192bbd6670",
+        "signature": "09ea0e3167bda9b8c9f43d446cb2ca7f7ac7fc15de74500edea812192bbd6670",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-sync.d.ts": {
+        "version": "27a2c4e2e505224041f34ccc74ee1f5211c70d297368d1c4b059602861b91b4c",
+        "signature": "27a2c4e2e505224041f34ccc74ee1f5211c70d297368d1c4b059602861b91b4c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-update.d.ts": {
+        "version": "c12da034ad66a5f42ef736f033620f863437ae5c974700c905ad287effa7b49f",
+        "signature": "c12da034ad66a5f42ef736f033620f863437ae5c974700c905ad287effa7b49f",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-upsert.d.ts": {
+        "version": "b1f6d86dad758f800b2016c76d4cc67f947797f6b1306f918aeb427553adeea9",
+        "signature": "b1f6d86dad758f800b2016c76d4cc67f947797f6b1306f918aeb427553adeea9",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-validate.d.ts": {
+        "version": "7fbabb1ac1552a8edf00c488296cd0ab494016760d4dcfc1fc2c06b40104bac9",
+        "signature": "7fbabb1ac1552a8edf00c488296cd0ab494016760d4dcfc1fc2c06b40104bac9",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-connect.d.ts": {
+        "version": "675da3e8eaf3866a24072724fdd85d19bd705a2a7927bd1c35657e732caaaf09",
+        "signature": "675da3e8eaf3866a24072724fdd85d19bd705a2a7927bd1c35657e732caaaf09",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-count.d.ts": {
+        "version": "c9be97b6c3204d68f289ee6dee3c6e941cf44100b4ce6d94fc8fc7722a045395",
+        "signature": "c9be97b6c3204d68f289ee6dee3c6e941cf44100b4ce6d94fc8fc7722a045395",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-create.d.ts": {
+        "version": "bb66810e650a276ff0ab3aca00e63eea0655b5015fec523632c3aa2f81c860e1",
+        "signature": "bb66810e650a276ff0ab3aca00e63eea0655b5015fec523632c3aa2f81c860e1",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-define.d.ts": {
+        "version": "d65e3924fb2d1e734c3d23fa4d600bb8e47f4ae762ba4d034cdfa95984b1f759",
+        "signature": "d65e3924fb2d1e734c3d23fa4d600bb8e47f4ae762ba4d034cdfa95984b1f759",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-destroy.d.ts": {
+        "version": "f82d804b727ae7c7b93df0ce499b08bdf08ad168e9122cdd21b92e118b2293f4",
+        "signature": "f82d804b727ae7c7b93df0ce499b08bdf08ad168e9122cdd21b92e118b2293f4",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-find.d.ts": {
+        "version": "9459556b9e1325ee67249e07f9902de3e56d4fe76b29d38c6f7b3e9fe089d6a9",
+        "signature": "9459556b9e1325ee67249e07f9902de3e56d4fe76b29d38c6f7b3e9fe089d6a9",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-find-after-expand-include-all.d.ts": {
+        "version": "b13406ee925edaf0185f925110a3f30edfc2697abfdd7ab74e39b36800a5cb77",
+        "signature": "b13406ee925edaf0185f925110a3f30edfc2697abfdd7ab74e39b36800a5cb77",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-find-after-options.d.ts": {
+        "version": "e733f2a51341a95fadcd4c2165970dd14057952d35a5de5c3cbc6cba69462c49",
+        "signature": "e733f2a51341a95fadcd4c2165970dd14057952d35a5de5c3cbc6cba69462c49",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-init.d.ts": {
+        "version": "428c103e78dc7ab193bc57295029d079711c1ffd0da3f6e3c6a9644e920e704b",
+        "signature": "428c103e78dc7ab193bc57295029d079711c1ffd0da3f6e3c6a9644e920e704b",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-restore.d.ts": {
+        "version": "f8c83fc5290606232eb5d759c83cd726bfcac926a46074a348a388c812bda700",
+        "signature": "f8c83fc5290606232eb5d759c83cd726bfcac926a46074a348a388c812bda700",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-save.d.ts": {
+        "version": "32467e9ee760584105881baeb5792f3774f4d6431e56d01948955516358bb8f1",
+        "signature": "32467e9ee760584105881baeb5792f3774f4d6431e56d01948955516358bb8f1",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-sync.d.ts": {
+        "version": "3950c2bee49ac606917608a1dcad07fea8f938fd8a19c378aa995db3b3951563",
+        "signature": "3950c2bee49ac606917608a1dcad07fea8f938fd8a19c378aa995db3b3951563",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-update.d.ts": {
+        "version": "1002554967804daf518a61508f2c8fd0eaf15ca2971ff87829b78e1ad5c3eac8",
+        "signature": "1002554967804daf518a61508f2c8fd0eaf15ca2971ff87829b78e1ad5c3eac8",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-upsert.d.ts": {
+        "version": "f651c9fbc4c36143c5d082336233aa435ac6d9e592173020e6daa3e66f0bb3ac",
+        "signature": "f651c9fbc4c36143c5d082336233aa435ac6d9e592173020e6daa3e66f0bb3ac",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-validate.d.ts": {
+        "version": "fbf401f1b10035834078b1fb9e9265be67d19f792b939242653588272e502bd1",
+        "signature": "fbf401f1b10035834078b1fb9e9265be67d19f792b939242653588272e502bd1",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/shared/hook-meta.d.ts": {
+        "version": "82660a844edd2510046459d58d12950083dd65c115632e7e6bedb6a7fb8ae0c4",
+        "signature": "82660a844edd2510046459d58d12950083dd65c115632e7e6bedb6a7fb8ae0c4",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/shared/hooks-service.d.ts": {
+        "version": "f6f4d770b121d749f4e2427de7062769ba50742e2fede61c0abecd980af9b0b8",
+        "signature": "f6f4d770b121d749f4e2427de7062769ba50742e2fede61c0abecd980af9b0b8",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/hooks/shared/validation-failed.d.ts": {
+        "version": "184bb87d099eaec0c000e6223a5bee74ae9c043af30dc256975402c925fd2920",
+        "signature": "184bb87d099eaec0c000e6223a5bee74ae9c043af30dc256975402c925fd2920",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/column/column-options/allow-null.d.ts": {
+        "version": "03bf75a64f5863530593bddae9b3399944ea5900f9a02959eac08d38bc54f079",
+        "signature": "03bf75a64f5863530593bddae9b3399944ea5900f9a02959eac08d38bc54f079",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/column/column-options/comment.d.ts": {
+        "version": "8563c7298a9eb9f5ac5bdafc361bdeade9f6a1082a9a774ce97876c6ea613eb4",
+        "signature": "8563c7298a9eb9f5ac5bdafc361bdeade9f6a1082a9a774ce97876c6ea613eb4",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/column/column-options/default.d.ts": {
+        "version": "d6eb3d0af3c9390cf7d701a83f8cce269757da436529d7dc34028d67a2cb8a9d",
+        "signature": "d6eb3d0af3c9390cf7d701a83f8cce269757da436529d7dc34028d67a2cb8a9d",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/column/column-options/unique.d.ts": {
+        "version": "3170ad02d82944b74342cec2d370f9ab5e2f4ae4b0124cb45a6174489fccdeb1",
+        "signature": "3170ad02d82944b74342cec2d370f9ab5e2f4ae4b0124cb45a6174489fccdeb1",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/column/primary-key/auto-increment.d.ts": {
+        "version": "942523f920e5a83c45ff32fa0294d7921309f5d7a52081c271183f70301729e6",
+        "signature": "942523f920e5a83c45ff32fa0294d7921309f5d7a52081c271183f70301729e6",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/column/primary-key/primary-key.d.ts": {
+        "version": "6c17e64627b476dcb03ccabdb0322f22c0f536e72f9f72b9c13847b6abfceea9",
+        "signature": "6c17e64627b476dcb03ccabdb0322f22c0f536e72f9f72b9c13847b6abfceea9",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/column/timestamps/created-at.d.ts": {
+        "version": "c6f6550d9e0fc184cbea82c74dc812be0fc3248346446077021ffbbef93e0723",
+        "signature": "c6f6550d9e0fc184cbea82c74dc812be0fc3248346446077021ffbbef93e0723",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/column/timestamps/deleted-at.d.ts": {
+        "version": "aaab817ea7aae249c25d44ae66c5b0ccb9ec7bd9a911c0baa8061f7539a894f8",
+        "signature": "aaab817ea7aae249c25d44ae66c5b0ccb9ec7bd9a911c0baa8061f7539a894f8",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/column/timestamps/updated-at.d.ts": {
+        "version": "5daf607cead28ea8a2da8e67d72525f524e3a225d24763dbfae9be5f40383f72",
+        "signature": "5daf607cead28ea8a2da8e67d72525f524e3a225d24763dbfae9be5f40383f72",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/column/attribute-service.d.ts": {
+        "version": "d94997ffaa221aefb43edac9dad5c0b9a3628baaa7ce2bda769592adf49a1f6c",
+        "signature": "d94997ffaa221aefb43edac9dad5c0b9a3628baaa7ce2bda769592adf49a1f6c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/column/column.d.ts": {
+        "version": "96b6b6f78abb6edffd020e84466e53cd5646181350546b3a1a27e4d5c8bc2e49",
+        "signature": "96b6b6f78abb6edffd020e84466e53cd5646181350546b3a1a27e4d5c8bc2e49",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/shared/model-service.d.ts": {
+        "version": "aa80014bf1e34657a26496f2245202aada7a5aa50ef6fe837d98e6119be0c8f7",
+        "signature": "aa80014bf1e34657a26496f2245202aada7a5aa50ef6fe837d98e6119be0c8f7",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/table/table-options.d.ts": {
+        "version": "b19d301bf10608946074da00284771ed404e5f0fef8109585ce63fa715d46538",
+        "signature": "b19d301bf10608946074da00284771ed404e5f0fef8109585ce63fa715d46538",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/table/table.d.ts": {
+        "version": "54b7ae6bb6f706e0b05c1200cca0061a62c3e6596a0aabfb29cee4ac53b7468c",
+        "signature": "54b7ae6bb6f706e0b05c1200cca0061a62c3e6596a0aabfb29cee4ac53b7468c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/index/index-service.d.ts": {
+        "version": "61b3940bd4e8e57d71f08a7e6ae42247ac7a529027735c81acb9423e27d25f38",
+        "signature": "61b3940bd4e8e57d71f08a7e6ae42247ac7a529027735c81acb9423e27d25f38",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/index/create-index-decorator.d.ts": {
+        "version": "d5579e1b121fc866fd02a690cc5f5521ee3408e54758fab701c1809ee1a14e2c",
+        "signature": "d5579e1b121fc866fd02a690cc5f5521ee3408e54758fab701c1809ee1a14e2c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/model/index/index-decorator.d.ts": {
+        "version": "71575c1dcfc28c66d04ce052fab12e29ffc7fc2ee2600b321166cb5f521db1c2",
+        "signature": "71575c1dcfc28c66d04ce052fab12e29ffc7fc2ee2600b321166cb5f521db1c2",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/scopes/scope-find-options.d.ts": {
+        "version": "cd0019ed23385e7dec7f97355cc2f1378996b1cb38bad5da5c0eaa210daad228",
+        "signature": "cd0019ed23385e7dec7f97355cc2f1378996b1cb38bad5da5c0eaa210daad228",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/scopes/scope-table-options.d.ts": {
+        "version": "fc67bf6ac6fe3b26bb369ec95c616acc682b5db43bdafda733e570641ecaf084",
+        "signature": "fc67bf6ac6fe3b26bb369ec95c616acc682b5db43bdafda733e570641ecaf084",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/scopes/scope-options.d.ts": {
+        "version": "5d3cd8f6566bb35f9d9164ed19942d17012f4bb6f575e20ffdd3ebd328680c13",
+        "signature": "5d3cd8f6566bb35f9d9164ed19942d17012f4bb6f575e20ffdd3ebd328680c13",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/scopes/default-scope.d.ts": {
+        "version": "5ea0440d228f4ccbb7db8e5417b205dece2560fe0651b0e4215e3107aadd233e",
+        "signature": "5ea0440d228f4ccbb7db8e5417b205dece2560fe0651b0e4215e3107aadd233e",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/scopes/scope-service.d.ts": {
+        "version": "aab1cecd632545735b411b46988f5119828b1b9b62e9bc84af13dd2b611abf4e",
+        "signature": "aab1cecd632545735b411b46988f5119828b1b9b62e9bc84af13dd2b611abf4e",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/scopes/scopes.d.ts": {
+        "version": "103488e4f3d755e6cad0de9e9fd6fd54092bc72aa12c43bd8b2814c0f9ae3322",
+        "signature": "103488e4f3d755e6cad0de9e9fd6fd54092bc72aa12c43bd8b2814c0f9ae3322",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/sequelize/data-type/data-type.d.ts": {
+        "version": "f9e7ea6d5324204ea13dc554ccbfb0df7dbed531e8c23822c3966a441658afa6",
+        "signature": "f9e7ea6d5324204ea13dc554ccbfb0df7dbed531e8c23822c3966a441658afa6",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/sequelize/data-type/data-type-service.d.ts": {
+        "version": "3c206112006940848c84dd69894036115a944d1628cc90ee5a22bcf17fd7bc96",
+        "signature": "3c206112006940848c84dd69894036115a944d1628cc90ee5a22bcf17fd7bc96",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/sequelize/validation-only/db-dialect-dummy.d.ts": {
+        "version": "3aa41c401a49d65d38ba77755be9aabff66bacb2c5fd7f58001bc5af47f9b4b3",
+        "signature": "3aa41c401a49d65d38ba77755be9aabff66bacb2c5fd7f58001bc5af47f9b4b3",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/sequelize/sequelize/sequelize-service.d.ts": {
+        "version": "38e2092aa37897aeb0481a97b3a167f8e41ffe530dd276a9e9d0798b43f596c4",
+        "signature": "38e2092aa37897aeb0481a97b3a167f8e41ffe530dd276a9e9d0798b43f596c4",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/contains.d.ts": {
+        "version": "8613c8ca02e06f075a238574a25e3e1ceced8b893e7f4d6b47b690d82cad949b",
+        "signature": "8613c8ca02e06f075a238574a25e3e1ceced8b893e7f4d6b47b690d82cad949b",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/equals.d.ts": {
+        "version": "4d36d37ff5adce5b79b4a123c6828addc97ce9c86578e04fe45ef4c3ce8e7cd6",
+        "signature": "4d36d37ff5adce5b79b4a123c6828addc97ce9c86578e04fe45ef4c3ce8e7cd6",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is.d.ts": {
+        "version": "18db7de69084ee35368c07a74f3996e4bdc037effeea7c3ed2defa250dfcdfe2",
+        "signature": "18db7de69084ee35368c07a74f3996e4bdc037effeea7c3ed2defa250dfcdfe2",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-after.d.ts": {
+        "version": "2f37bd66d7ecce73771f8ca960c7a6ae003a4d0309c1644743df468fc2a0bb27",
+        "signature": "2f37bd66d7ecce73771f8ca960c7a6ae003a4d0309c1644743df468fc2a0bb27",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-alpha.d.ts": {
+        "version": "ccab85cc166fe76387031187c8ed7ce156975ec9bfcfdcbde25dc18cdc671ccc",
+        "signature": "ccab85cc166fe76387031187c8ed7ce156975ec9bfcfdcbde25dc18cdc671ccc",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-alphanumeric.d.ts": {
+        "version": "6f6ebdc7f03dcc8996373b3ca0927672dccd72af9e1623a9c9114b961fb26e86",
+        "signature": "6f6ebdc7f03dcc8996373b3ca0927672dccd72af9e1623a9c9114b961fb26e86",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-before.d.ts": {
+        "version": "b03f863a5b9670514f99b6bbf36895d7102caab9ab72d3b8778fc3429937704a",
+        "signature": "b03f863a5b9670514f99b6bbf36895d7102caab9ab72d3b8778fc3429937704a",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-credit-card.d.ts": {
+        "version": "3c44b0d212075d939fff25e6c97b04436a55252899d1247f29686a8133270a59",
+        "signature": "3c44b0d212075d939fff25e6c97b04436a55252899d1247f29686a8133270a59",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-date.d.ts": {
+        "version": "e6eb8c2dfabc1713abb667bd65603a3888d46320d3874c117b4c24a16a29dfc5",
+        "signature": "e6eb8c2dfabc1713abb667bd65603a3888d46320d3874c117b4c24a16a29dfc5",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-decimal.d.ts": {
+        "version": "f7ec29c1118f3e6422a13113a705f52e2491a64c09bd6041e8900e218b3c58fc",
+        "signature": "f7ec29c1118f3e6422a13113a705f52e2491a64c09bd6041e8900e218b3c58fc",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-email.d.ts": {
+        "version": "13cb0e4ba5f0cf599e4eaa5528506ecfa284eef6d0f6f098517eb7cd18371d8b",
+        "signature": "13cb0e4ba5f0cf599e4eaa5528506ecfa284eef6d0f6f098517eb7cd18371d8b",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-float.d.ts": {
+        "version": "8297d59fddbbc058d92a9bf5f9215dc645feb0779a73324588b74abd8b6f5742",
+        "signature": "8297d59fddbbc058d92a9bf5f9215dc645feb0779a73324588b74abd8b6f5742",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-in.d.ts": {
+        "version": "1be595761a51c2418c7b8b86563d6636255fa35537f8ef8ac4b5bb1f22bf2fbd",
+        "signature": "1be595761a51c2418c7b8b86563d6636255fa35537f8ef8ac4b5bb1f22bf2fbd",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-int.d.ts": {
+        "version": "a1ccc596297ff097bae0f22ced15db88c5c2c1c8edf9f7db63ee8e0738089dc8",
+        "signature": "a1ccc596297ff097bae0f22ced15db88c5c2c1c8edf9f7db63ee8e0738089dc8",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-ip.d.ts": {
+        "version": "dff5c929e4fbf17a155adcd74e8b4bdfd35d1dbccad373dd406547d7c88de0be",
+        "signature": "dff5c929e4fbf17a155adcd74e8b4bdfd35d1dbccad373dd406547d7c88de0be",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-ip-v4.d.ts": {
+        "version": "8e75511a2ff565fcc0356ae0fa2a3fe33dde535acb3f052eb8acde6523c31ea7",
+        "signature": "8e75511a2ff565fcc0356ae0fa2a3fe33dde535acb3f052eb8acde6523c31ea7",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-array.d.ts": {
+        "version": "0248dcbfe1a7cf94a06c6e1ed356a06d3a31a3f8ae0b778742fcf3856395f092",
+        "signature": "0248dcbfe1a7cf94a06c6e1ed356a06d3a31a3f8ae0b778742fcf3856395f092",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-ip-v6.d.ts": {
+        "version": "6640a6448bc3de4e2dc41ce5335f64053b5b2faddb51fa12ea7b8d80e0dec244",
+        "signature": "6640a6448bc3de4e2dc41ce5335f64053b5b2faddb51fa12ea7b8d80e0dec244",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-lowercase.d.ts": {
+        "version": "b3cff05837a161fcb67896d62da40b59e5ae61fdb07239b537493d6bb930116f",
+        "signature": "b3cff05837a161fcb67896d62da40b59e5ae61fdb07239b537493d6bb930116f",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-null.d.ts": {
+        "version": "484b269d5d5d007f24d8bf97e162ac5ab944f41dce67d9f213d9a41b4e37f3c3",
+        "signature": "484b269d5d5d007f24d8bf97e162ac5ab944f41dce67d9f213d9a41b4e37f3c3",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-numeric.d.ts": {
+        "version": "a268804bceba21eb8207968af124805239cf9c165962b84be0c9486c600040b7",
+        "signature": "a268804bceba21eb8207968af124805239cf9c165962b84be0c9486c600040b7",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-uppercase.d.ts": {
+        "version": "963f15f29b61c25ea9cd4c684dce3188bca77f1b78a7d0951a15c9c581784206",
+        "signature": "963f15f29b61c25ea9cd4c684dce3188bca77f1b78a7d0951a15c9c581784206",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-url.d.ts": {
+        "version": "41493b7a4cafe332466eb3ce3441e0699f1b8dfa03360ce61e9c1df0172c05b2",
+        "signature": "41493b7a4cafe332466eb3ce3441e0699f1b8dfa03360ce61e9c1df0172c05b2",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/is-uuid.d.ts": {
+        "version": "70eab0f7b8eca9c24dfeb657c688e8c99150b9d22c79095c9301cc4b85a09128",
+        "signature": "70eab0f7b8eca9c24dfeb657c688e8c99150b9d22c79095c9301cc4b85a09128",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/length.d.ts": {
+        "version": "7ea2e0332336c942271a4f41faf52104280f59d252a231a9e18210900a0eef0c",
+        "signature": "7ea2e0332336c942271a4f41faf52104280f59d252a231a9e18210900a0eef0c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/max.d.ts": {
+        "version": "665cb1d1c0256005897dce9383d39e3666ba4e3154390759073e8f1a3cf3fd9e",
+        "signature": "665cb1d1c0256005897dce9383d39e3666ba4e3154390759073e8f1a3cf3fd9e",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/min.d.ts": {
+        "version": "e67c8d5b0bc4c1ffa1c9fd4c24f6e377ddcbc267eaa58c469721983090d9136f",
+        "signature": "e67c8d5b0bc4c1ffa1c9fd4c24f6e377ddcbc267eaa58c469721983090d9136f",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/not.d.ts": {
+        "version": "87b305d8104c5a708de8bcd1a25dda64e925deb4fa74c25c9352bc6f01760baf",
+        "signature": "87b305d8104c5a708de8bcd1a25dda64e925deb4fa74c25c9352bc6f01760baf",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/not-contains.d.ts": {
+        "version": "e5639037a16f1b0e50bb372236cfb23a61c37390ad8c854c46ffc4b83a126b8b",
+        "signature": "e5639037a16f1b0e50bb372236cfb23a61c37390ad8c854c46ffc4b83a126b8b",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/not-empty.d.ts": {
+        "version": "45abec77bf59857a6ae956d61f0f4176fd001d09d57fe7822f77a1ecc0e801cc",
+        "signature": "45abec77bf59857a6ae956d61f0f4176fd001d09d57fe7822f77a1ecc0e801cc",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/not-in.d.ts": {
+        "version": "fa33c5a5f554690923e36c5091a2e18bd0f5409925a08227b3be56211780000f",
+        "signature": "fa33c5a5f554690923e36c5091a2e18bd0f5409925a08227b3be56211780000f",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/not-null.d.ts": {
+        "version": "53333f60b5e6871ffc307afd61bde499f10d8e2d295b5aaa45cca8011a6df428",
+        "signature": "53333f60b5e6871ffc307afd61bde499f10d8e2d295b5aaa45cca8011a6df428",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/validate.d.ts": {
+        "version": "8476667d8e9c69d512e8812c0269c9173ca926f8cf88a8abaff8c885516a5ae2",
+        "signature": "8476667d8e9c69d512e8812c0269c9173ca926f8cf88a8abaff8c885516a5ae2",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/validation/validator.d.ts": {
+        "version": "ee6f02df42a5f1f332fd37d9a14dd8eff9a08330a49b9dbcd54a8c448562c33c",
+        "signature": "ee6f02df42a5f1f332fd37d9a14dd8eff9a08330a49b9dbcd54a8c448562c33c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/sequelize-typescript/dist/index.d.ts": {
+        "version": "09eec98b368e47af834c1d1ef97999506ee1ebec34e000c11dc0a1963c8a0320",
+        "signature": "09eec98b368e47af834c1d1ef97999506ee1ebec34e000c11dc0a1963c8a0320",
+        "affectsGlobalScope": false
+      },
+      "../src/base-model.ts": {
+        "version": "5e2348d2f5bdb117bc1d5f042508adc68abec065c3b75db472a2c4db82343eee",
+        "signature": "7bc06beb157c13258ba9e05c14157d7face0af04df8bb3fc058ea8c3dff27514",
+        "affectsGlobalScope": false
       },
       "../node_modules/@nestjs/common/cache/cache.constants.d.ts": {
         "version": "3346a737f29b700e7c6c2a694973ceb70a738c3ac5212ffbefac8a27048fa8d6",
@@ -1156,146 +1931,6 @@
         "signature": "ceadf8ae9b705cdfa854ab0efc44d22509e8e2a0d9ff35206bde3a954e469f07",
         "affectsGlobalScope": false
       },
-      "../node_modules/sequelize/types/lib/data-types.d.ts": {
-        "version": "90f0eb36d6cca7e856726c478d061c40c869d184012e2912098269ffc904417f",
-        "signature": "90f0eb36d6cca7e856726c478d061c40c869d184012e2912098269ffc904417f",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/deferrable.d.ts": {
-        "version": "c0f575e9f7005738c3470854fa23817120457d870b1a58eadb3b3212d38aaa80",
-        "signature": "c0f575e9f7005738c3470854fa23817120457d870b1a58eadb3b3212d38aaa80",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/operators.d.ts": {
-        "version": "f64a696104d96d1bbf022949dd6276504ea98b1dd470ec12eddf9042e7e93855",
-        "signature": "f64a696104d96d1bbf022949dd6276504ea98b1dd470ec12eddf9042e7e93855",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/query-types.d.ts": {
-        "version": "0c098f6d249616469e6d9e2c584145c8e9299297b472d77ca348d293fe3ffd80",
-        "signature": "0c098f6d249616469e6d9e2c584145c8e9299297b472d77ca348d293fe3ffd80",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/table-hints.d.ts": {
-        "version": "fd7d0017b5f33a8a58e07d0c15a93387250ae1d627170ecec68f0a93960cc02b",
-        "signature": "fd7d0017b5f33a8a58e07d0c15a93387250ae1d627170ecec68f0a93960cc02b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/index-hints.d.ts": {
-        "version": "334236475f89849f4373639c9053809ec3ee48f20f859f96e3cd3f0eff770921",
-        "signature": "334236475f89849f4373639c9053809ec3ee48f20f859f96e3cd3f0eff770921",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/associations/base.d.ts": {
-        "version": "0172ff182c1f2ae6ee5860ddfd78604dbf614479ee956fc2c2a36afa3b5cdf0e",
-        "signature": "0172ff182c1f2ae6ee5860ddfd78604dbf614479ee956fc2c2a36afa3b5cdf0e",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/bluebird/index.d.ts": {
-        "version": "1a6100f908d642fe1c74d1354b0e12ee647655b8d355159a1bb4c62ae874ccea",
-        "signature": "1a6100f908d642fe1c74d1354b0e12ee647655b8d355159a1bb4c62ae874ccea",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/promise.d.ts": {
-        "version": "862aa0da286f46c1086c70219041443734b736a95354f6093c8de69ff11ece0d",
-        "signature": "862aa0da286f46c1086c70219041443734b736a95354f6093c8de69ff11ece0d",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/associations/belongs-to.d.ts": {
-        "version": "568bb132f3579ed42352a9be5cf665cb96eb24482469c6168c9e6f4f7e55317f",
-        "signature": "568bb132f3579ed42352a9be5cf665cb96eb24482469c6168c9e6f4f7e55317f",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/associations/has-one.d.ts": {
-        "version": "440e67038df2ba260de32578f314624eeb3ec5e73df4129fcee7df4e58511440",
-        "signature": "440e67038df2ba260de32578f314624eeb3ec5e73df4129fcee7df4e58511440",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/associations/has-many.d.ts": {
-        "version": "1f9fccfe2edb2aa718114c7491b12d4c6edfc9ff4d0510d0ccdd48941d5770a0",
-        "signature": "1f9fccfe2edb2aa718114c7491b12d4c6edfc9ff4d0510d0ccdd48941d5770a0",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/instance-validator.d.ts": {
-        "version": "60acbc6cb20f43833c5fe4eb204bfe9ea5dcc4eff54c3cffbb9c8850a5c0b7cf",
-        "signature": "60acbc6cb20f43833c5fe4eb204bfe9ea5dcc4eff54c3cffbb9c8850a5c0b7cf",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/hooks.d.ts": {
-        "version": "1d5de882d78a0cb5aaa1da6b94936ea449cf5924fa47d6cded9221edba80069c",
-        "signature": "1d5de882d78a0cb5aaa1da6b94936ea449cf5924fa47d6cded9221edba80069c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/model-manager.d.ts": {
-        "version": "6b41e2c79936d58d2cc9749264df7e9f5e93866d450a89cb5d880ca4c9ff9e5e",
-        "signature": "6b41e2c79936d58d2cc9749264df7e9f5e93866d450a89cb5d880ca4c9ff9e5e",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/query-interface.d.ts": {
-        "version": "224b0a36c1f02a0a37ba98aabeca608ef212aba78abbc3d14e0cb7ec51585569",
-        "signature": "224b0a36c1f02a0a37ba98aabeca608ef212aba78abbc3d14e0cb7ec51585569",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/validator/index.d.ts": {
-        "version": "d51dd1eeec95fbe192e6dfeee8f982b3d6115a0ff6059cafc879330d94367fb0",
-        "signature": "d51dd1eeec95fbe192e6dfeee8f982b3d6115a0ff6059cafc879330d94367fb0",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/utils/validator-extras.d.ts": {
-        "version": "3b9e650cf228a1d63f90e018be93b4e77e2250c563006559a77a617a3d5bae2e",
-        "signature": "3b9e650cf228a1d63f90e018be93b4e77e2250c563006559a77a617a3d5bae2e",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/connection-manager.d.ts": {
-        "version": "a945a2e45ea5ea22941d21aa7b92dc7b587cec6a7588fd04480c9db11c964c2f",
-        "signature": "a945a2e45ea5ea22941d21aa7b92dc7b587cec6a7588fd04480c9db11c964c2f",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/sequelize.d.ts": {
-        "version": "f4782e09026ebbfdee12dd9ee2c0679ae185fdb0b5ca1299b6bb82424030d8cc",
-        "signature": "f4782e09026ebbfdee12dd9ee2c0679ae185fdb0b5ca1299b6bb82424030d8cc",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/transaction.d.ts": {
-        "version": "b1a8ab84aef9855de51d2f88ee8c0b69e4232d7c7e4756de13862faa73642c2b",
-        "signature": "b1a8ab84aef9855de51d2f88ee8c0b69e4232d7c7e4756de13862faa73642c2b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/associations/belongs-to-many.d.ts": {
-        "version": "5894d46bd482730aff62c0811ca2df714320ffae6052dffbc2f2643910983c8b",
-        "signature": "5894d46bd482730aff62c0811ca2df714320ffae6052dffbc2f2643910983c8b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/associations/index.d.ts": {
-        "version": "47d01ed73d26a694589ea1e020f8edf31cb0640d82096203672bb603d82e7166",
-        "signature": "47d01ed73d26a694589ea1e020f8edf31cb0640d82096203672bb603d82e7166",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/model.d.ts": {
-        "version": "8a7adab3c63719d6037507b0eb62d33ada279785ef5a7af7f45fcac328733163",
-        "signature": "8a7adab3c63719d6037507b0eb62d33ada279785ef5a7af7f45fcac328733163",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/utils.d.ts": {
-        "version": "70219c091b0f30dea9d812db26d249a949385cd6027a8daf237415835ebdac35",
-        "signature": "70219c091b0f30dea9d812db26d249a949385cd6027a8daf237415835ebdac35",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/lib/errors.d.ts": {
-        "version": "de5e79447d967d440ad39276ab5bd34d522573b9e1ad1b8175ca87d84144003c",
-        "signature": "de5e79447d967d440ad39276ab5bd34d522573b9e1ad1b8175ca87d84144003c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize/types/index.d.ts": {
-        "version": "47d15b6691b8989b402a0952245eafd71f49ce7940a085d776be462330a3756b",
-        "signature": "47d15b6691b8989b402a0952245eafd71f49ce7940a085d776be462330a3756b",
-        "affectsGlobalScope": false
-      },
-      "../src/cache-utilty.ts": {
-        "version": "58baec967f0571aa23a318fbe00bd5bf4e73fd8ae3d56e438b2c40998b4ee882",
-        "signature": "3b152b40dbf211cded81278f6db75b1fe40f018452dfb9e41cfe7bf96658a2bf",
-        "affectsGlobalScope": false
-      },
       "../src/date-utility.ts": {
         "version": "126f9e603ef2567bb86089113c28e8361a4edc29d205c4dae484feef88af8632",
         "signature": "e018f7a029729b0ef1396ed46e95dd3e1b45a645ecde660ba4f5f7c7bbb10141",
@@ -1371,654 +2006,19 @@
         "signature": "0714e2046df66c0e93c3330d30dbc0565b3e8cd3ee302cf99e4ede6220e5fec8",
         "affectsGlobalScope": true
       },
-      "../node_modules/sequelize-typescript/dist/model/model/association/association-get-options.d.ts": {
-        "version": "8e2dd4721ff5a28ab131d49d15f97883ec6d19f6d1d2566ad05d3ecb6131fc92",
-        "signature": "8e2dd4721ff5a28ab131d49d15f97883ec6d19f6d1d2566ad05d3ecb6131fc92",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/model/association/association-count-options.d.ts": {
-        "version": "631e45a2165666f67b592180e0946861e6c955fad042d09843c69c0806ff96e9",
-        "signature": "631e45a2165666f67b592180e0946861e6c955fad042d09843c69c0806ff96e9",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/model/association/association-action-options.d.ts": {
-        "version": "08eeedef29a6e4401989a1b306f391a18414b2e8599d49d9ac8022629e60dfda",
-        "signature": "08eeedef29a6e4401989a1b306f391a18414b2e8599d49d9ac8022629e60dfda",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/model/association/association-create-options.d.ts": {
-        "version": "cc1a4477b7b72f29007226564719271b325a3008883cb3a676a89490ddb7a479",
-        "signature": "cc1a4477b7b72f29007226564719271b325a3008883cb3a676a89490ddb7a479",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/model/model.d.ts": {
-        "version": "60e23e608b09c134471d21edb85e208c1cb9e739eea73779d4828a82a908fde8",
-        "signature": "60e23e608b09c134471d21edb85e208c1cb9e739eea73779d4828a82a908fde8",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/shared/model-class-getter.d.ts": {
-        "version": "fa672fd644dc19265cc4f457bc038749411f2de638fcba40f63de3e89bc46a2b",
-        "signature": "fa672fd644dc19265cc4f457bc038749411f2de638fcba40f63de3e89bc46a2b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/belongs-to/belongs-to.d.ts": {
-        "version": "a40ccf97e002947a57c829f83336f15a8df45bc4f6a31c5b8dd3fb115b4389b0",
-        "signature": "a40ccf97e002947a57c829f83336f15a8df45bc4f6a31c5b8dd3fb115b4389b0",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/shared/union-association-options.d.ts": {
-        "version": "a331a6263556bf5eca5516a8628e40e0e867c5617e9afabdd668dd9def7919ec",
-        "signature": "a331a6263556bf5eca5516a8628e40e0e867c5617e9afabdd668dd9def7919ec",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/shared/association.d.ts": {
-        "version": "1394912ef3f2355f73fd037d59e7f7ff5ba6e20f4de3e315362c47965dd44cc2",
-        "signature": "1394912ef3f2355f73fd037d59e7f7ff5ba6e20f4de3e315362c47965dd44cc2",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/sequelize/sequelize/sequelize-options.d.ts": {
-        "version": "f62d29224182978f4477bd630a9ebe49483a7c953b58d028a6b57a46e2e96125",
-        "signature": "f62d29224182978f4477bd630a9ebe49483a7c953b58d028a6b57a46e2e96125",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/sequelize/sequelize/sequelize.d.ts": {
-        "version": "821799420685071aea759445359341e35d034e74a7c6a4bcefa91d137781a398",
-        "signature": "821799420685071aea759445359341e35d034e74a7c6a4bcefa91d137781a398",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts": {
-        "version": "03fcfdfafe7aff5bb4e06d71242ff9360f5294b38937cd6126b190fd71103a1b",
-        "signature": "03fcfdfafe7aff5bb4e06d71242ff9360f5294b38937cd6126b190fd71103a1b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/belongs-to/belongs-to-association.d.ts": {
-        "version": "e9a93def8eafe683cd2d35bd85bb9a4fbe6d260e5c096acda42840fb2f9e60d4",
-        "signature": "e9a93def8eafe683cd2d35bd85bb9a4fbe6d260e5c096acda42840fb2f9e60d4",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/through/through-options.d.ts": {
-        "version": "dab8a6fe9df905a6e6870fad6140658f3c7dfd9aa81cfbb50ddcaecb62137984",
-        "signature": "dab8a6fe9df905a6e6870fad6140658f3c7dfd9aa81cfbb50ddcaecb62137984",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/belongs-to-many/belongs-to-many-options.d.ts": {
-        "version": "d4d3b48466228df8b63f581e858a22b4fbbf2118800b9549a01504cae8552538",
-        "signature": "d4d3b48466228df8b63f581e858a22b4fbbf2118800b9549a01504cae8552538",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/belongs-to-many/belongs-to-many.d.ts": {
-        "version": "f5b257c22b131ef74c81ced994ee6e4c38fbc31f828bf37b4172f4ffbeebf641",
-        "signature": "f5b257c22b131ef74c81ced994ee6e4c38fbc31f828bf37b4172f4ffbeebf641",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/belongs-to-many/belongs-to-many-association.d.ts": {
-        "version": "c2d3d1521ac35d3ed5051233f254d8f90fea4e77ffd2e179fc590b0bed6459fc",
-        "signature": "c2d3d1521ac35d3ed5051233f254d8f90fea4e77ffd2e179fc590b0bed6459fc",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/foreign-key/foreign-key.d.ts": {
-        "version": "ae71e1c5b1fa9904c86ee816d6c55da370871364191abefcbce47a3c002664e1",
-        "signature": "ae71e1c5b1fa9904c86ee816d6c55da370871364191abefcbce47a3c002664e1",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/has/has-association.d.ts": {
-        "version": "0d8023b322fc4f10ee3fe6f8456a6beead2ec1fa3b413c25f275b16430993cb3",
-        "signature": "0d8023b322fc4f10ee3fe6f8456a6beead2ec1fa3b413c25f275b16430993cb3",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/has/has-one.d.ts": {
-        "version": "28f517c0a459596c7673df92020f7c1c782ac50ca1c6895e00364cd31d588f3c",
-        "signature": "28f517c0a459596c7673df92020f7c1c782ac50ca1c6895e00364cd31d588f3c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/has/has-many.d.ts": {
-        "version": "ca12965d5dfa26fb64c9eef6a098fb64c3838f08ed84852336e1cab31f811acd",
-        "signature": "ca12965d5dfa26fb64c9eef6a098fb64c3838f08ed84852336e1cab31f811acd",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/associations/shared/association-service.d.ts": {
-        "version": "ba4155dd10a19399f01334e7a738e8665da1be331e0f69c307c83fd47871cd64",
-        "signature": "ba4155dd10a19399f01334e7a738e8665da1be331e0f69c307c83fd47871cd64",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/shared/hook-options.d.ts": {
-        "version": "d60c72243b056608064b85bc16bbcc7782cd26e367908992b2a9d2601ddbbf51",
-        "signature": "d60c72243b056608064b85bc16bbcc7782cd26e367908992b2a9d2601ddbbf51",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/bulk/after/after-bulk-create.d.ts": {
-        "version": "c559ccbc8040f5d68600350cd9d869c9da72745f321f87ba3cca564cb1cf9ab2",
-        "signature": "c559ccbc8040f5d68600350cd9d869c9da72745f321f87ba3cca564cb1cf9ab2",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/bulk/after/after-bulk-destroy.d.ts": {
-        "version": "db394a0483d61c4d5c4aadb18a93af2682340889e40543e039620ee7f6c0d3f9",
-        "signature": "db394a0483d61c4d5c4aadb18a93af2682340889e40543e039620ee7f6c0d3f9",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/bulk/after/after-bulk-restore.d.ts": {
-        "version": "61fd1cd9782d52eb2f09615a9ca29f9a78389601238ad069e6996d1c87c06c90",
-        "signature": "61fd1cd9782d52eb2f09615a9ca29f9a78389601238ad069e6996d1c87c06c90",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/bulk/after/after-bulk-sync.d.ts": {
-        "version": "f112b5406f1d58075fd6c2e0bf8dbd01af2857e11892154809710455e67a4d2a",
-        "signature": "f112b5406f1d58075fd6c2e0bf8dbd01af2857e11892154809710455e67a4d2a",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/bulk/after/after-bulk-update.d.ts": {
-        "version": "da999c5d6325705481cb5791ddbf340d85d8495695ee631313d7cc051eee2654",
-        "signature": "da999c5d6325705481cb5791ddbf340d85d8495695ee631313d7cc051eee2654",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/bulk/before/before-bulk-create.d.ts": {
-        "version": "69300c6bafaa5add785aafa8197f10a2eb38b56a7e504bd407628d1a3fa9b170",
-        "signature": "69300c6bafaa5add785aafa8197f10a2eb38b56a7e504bd407628d1a3fa9b170",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/bulk/before/before-bulk-destroy.d.ts": {
-        "version": "83fa6c5e414dfeeb3619bed8e09db67a38a5e2248f168af0a4a768f6eba401af",
-        "signature": "83fa6c5e414dfeeb3619bed8e09db67a38a5e2248f168af0a4a768f6eba401af",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/bulk/before/before-bulk-restore.d.ts": {
-        "version": "471cd16c1e950f8d137a8693e41c96101f093e61caf34150a3433d5b8e5cb87f",
-        "signature": "471cd16c1e950f8d137a8693e41c96101f093e61caf34150a3433d5b8e5cb87f",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/bulk/before/before-bulk-sync.d.ts": {
-        "version": "b5b136c10b2de71a48795dd2fefc3fa8ae425e9cb147158483162dfaf1ff7799",
-        "signature": "b5b136c10b2de71a48795dd2fefc3fa8ae425e9cb147158483162dfaf1ff7799",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/bulk/before/before-bulk-update.d.ts": {
-        "version": "3009e68cea716566804d42ff2f56ebdcd7bcbc080efe7ec89737a46992085b18",
-        "signature": "3009e68cea716566804d42ff2f56ebdcd7bcbc080efe7ec89737a46992085b18",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-connect.d.ts": {
-        "version": "9e6b856f1660a2584b756228db5b5cc49d076e7e41d8a77f93543d6e0b1d2921",
-        "signature": "9e6b856f1660a2584b756228db5b5cc49d076e7e41d8a77f93543d6e0b1d2921",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-create.d.ts": {
-        "version": "ad049039b742cfecf408a909d97d53304f31952d6e1cb9455891f8400d9a296b",
-        "signature": "ad049039b742cfecf408a909d97d53304f31952d6e1cb9455891f8400d9a296b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-define.d.ts": {
-        "version": "e3d20f1df6a739d9463b6e8a8a8b5ccdf03ec3bfa839cc1a63471895df6e0041",
-        "signature": "e3d20f1df6a739d9463b6e8a8a8b5ccdf03ec3bfa839cc1a63471895df6e0041",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-destroy.d.ts": {
-        "version": "a8531388539742511395837eea1d0d18c7dd39e1ff8ae9fdd368bcdd38ce5658",
-        "signature": "a8531388539742511395837eea1d0d18c7dd39e1ff8ae9fdd368bcdd38ce5658",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-find.d.ts": {
-        "version": "a1304e98d5a622e6c1b22fd3f9e62ec4ecbfb818e76c8094441a4d29d09e1f0b",
-        "signature": "a1304e98d5a622e6c1b22fd3f9e62ec4ecbfb818e76c8094441a4d29d09e1f0b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-init.d.ts": {
-        "version": "c2ab91b573f4ec8ffb0f5b4afe5281cbbf8e7d6efb2d553b17d94a14c36ea9a3",
-        "signature": "c2ab91b573f4ec8ffb0f5b4afe5281cbbf8e7d6efb2d553b17d94a14c36ea9a3",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-restore.d.ts": {
-        "version": "243ad1119f0dcf12a169d2ca766c07d026ae7f9b5db8f147ca28c8d171b2839f",
-        "signature": "243ad1119f0dcf12a169d2ca766c07d026ae7f9b5db8f147ca28c8d171b2839f",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-save.d.ts": {
-        "version": "09ea0e3167bda9b8c9f43d446cb2ca7f7ac7fc15de74500edea812192bbd6670",
-        "signature": "09ea0e3167bda9b8c9f43d446cb2ca7f7ac7fc15de74500edea812192bbd6670",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-sync.d.ts": {
-        "version": "27a2c4e2e505224041f34ccc74ee1f5211c70d297368d1c4b059602861b91b4c",
-        "signature": "27a2c4e2e505224041f34ccc74ee1f5211c70d297368d1c4b059602861b91b4c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-update.d.ts": {
-        "version": "c12da034ad66a5f42ef736f033620f863437ae5c974700c905ad287effa7b49f",
-        "signature": "c12da034ad66a5f42ef736f033620f863437ae5c974700c905ad287effa7b49f",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-upsert.d.ts": {
-        "version": "b1f6d86dad758f800b2016c76d4cc67f947797f6b1306f918aeb427553adeea9",
-        "signature": "b1f6d86dad758f800b2016c76d4cc67f947797f6b1306f918aeb427553adeea9",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/after/after-validate.d.ts": {
-        "version": "7fbabb1ac1552a8edf00c488296cd0ab494016760d4dcfc1fc2c06b40104bac9",
-        "signature": "7fbabb1ac1552a8edf00c488296cd0ab494016760d4dcfc1fc2c06b40104bac9",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-connect.d.ts": {
-        "version": "675da3e8eaf3866a24072724fdd85d19bd705a2a7927bd1c35657e732caaaf09",
-        "signature": "675da3e8eaf3866a24072724fdd85d19bd705a2a7927bd1c35657e732caaaf09",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-count.d.ts": {
-        "version": "c9be97b6c3204d68f289ee6dee3c6e941cf44100b4ce6d94fc8fc7722a045395",
-        "signature": "c9be97b6c3204d68f289ee6dee3c6e941cf44100b4ce6d94fc8fc7722a045395",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-create.d.ts": {
-        "version": "bb66810e650a276ff0ab3aca00e63eea0655b5015fec523632c3aa2f81c860e1",
-        "signature": "bb66810e650a276ff0ab3aca00e63eea0655b5015fec523632c3aa2f81c860e1",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-define.d.ts": {
-        "version": "d65e3924fb2d1e734c3d23fa4d600bb8e47f4ae762ba4d034cdfa95984b1f759",
-        "signature": "d65e3924fb2d1e734c3d23fa4d600bb8e47f4ae762ba4d034cdfa95984b1f759",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-destroy.d.ts": {
-        "version": "f82d804b727ae7c7b93df0ce499b08bdf08ad168e9122cdd21b92e118b2293f4",
-        "signature": "f82d804b727ae7c7b93df0ce499b08bdf08ad168e9122cdd21b92e118b2293f4",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-find.d.ts": {
-        "version": "9459556b9e1325ee67249e07f9902de3e56d4fe76b29d38c6f7b3e9fe089d6a9",
-        "signature": "9459556b9e1325ee67249e07f9902de3e56d4fe76b29d38c6f7b3e9fe089d6a9",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-find-after-expand-include-all.d.ts": {
-        "version": "b13406ee925edaf0185f925110a3f30edfc2697abfdd7ab74e39b36800a5cb77",
-        "signature": "b13406ee925edaf0185f925110a3f30edfc2697abfdd7ab74e39b36800a5cb77",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-find-after-options.d.ts": {
-        "version": "e733f2a51341a95fadcd4c2165970dd14057952d35a5de5c3cbc6cba69462c49",
-        "signature": "e733f2a51341a95fadcd4c2165970dd14057952d35a5de5c3cbc6cba69462c49",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-init.d.ts": {
-        "version": "428c103e78dc7ab193bc57295029d079711c1ffd0da3f6e3c6a9644e920e704b",
-        "signature": "428c103e78dc7ab193bc57295029d079711c1ffd0da3f6e3c6a9644e920e704b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-restore.d.ts": {
-        "version": "f8c83fc5290606232eb5d759c83cd726bfcac926a46074a348a388c812bda700",
-        "signature": "f8c83fc5290606232eb5d759c83cd726bfcac926a46074a348a388c812bda700",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-save.d.ts": {
-        "version": "32467e9ee760584105881baeb5792f3774f4d6431e56d01948955516358bb8f1",
-        "signature": "32467e9ee760584105881baeb5792f3774f4d6431e56d01948955516358bb8f1",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-sync.d.ts": {
-        "version": "3950c2bee49ac606917608a1dcad07fea8f938fd8a19c378aa995db3b3951563",
-        "signature": "3950c2bee49ac606917608a1dcad07fea8f938fd8a19c378aa995db3b3951563",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-update.d.ts": {
-        "version": "1002554967804daf518a61508f2c8fd0eaf15ca2971ff87829b78e1ad5c3eac8",
-        "signature": "1002554967804daf518a61508f2c8fd0eaf15ca2971ff87829b78e1ad5c3eac8",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-upsert.d.ts": {
-        "version": "f651c9fbc4c36143c5d082336233aa435ac6d9e592173020e6daa3e66f0bb3ac",
-        "signature": "f651c9fbc4c36143c5d082336233aa435ac6d9e592173020e6daa3e66f0bb3ac",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/single/before/before-validate.d.ts": {
-        "version": "fbf401f1b10035834078b1fb9e9265be67d19f792b939242653588272e502bd1",
-        "signature": "fbf401f1b10035834078b1fb9e9265be67d19f792b939242653588272e502bd1",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/shared/hook-meta.d.ts": {
-        "version": "82660a844edd2510046459d58d12950083dd65c115632e7e6bedb6a7fb8ae0c4",
-        "signature": "82660a844edd2510046459d58d12950083dd65c115632e7e6bedb6a7fb8ae0c4",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/shared/hooks-service.d.ts": {
-        "version": "416a366de701ab9a0addad5a99fe3138c1c09f7be901f493b7b22a83d0eae2c9",
-        "signature": "416a366de701ab9a0addad5a99fe3138c1c09f7be901f493b7b22a83d0eae2c9",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/hooks/shared/validation-failed.d.ts": {
-        "version": "184bb87d099eaec0c000e6223a5bee74ae9c043af30dc256975402c925fd2920",
-        "signature": "184bb87d099eaec0c000e6223a5bee74ae9c043af30dc256975402c925fd2920",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/column/column-options/allow-null.d.ts": {
-        "version": "03bf75a64f5863530593bddae9b3399944ea5900f9a02959eac08d38bc54f079",
-        "signature": "03bf75a64f5863530593bddae9b3399944ea5900f9a02959eac08d38bc54f079",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/column/column-options/comment.d.ts": {
-        "version": "8563c7298a9eb9f5ac5bdafc361bdeade9f6a1082a9a774ce97876c6ea613eb4",
-        "signature": "8563c7298a9eb9f5ac5bdafc361bdeade9f6a1082a9a774ce97876c6ea613eb4",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/column/column-options/default.d.ts": {
-        "version": "d6eb3d0af3c9390cf7d701a83f8cce269757da436529d7dc34028d67a2cb8a9d",
-        "signature": "d6eb3d0af3c9390cf7d701a83f8cce269757da436529d7dc34028d67a2cb8a9d",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/column/column-options/unique.d.ts": {
-        "version": "3170ad02d82944b74342cec2d370f9ab5e2f4ae4b0124cb45a6174489fccdeb1",
-        "signature": "3170ad02d82944b74342cec2d370f9ab5e2f4ae4b0124cb45a6174489fccdeb1",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/column/primary-key/auto-increment.d.ts": {
-        "version": "942523f920e5a83c45ff32fa0294d7921309f5d7a52081c271183f70301729e6",
-        "signature": "942523f920e5a83c45ff32fa0294d7921309f5d7a52081c271183f70301729e6",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/column/primary-key/primary-key.d.ts": {
-        "version": "6c17e64627b476dcb03ccabdb0322f22c0f536e72f9f72b9c13847b6abfceea9",
-        "signature": "6c17e64627b476dcb03ccabdb0322f22c0f536e72f9f72b9c13847b6abfceea9",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/column/timestamps/created-at.d.ts": {
-        "version": "c6f6550d9e0fc184cbea82c74dc812be0fc3248346446077021ffbbef93e0723",
-        "signature": "c6f6550d9e0fc184cbea82c74dc812be0fc3248346446077021ffbbef93e0723",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/column/timestamps/deleted-at.d.ts": {
-        "version": "aaab817ea7aae249c25d44ae66c5b0ccb9ec7bd9a911c0baa8061f7539a894f8",
-        "signature": "aaab817ea7aae249c25d44ae66c5b0ccb9ec7bd9a911c0baa8061f7539a894f8",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/column/timestamps/updated-at.d.ts": {
-        "version": "5daf607cead28ea8a2da8e67d72525f524e3a225d24763dbfae9be5f40383f72",
-        "signature": "5daf607cead28ea8a2da8e67d72525f524e3a225d24763dbfae9be5f40383f72",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/column/attribute-service.d.ts": {
-        "version": "d94997ffaa221aefb43edac9dad5c0b9a3628baaa7ce2bda769592adf49a1f6c",
-        "signature": "d94997ffaa221aefb43edac9dad5c0b9a3628baaa7ce2bda769592adf49a1f6c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/column/column.d.ts": {
-        "version": "96b6b6f78abb6edffd020e84466e53cd5646181350546b3a1a27e4d5c8bc2e49",
-        "signature": "96b6b6f78abb6edffd020e84466e53cd5646181350546b3a1a27e4d5c8bc2e49",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/shared/model-service.d.ts": {
-        "version": "aa80014bf1e34657a26496f2245202aada7a5aa50ef6fe837d98e6119be0c8f7",
-        "signature": "aa80014bf1e34657a26496f2245202aada7a5aa50ef6fe837d98e6119be0c8f7",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/table/table-options.d.ts": {
-        "version": "f7b8e731e8675fa8abc36ec4624e5c733f7f5543d698a194dde32ede31a0c05f",
-        "signature": "f7b8e731e8675fa8abc36ec4624e5c733f7f5543d698a194dde32ede31a0c05f",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/table/table.d.ts": {
-        "version": "d110e56cba5515ae28f15d1782b5bf0f39c6c7b97bf9da1f9c71c2e16d2a6d5d",
-        "signature": "d110e56cba5515ae28f15d1782b5bf0f39c6c7b97bf9da1f9c71c2e16d2a6d5d",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/index/index-service.d.ts": {
-        "version": "61b3940bd4e8e57d71f08a7e6ae42247ac7a529027735c81acb9423e27d25f38",
-        "signature": "61b3940bd4e8e57d71f08a7e6ae42247ac7a529027735c81acb9423e27d25f38",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/index/create-index-decorator.d.ts": {
-        "version": "d5579e1b121fc866fd02a690cc5f5521ee3408e54758fab701c1809ee1a14e2c",
-        "signature": "d5579e1b121fc866fd02a690cc5f5521ee3408e54758fab701c1809ee1a14e2c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/model/index/index-decorator.d.ts": {
-        "version": "71575c1dcfc28c66d04ce052fab12e29ffc7fc2ee2600b321166cb5f521db1c2",
-        "signature": "71575c1dcfc28c66d04ce052fab12e29ffc7fc2ee2600b321166cb5f521db1c2",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/scopes/scope-find-options.d.ts": {
-        "version": "97c0073e32fe3d78aefa9cf4ecc4fe9365f078768ae843aca14a91517b72f416",
-        "signature": "97c0073e32fe3d78aefa9cf4ecc4fe9365f078768ae843aca14a91517b72f416",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/scopes/scope-table-options.d.ts": {
-        "version": "83a1a6261a28afbdbd3995c8e6dd6569b2b49cda913330a284861d1981c3f271",
-        "signature": "83a1a6261a28afbdbd3995c8e6dd6569b2b49cda913330a284861d1981c3f271",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/scopes/scope-options.d.ts": {
-        "version": "db12f539fc8dbb7dcc3407ec0b06a09ba7bf0a0bcdd2a3ce976100cc7c86d3c4",
-        "signature": "db12f539fc8dbb7dcc3407ec0b06a09ba7bf0a0bcdd2a3ce976100cc7c86d3c4",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/scopes/default-scope.d.ts": {
-        "version": "5bd6ae897058f014bffee2ab0d448e00ee210c6934d624dc7bd809e88abc863b",
-        "signature": "5bd6ae897058f014bffee2ab0d448e00ee210c6934d624dc7bd809e88abc863b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/scopes/scope-service.d.ts": {
-        "version": "aa65a910e87d2c0d8237ffa6ffdb528b299bd813f9b0f8408673a4e1cbd07d3c",
-        "signature": "aa65a910e87d2c0d8237ffa6ffdb528b299bd813f9b0f8408673a4e1cbd07d3c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/scopes/scopes.d.ts": {
-        "version": "ddd5f5e02f3263559620aa7c7e96904c085a5ab728435f1614629fbf9be5dc5c",
-        "signature": "ddd5f5e02f3263559620aa7c7e96904c085a5ab728435f1614629fbf9be5dc5c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/sequelize/data-type/data-type.d.ts": {
-        "version": "f9e7ea6d5324204ea13dc554ccbfb0df7dbed531e8c23822c3966a441658afa6",
-        "signature": "f9e7ea6d5324204ea13dc554ccbfb0df7dbed531e8c23822c3966a441658afa6",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/sequelize/data-type/data-type-service.d.ts": {
-        "version": "3c206112006940848c84dd69894036115a944d1628cc90ee5a22bcf17fd7bc96",
-        "signature": "3c206112006940848c84dd69894036115a944d1628cc90ee5a22bcf17fd7bc96",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/sequelize/validation-only/db-dialect-dummy.d.ts": {
-        "version": "3aa41c401a49d65d38ba77755be9aabff66bacb2c5fd7f58001bc5af47f9b4b3",
-        "signature": "3aa41c401a49d65d38ba77755be9aabff66bacb2c5fd7f58001bc5af47f9b4b3",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/sequelize/sequelize/sequelize-service.d.ts": {
-        "version": "0e340d515819577c006a4082d178a0a55aafe7c07c286d3df96634e7051c6664",
-        "signature": "0e340d515819577c006a4082d178a0a55aafe7c07c286d3df96634e7051c6664",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/shared/types.d.ts": {
-        "version": "bde06478ff53d600e9c12c0e4ee2b4fbbd32219a9dc8f3bc50fd5cfd297c5b93",
-        "signature": "bde06478ff53d600e9c12c0e4ee2b4fbbd32219a9dc8f3bc50fd5cfd297c5b93",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/sequelize/repository/repository.d.ts": {
-        "version": "caeef3bbfe6942c66ba09e35d63a8770178cac92b91ae3088515638ff7367498",
-        "signature": "caeef3bbfe6942c66ba09e35d63a8770178cac92b91ae3088515638ff7367498",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/contains.d.ts": {
-        "version": "8613c8ca02e06f075a238574a25e3e1ceced8b893e7f4d6b47b690d82cad949b",
-        "signature": "8613c8ca02e06f075a238574a25e3e1ceced8b893e7f4d6b47b690d82cad949b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/equals.d.ts": {
-        "version": "4d36d37ff5adce5b79b4a123c6828addc97ce9c86578e04fe45ef4c3ce8e7cd6",
-        "signature": "4d36d37ff5adce5b79b4a123c6828addc97ce9c86578e04fe45ef4c3ce8e7cd6",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is.d.ts": {
-        "version": "8a0a7303c4ea8fd06f624b4b74b8b004ab4220338747e36cc5e14660f3bb2e86",
-        "signature": "8a0a7303c4ea8fd06f624b4b74b8b004ab4220338747e36cc5e14660f3bb2e86",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-after.d.ts": {
-        "version": "2f37bd66d7ecce73771f8ca960c7a6ae003a4d0309c1644743df468fc2a0bb27",
-        "signature": "2f37bd66d7ecce73771f8ca960c7a6ae003a4d0309c1644743df468fc2a0bb27",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-alpha.d.ts": {
-        "version": "ccab85cc166fe76387031187c8ed7ce156975ec9bfcfdcbde25dc18cdc671ccc",
-        "signature": "ccab85cc166fe76387031187c8ed7ce156975ec9bfcfdcbde25dc18cdc671ccc",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-alphanumeric.d.ts": {
-        "version": "6f6ebdc7f03dcc8996373b3ca0927672dccd72af9e1623a9c9114b961fb26e86",
-        "signature": "6f6ebdc7f03dcc8996373b3ca0927672dccd72af9e1623a9c9114b961fb26e86",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-before.d.ts": {
-        "version": "b03f863a5b9670514f99b6bbf36895d7102caab9ab72d3b8778fc3429937704a",
-        "signature": "b03f863a5b9670514f99b6bbf36895d7102caab9ab72d3b8778fc3429937704a",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-credit-card.d.ts": {
-        "version": "3c44b0d212075d939fff25e6c97b04436a55252899d1247f29686a8133270a59",
-        "signature": "3c44b0d212075d939fff25e6c97b04436a55252899d1247f29686a8133270a59",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-date.d.ts": {
-        "version": "e6eb8c2dfabc1713abb667bd65603a3888d46320d3874c117b4c24a16a29dfc5",
-        "signature": "e6eb8c2dfabc1713abb667bd65603a3888d46320d3874c117b4c24a16a29dfc5",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-decimal.d.ts": {
-        "version": "f7ec29c1118f3e6422a13113a705f52e2491a64c09bd6041e8900e218b3c58fc",
-        "signature": "f7ec29c1118f3e6422a13113a705f52e2491a64c09bd6041e8900e218b3c58fc",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-email.d.ts": {
-        "version": "13cb0e4ba5f0cf599e4eaa5528506ecfa284eef6d0f6f098517eb7cd18371d8b",
-        "signature": "13cb0e4ba5f0cf599e4eaa5528506ecfa284eef6d0f6f098517eb7cd18371d8b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-float.d.ts": {
-        "version": "8297d59fddbbc058d92a9bf5f9215dc645feb0779a73324588b74abd8b6f5742",
-        "signature": "8297d59fddbbc058d92a9bf5f9215dc645feb0779a73324588b74abd8b6f5742",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-in.d.ts": {
-        "version": "1be595761a51c2418c7b8b86563d6636255fa35537f8ef8ac4b5bb1f22bf2fbd",
-        "signature": "1be595761a51c2418c7b8b86563d6636255fa35537f8ef8ac4b5bb1f22bf2fbd",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-int.d.ts": {
-        "version": "a1ccc596297ff097bae0f22ced15db88c5c2c1c8edf9f7db63ee8e0738089dc8",
-        "signature": "a1ccc596297ff097bae0f22ced15db88c5c2c1c8edf9f7db63ee8e0738089dc8",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-ip.d.ts": {
-        "version": "dff5c929e4fbf17a155adcd74e8b4bdfd35d1dbccad373dd406547d7c88de0be",
-        "signature": "dff5c929e4fbf17a155adcd74e8b4bdfd35d1dbccad373dd406547d7c88de0be",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-ip-v4.d.ts": {
-        "version": "8e75511a2ff565fcc0356ae0fa2a3fe33dde535acb3f052eb8acde6523c31ea7",
-        "signature": "8e75511a2ff565fcc0356ae0fa2a3fe33dde535acb3f052eb8acde6523c31ea7",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-array.d.ts": {
-        "version": "0248dcbfe1a7cf94a06c6e1ed356a06d3a31a3f8ae0b778742fcf3856395f092",
-        "signature": "0248dcbfe1a7cf94a06c6e1ed356a06d3a31a3f8ae0b778742fcf3856395f092",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-ip-v6.d.ts": {
-        "version": "6640a6448bc3de4e2dc41ce5335f64053b5b2faddb51fa12ea7b8d80e0dec244",
-        "signature": "6640a6448bc3de4e2dc41ce5335f64053b5b2faddb51fa12ea7b8d80e0dec244",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-lowercase.d.ts": {
-        "version": "b3cff05837a161fcb67896d62da40b59e5ae61fdb07239b537493d6bb930116f",
-        "signature": "b3cff05837a161fcb67896d62da40b59e5ae61fdb07239b537493d6bb930116f",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-null.d.ts": {
-        "version": "484b269d5d5d007f24d8bf97e162ac5ab944f41dce67d9f213d9a41b4e37f3c3",
-        "signature": "484b269d5d5d007f24d8bf97e162ac5ab944f41dce67d9f213d9a41b4e37f3c3",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-numeric.d.ts": {
-        "version": "a268804bceba21eb8207968af124805239cf9c165962b84be0c9486c600040b7",
-        "signature": "a268804bceba21eb8207968af124805239cf9c165962b84be0c9486c600040b7",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-uppercase.d.ts": {
-        "version": "963f15f29b61c25ea9cd4c684dce3188bca77f1b78a7d0951a15c9c581784206",
-        "signature": "963f15f29b61c25ea9cd4c684dce3188bca77f1b78a7d0951a15c9c581784206",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-url.d.ts": {
-        "version": "41493b7a4cafe332466eb3ce3441e0699f1b8dfa03360ce61e9c1df0172c05b2",
-        "signature": "41493b7a4cafe332466eb3ce3441e0699f1b8dfa03360ce61e9c1df0172c05b2",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/is-uuid.d.ts": {
-        "version": "70eab0f7b8eca9c24dfeb657c688e8c99150b9d22c79095c9301cc4b85a09128",
-        "signature": "70eab0f7b8eca9c24dfeb657c688e8c99150b9d22c79095c9301cc4b85a09128",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/length.d.ts": {
-        "version": "7ea2e0332336c942271a4f41faf52104280f59d252a231a9e18210900a0eef0c",
-        "signature": "7ea2e0332336c942271a4f41faf52104280f59d252a231a9e18210900a0eef0c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/max.d.ts": {
-        "version": "665cb1d1c0256005897dce9383d39e3666ba4e3154390759073e8f1a3cf3fd9e",
-        "signature": "665cb1d1c0256005897dce9383d39e3666ba4e3154390759073e8f1a3cf3fd9e",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/min.d.ts": {
-        "version": "e67c8d5b0bc4c1ffa1c9fd4c24f6e377ddcbc267eaa58c469721983090d9136f",
-        "signature": "e67c8d5b0bc4c1ffa1c9fd4c24f6e377ddcbc267eaa58c469721983090d9136f",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/not.d.ts": {
-        "version": "5e2b8d6d088162877ce5d742dc558a823b5edee24eee6df29f59ebcf4af960b2",
-        "signature": "5e2b8d6d088162877ce5d742dc558a823b5edee24eee6df29f59ebcf4af960b2",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/not-contains.d.ts": {
-        "version": "e5639037a16f1b0e50bb372236cfb23a61c37390ad8c854c46ffc4b83a126b8b",
-        "signature": "e5639037a16f1b0e50bb372236cfb23a61c37390ad8c854c46ffc4b83a126b8b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/not-empty.d.ts": {
-        "version": "45abec77bf59857a6ae956d61f0f4176fd001d09d57fe7822f77a1ecc0e801cc",
-        "signature": "45abec77bf59857a6ae956d61f0f4176fd001d09d57fe7822f77a1ecc0e801cc",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/not-in.d.ts": {
-        "version": "fa33c5a5f554690923e36c5091a2e18bd0f5409925a08227b3be56211780000f",
-        "signature": "fa33c5a5f554690923e36c5091a2e18bd0f5409925a08227b3be56211780000f",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/not-null.d.ts": {
-        "version": "53333f60b5e6871ffc307afd61bde499f10d8e2d295b5aaa45cca8011a6df428",
-        "signature": "53333f60b5e6871ffc307afd61bde499f10d8e2d295b5aaa45cca8011a6df428",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/validate.d.ts": {
-        "version": "8476667d8e9c69d512e8812c0269c9173ca926f8cf88a8abaff8c885516a5ae2",
-        "signature": "8476667d8e9c69d512e8812c0269c9173ca926f8cf88a8abaff8c885516a5ae2",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/validation/validator.d.ts": {
-        "version": "ee6f02df42a5f1f332fd37d9a14dd8eff9a08330a49b9dbcd54a8c448562c33c",
-        "signature": "ee6f02df42a5f1f332fd37d9a14dd8eff9a08330a49b9dbcd54a8c448562c33c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/sequelize-typescript/dist/index.d.ts": {
-        "version": "09eec98b368e47af834c1d1ef97999506ee1ebec34e000c11dc0a1963c8a0320",
-        "signature": "09eec98b368e47af834c1d1ef97999506ee1ebec34e000c11dc0a1963c8a0320",
-        "affectsGlobalScope": false
-      },
       "../src/repository.module.ts": {
         "version": "f6e2371af438f04a2c7c37b1837da6c5bb88a8817ec19aa16b8617c763b9fc8e",
         "signature": "e587bef6e3790218189604551a358f170b96b31eb9f8038f1e4215a12f470784",
         "affectsGlobalScope": false
       },
       "../src/base-repository.ts": {
-        "version": "3f65392d40bd354fe5f43aca755fc697196e87566e618180411eda7ae84b629c",
+        "version": "1afe0036cf685a1c7c8327e0c27a9d8823b9e6d54e084c746d8af6c5c500f0f4",
         "signature": "77eacc9747279da105d1e49edb0174d56b7c4ae596c349986b9091cf78c703e8",
         "affectsGlobalScope": false
       },
-      "../src/base-model.ts": {
-        "version": "4d867c49143a8c2def5d045874b5455d3a9970891b254ba2c9bd9cf0ab171f29",
-        "signature": "93465cec8c29f2e20c249d7b4374b10a05395a2c870ab21a1e76f93c782b5ae5",
+      "../src/cache.ts": {
+        "version": "6212b0e6dd0b1bec894b48c7404f9d74c0acdf817f91204b6c007cfd7b723feb",
+        "signature": "9168fdb54db1c7778960b1568451944d5fc0594e47e877d1f3049b8ca4dcfcf0",
         "affectsGlobalScope": false
       },
       "../src/index.ts": {
@@ -2211,8 +2211,8 @@
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
         "affectsGlobalScope": false
       },
-      "../src/test/TestMode.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "../src/test/model/DmCourse.ts": {
+        "version": "fc1df297bf45a9608a9f8c946533e212ef24cbea89c87d838182733913fdab09",
         "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "affectsGlobalScope": false
       },
@@ -2249,6 +2249,11 @@
       "../node_modules/@types/babel__core/index.d.ts": {
         "version": "7df3163944694feeac63067632a8dc2e2dea1350119ec8b43df277af69198369",
         "signature": "7df3163944694feeac63067632a8dc2e2dea1350119ec8b43df277af69198369",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/bluebird/index.d.ts": {
+        "version": "1a6100f908d642fe1c74d1354b0e12ee647655b8d355159a1bb4c62ae874ccea",
+        "signature": "1a6100f908d642fe1c74d1354b0e12ee647655b8d355159a1bb4c62ae874ccea",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/node/globals.d.ts": {
@@ -4214,9 +4219,9 @@
         "../node_modules/sequelize-typescript/dist/associations/shared/association.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/union-association-options.d.ts",
+        "../node_modules/sequelize-typescript/dist/model/model/model.d.ts",
         "../node_modules/sequelize-typescript/dist/model/shared/model-class-getter.d.ts",
-        "../node_modules/sequelize-typescript/dist/sequelize/sequelize/sequelize.d.ts",
-        "../node_modules/sequelize/types/index.d.ts"
+        "../node_modules/sequelize-typescript/dist/sequelize/sequelize/sequelize.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/associations/belongs-to-many/belongs-to-many-options.d.ts": [
         "../node_modules/sequelize-typescript/dist/associations/through/through-options.d.ts",
@@ -4246,6 +4251,7 @@
         "../node_modules/sequelize-typescript/dist/associations/shared/association.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/union-association-options.d.ts",
+        "../node_modules/sequelize-typescript/dist/model/model/model.d.ts",
         "../node_modules/sequelize-typescript/dist/model/shared/model-class-getter.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
       ],
@@ -4260,6 +4266,7 @@
       "../node_modules/sequelize-typescript/dist/associations/shared/association-service.d.ts": [
         "../node_modules/reflect-metadata/index.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts",
+        "../node_modules/sequelize-typescript/dist/associations/shared/union-association-options.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts": [
@@ -4555,6 +4562,7 @@
         "../node_modules/sequelize-typescript/dist/model/model/association/association-count-options.d.ts",
         "../node_modules/sequelize-typescript/dist/model/model/association/association-create-options.d.ts",
         "../node_modules/sequelize-typescript/dist/model/model/association/association-get-options.d.ts",
+        "../node_modules/sequelize-typescript/dist/sequelize/repository/repository.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/model/shared/model-class-getter.d.ts": [
@@ -4567,6 +4575,7 @@
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/model/table/table.d.ts": [
+        "../node_modules/sequelize-typescript/dist/model/model/model.d.ts",
         "../node_modules/sequelize-typescript/dist/model/table/table-options.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/scopes/default-scope.d.ts": [
@@ -4628,7 +4637,6 @@
         "../node_modules/sequelize/types/lib/index-hints.d.ts",
         "../node_modules/sequelize/types/lib/model.d.ts",
         "../node_modules/sequelize/types/lib/operators.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
         "../node_modules/sequelize/types/lib/query-interface.d.ts",
         "../node_modules/sequelize/types/lib/query-types.d.ts",
         "../node_modules/sequelize/types/lib/sequelize.d.ts",
@@ -4642,27 +4650,22 @@
       ],
       "../node_modules/sequelize/types/lib/associations/belongs-to-many.d.ts": [
         "../node_modules/sequelize/types/lib/associations/base.d.ts",
-        "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
-        "../node_modules/sequelize/types/lib/transaction.d.ts"
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/associations/belongs-to.d.ts": [
         "../node_modules/sequelize/types/lib/associations/base.d.ts",
         "../node_modules/sequelize/types/lib/data-types.d.ts",
-        "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts"
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/associations/has-many.d.ts": [
         "../node_modules/sequelize/types/lib/associations/base.d.ts",
         "../node_modules/sequelize/types/lib/data-types.d.ts",
-        "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts"
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/associations/has-one.d.ts": [
         "../node_modules/sequelize/types/lib/associations/base.d.ts",
         "../node_modules/sequelize/types/lib/data-types.d.ts",
-        "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts"
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/associations/index.d.ts": [
         "../node_modules/sequelize/types/lib/associations/base.d.ts",
@@ -4671,13 +4674,17 @@
         "../node_modules/sequelize/types/lib/associations/has-many.d.ts",
         "../node_modules/sequelize/types/lib/associations/has-one.d.ts"
       ],
-      "../node_modules/sequelize/types/lib/connection-manager.d.ts": [
-        "../node_modules/sequelize/types/lib/promise.d.ts"
+      "../node_modules/sequelize/types/lib/errors.d.ts": [
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/hooks.d.ts": [
+        "../node_modules/sequelize/types/index.d.ts",
         "../node_modules/sequelize/types/lib/instance-validator.d.ts",
         "../node_modules/sequelize/types/lib/model.d.ts",
         "../node_modules/sequelize/types/lib/sequelize.d.ts"
+      ],
+      "../node_modules/sequelize/types/lib/instance-validator.d.ts": [
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/model-manager.d.ts": [
         "../node_modules/sequelize/types/lib/model.d.ts",
@@ -4690,64 +4697,50 @@
         "../node_modules/sequelize/types/lib/deferrable.d.ts",
         "../node_modules/sequelize/types/lib/hooks.d.ts",
         "../node_modules/sequelize/types/lib/instance-validator.d.ts",
-        "../node_modules/sequelize/types/lib/model-manager.d.ts",
         "../node_modules/sequelize/types/lib/operators.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
         "../node_modules/sequelize/types/lib/query-interface.d.ts",
         "../node_modules/sequelize/types/lib/sequelize.d.ts",
         "../node_modules/sequelize/types/lib/transaction.d.ts",
         "../node_modules/sequelize/types/lib/utils.d.ts"
       ],
-      "../node_modules/sequelize/types/lib/promise.d.ts": [
-        "../node_modules/@types/bluebird/index.d.ts"
-      ],
       "../node_modules/sequelize/types/lib/query-interface.d.ts": [
         "../node_modules/sequelize/types/lib/data-types.d.ts",
+        "../node_modules/sequelize/types/lib/deferrable.d.ts",
         "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
         "../node_modules/sequelize/types/lib/query-types.d.ts",
         "../node_modules/sequelize/types/lib/sequelize.d.ts",
-        "../node_modules/sequelize/types/lib/transaction.d.ts"
+        "../node_modules/sequelize/types/lib/transaction.d.ts",
+        "../node_modules/sequelize/types/lib/utils.d.ts",
+        "../node_modules/sequelize/types/type-helpers/set-required.d.ts"
       ],
       "../node_modules/sequelize/types/lib/sequelize.d.ts": [
         "../node_modules/sequelize/types/lib/connection-manager.d.ts",
         "../node_modules/sequelize/types/lib/data-types.d.ts",
-        "../node_modules/sequelize/types/lib/deferrable.d.ts",
         "../node_modules/sequelize/types/lib/hooks.d.ts",
         "../node_modules/sequelize/types/lib/instance-validator.d.ts",
         "../node_modules/sequelize/types/lib/model-manager.d.ts",
         "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/operators.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
         "../node_modules/sequelize/types/lib/query-interface.d.ts",
         "../node_modules/sequelize/types/lib/query-types.d.ts",
         "../node_modules/sequelize/types/lib/transaction.d.ts",
-        "../node_modules/sequelize/types/lib/utils.d.ts",
-        "../node_modules/sequelize/types/lib/utils/validator-extras.d.ts"
+        "../node_modules/sequelize/types/lib/utils.d.ts"
       ],
       "../node_modules/sequelize/types/lib/transaction.d.ts": [
         "../node_modules/sequelize/types/lib/deferrable.d.ts",
         "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
         "../node_modules/sequelize/types/lib/sequelize.d.ts"
       ],
       "../node_modules/sequelize/types/lib/utils.d.ts": [
         "../node_modules/sequelize/types/lib/data-types.d.ts",
-        "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts"
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/utils/validator-extras.d.ts": [
         "../node_modules/@types/validator/index.d.ts"
       ],
       "../src/base-model.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../node_modules/@types/lodash/index.d.ts",
         "../node_modules/sequelize-typescript/dist/index.d.ts",
         "../node_modules/sequelize/types/index.d.ts",
-        "../src/base-repository.ts",
-        "../src/cache-utilty.ts",
-        "../src/date-utility.ts",
-        "../src/helpers.ts"
+        "../src/cache-utilty.ts"
       ],
       "../src/base-repository.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
@@ -4762,6 +4755,11 @@
       "../src/cache-utilty.ts": [
         "../node_modules/@types/node/crypto.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
+      ],
+      "../src/cache.ts": [
+        "../node_modules/sequelize-typescript/dist/index.d.ts",
+        "../node_modules/sequelize/types/index.d.ts",
+        "../src/cache-utilty.ts"
       ],
       "../src/index.ts": [
         "../src/base-model.ts",
@@ -6219,9 +6217,9 @@
         "../node_modules/sequelize-typescript/dist/associations/shared/association.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/union-association-options.d.ts",
+        "../node_modules/sequelize-typescript/dist/model/model/model.d.ts",
         "../node_modules/sequelize-typescript/dist/model/shared/model-class-getter.d.ts",
-        "../node_modules/sequelize-typescript/dist/sequelize/sequelize/sequelize.d.ts",
-        "../node_modules/sequelize/types/index.d.ts"
+        "../node_modules/sequelize-typescript/dist/sequelize/sequelize/sequelize.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/associations/belongs-to-many/belongs-to-many-options.d.ts": [
         "../node_modules/sequelize-typescript/dist/associations/through/through-options.d.ts",
@@ -6251,6 +6249,7 @@
         "../node_modules/sequelize-typescript/dist/associations/shared/association.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/union-association-options.d.ts",
+        "../node_modules/sequelize-typescript/dist/model/model/model.d.ts",
         "../node_modules/sequelize-typescript/dist/model/shared/model-class-getter.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
       ],
@@ -6265,6 +6264,7 @@
       "../node_modules/sequelize-typescript/dist/associations/shared/association-service.d.ts": [
         "../node_modules/reflect-metadata/index.d.ts",
         "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts",
+        "../node_modules/sequelize-typescript/dist/associations/shared/union-association-options.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/associations/shared/base-association.d.ts": [
@@ -6560,6 +6560,7 @@
         "../node_modules/sequelize-typescript/dist/model/model/association/association-count-options.d.ts",
         "../node_modules/sequelize-typescript/dist/model/model/association/association-create-options.d.ts",
         "../node_modules/sequelize-typescript/dist/model/model/association/association-get-options.d.ts",
+        "../node_modules/sequelize-typescript/dist/sequelize/repository/repository.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/model/shared/model-class-getter.d.ts": [
@@ -6572,6 +6573,7 @@
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/model/table/table.d.ts": [
+        "../node_modules/sequelize-typescript/dist/model/model/model.d.ts",
         "../node_modules/sequelize-typescript/dist/model/table/table-options.d.ts"
       ],
       "../node_modules/sequelize-typescript/dist/scopes/default-scope.d.ts": [
@@ -6633,7 +6635,6 @@
         "../node_modules/sequelize/types/lib/index-hints.d.ts",
         "../node_modules/sequelize/types/lib/model.d.ts",
         "../node_modules/sequelize/types/lib/operators.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
         "../node_modules/sequelize/types/lib/query-interface.d.ts",
         "../node_modules/sequelize/types/lib/query-types.d.ts",
         "../node_modules/sequelize/types/lib/sequelize.d.ts",
@@ -6647,27 +6648,22 @@
       ],
       "../node_modules/sequelize/types/lib/associations/belongs-to-many.d.ts": [
         "../node_modules/sequelize/types/lib/associations/base.d.ts",
-        "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
-        "../node_modules/sequelize/types/lib/transaction.d.ts"
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/associations/belongs-to.d.ts": [
         "../node_modules/sequelize/types/lib/associations/base.d.ts",
         "../node_modules/sequelize/types/lib/data-types.d.ts",
-        "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts"
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/associations/has-many.d.ts": [
         "../node_modules/sequelize/types/lib/associations/base.d.ts",
         "../node_modules/sequelize/types/lib/data-types.d.ts",
-        "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts"
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/associations/has-one.d.ts": [
         "../node_modules/sequelize/types/lib/associations/base.d.ts",
         "../node_modules/sequelize/types/lib/data-types.d.ts",
-        "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts"
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/associations/index.d.ts": [
         "../node_modules/sequelize/types/lib/associations/base.d.ts",
@@ -6676,13 +6672,17 @@
         "../node_modules/sequelize/types/lib/associations/has-many.d.ts",
         "../node_modules/sequelize/types/lib/associations/has-one.d.ts"
       ],
-      "../node_modules/sequelize/types/lib/connection-manager.d.ts": [
-        "../node_modules/sequelize/types/lib/promise.d.ts"
+      "../node_modules/sequelize/types/lib/errors.d.ts": [
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/hooks.d.ts": [
+        "../node_modules/sequelize/types/index.d.ts",
         "../node_modules/sequelize/types/lib/instance-validator.d.ts",
         "../node_modules/sequelize/types/lib/model.d.ts",
         "../node_modules/sequelize/types/lib/sequelize.d.ts"
+      ],
+      "../node_modules/sequelize/types/lib/instance-validator.d.ts": [
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/model-manager.d.ts": [
         "../node_modules/sequelize/types/lib/model.d.ts",
@@ -6695,65 +6695,62 @@
         "../node_modules/sequelize/types/lib/deferrable.d.ts",
         "../node_modules/sequelize/types/lib/hooks.d.ts",
         "../node_modules/sequelize/types/lib/instance-validator.d.ts",
-        "../node_modules/sequelize/types/lib/model-manager.d.ts",
         "../node_modules/sequelize/types/lib/operators.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
         "../node_modules/sequelize/types/lib/query-interface.d.ts",
         "../node_modules/sequelize/types/lib/sequelize.d.ts",
         "../node_modules/sequelize/types/lib/transaction.d.ts",
         "../node_modules/sequelize/types/lib/utils.d.ts"
       ],
-      "../node_modules/sequelize/types/lib/promise.d.ts": [
-        "../node_modules/@types/bluebird/index.d.ts"
-      ],
       "../node_modules/sequelize/types/lib/query-interface.d.ts": [
         "../node_modules/sequelize/types/lib/data-types.d.ts",
+        "../node_modules/sequelize/types/lib/deferrable.d.ts",
         "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
         "../node_modules/sequelize/types/lib/query-types.d.ts",
         "../node_modules/sequelize/types/lib/sequelize.d.ts",
-        "../node_modules/sequelize/types/lib/transaction.d.ts"
+        "../node_modules/sequelize/types/lib/transaction.d.ts",
+        "../node_modules/sequelize/types/lib/utils.d.ts",
+        "../node_modules/sequelize/types/type-helpers/set-required.d.ts"
       ],
       "../node_modules/sequelize/types/lib/sequelize.d.ts": [
         "../node_modules/sequelize/types/lib/connection-manager.d.ts",
         "../node_modules/sequelize/types/lib/data-types.d.ts",
-        "../node_modules/sequelize/types/lib/deferrable.d.ts",
         "../node_modules/sequelize/types/lib/hooks.d.ts",
         "../node_modules/sequelize/types/lib/instance-validator.d.ts",
         "../node_modules/sequelize/types/lib/model-manager.d.ts",
         "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/operators.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
         "../node_modules/sequelize/types/lib/query-interface.d.ts",
         "../node_modules/sequelize/types/lib/query-types.d.ts",
         "../node_modules/sequelize/types/lib/transaction.d.ts",
-        "../node_modules/sequelize/types/lib/utils.d.ts",
-        "../node_modules/sequelize/types/lib/utils/validator-extras.d.ts"
+        "../node_modules/sequelize/types/lib/utils.d.ts"
       ],
       "../node_modules/sequelize/types/lib/transaction.d.ts": [
         "../node_modules/sequelize/types/lib/deferrable.d.ts",
         "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts",
         "../node_modules/sequelize/types/lib/sequelize.d.ts"
       ],
       "../node_modules/sequelize/types/lib/utils.d.ts": [
         "../node_modules/sequelize/types/lib/data-types.d.ts",
-        "../node_modules/sequelize/types/lib/model.d.ts",
-        "../node_modules/sequelize/types/lib/promise.d.ts"
+        "../node_modules/sequelize/types/lib/model.d.ts"
       ],
       "../node_modules/sequelize/types/lib/utils/validator-extras.d.ts": [
         "../node_modules/@types/validator/index.d.ts"
       ],
       "../src/base-model.ts": [
         "../node_modules/sequelize-typescript/dist/index.d.ts",
+        "../node_modules/sequelize-typescript/dist/model/model/association/association-create-options.d.ts",
         "../node_modules/sequelize/types/index.d.ts",
-        "../src/base-repository.ts"
+        "../node_modules/sequelize/types/lib/hooks.d.ts",
+        "../node_modules/sequelize/types/lib/instance-validator.d.ts",
+        "../src/cache-utilty.ts"
       ],
       "../src/base-repository.ts": [
         "../node_modules/sequelize-typescript/dist/index.d.ts",
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../src/cache-utilty.ts": [
+        "../node_modules/sequelize/types/index.d.ts"
+      ],
+      "../src/cache.ts": [
         "../node_modules/sequelize/types/index.d.ts"
       ],
       "../src/index.ts": [
