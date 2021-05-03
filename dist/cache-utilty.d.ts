@@ -1,5 +1,9 @@
 import * as Redis from 'ioredis';
 import { FindOptions } from 'sequelize';
+export interface CacheKey {
+    readonly key: string;
+    readonly attributes: readonly string[];
+}
 export declare class CacheUtility {
     static setKey(name: string, key: any, options?: any): string;
     static setQueryOptions(options?: FindOptions): string;

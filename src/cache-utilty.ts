@@ -2,6 +2,11 @@ import * as crypto from 'crypto';
 import * as Redis from 'ioredis';
 import { FindOptions } from 'sequelize';
 
+export interface CacheKey {
+  readonly key: string
+  readonly attributes: readonly string[]
+}
+
 export class CacheUtility {
 
   static setKey(name: string, key: any, options?: any) {
