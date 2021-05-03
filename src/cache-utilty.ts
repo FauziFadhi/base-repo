@@ -1,5 +1,4 @@
 import * as crypto from 'crypto';
-import * as Redis from 'ioredis';
 import { FindOptions } from 'sequelize';
 
 export interface CacheKey {
@@ -26,19 +25,11 @@ export class CacheUtility {
     return parseInt(str.slice(-1)[0], 10);
   }
 
-  // for redis usage
-  static async invalidate(key: any, cacheStore: Redis.Redis): Promise<boolean> {
-    return await cacheStore.del(key) === 1 ? true : false;
-  }
-
   // for list cache usage
   static setResult(result: string) {
     return JSON.parse(result)
   }
 
-  static flush(cacheStore: Redis.Redis) {
-    cacheStore.flushall()
-  }
 
   static setOneQueryOptions(options?: FindOptions) {
     const hash = crypto.createHash('md5');

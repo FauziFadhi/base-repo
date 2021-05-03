@@ -1,6 +1,7 @@
-import { CacheKey } from 'cache-utilty';
 import { WhereOptions } from 'sequelize';
 import { Model } from 'sequelize-typescript';
+
+import { CacheKey } from './cache-utilty';
 
 export function base<M extends readonly CacheKey[], TModelAttributes extends {} = any, TCreationAttributes extends {} = TModelAttributes>(cacheKeys: M) {
   return class BaseModel extends Model<TModelAttributes, TCreationAttributes> {
