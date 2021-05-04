@@ -2,7 +2,7 @@ import * as crypto from 'crypto';
 import { FindOptions } from 'sequelize';
 
 export interface CacheKey {
-  readonly key: string
+  readonly name: string
   readonly attributes: readonly string[]
 }
 

@@ -1,17 +1,101 @@
-import { WhereOptions } from 'sequelize';
+import { RepositoryModule } from 'repository.module';
+import { FindOptions, WhereOptions } from 'sequelize';
 import { Model } from 'sequelize-typescript';
 
-import { CacheKey } from './cache-utilty';
+import CacheUtility, { CacheKey } from './cache-utilty';
 
-export function base<M extends readonly CacheKey[], TModelAttributes extends {} = any, TCreationAttributes extends {} = TModelAttributes>(cacheKeys: M) {
+type ExtractRouteParams<T extends PropertyKey> = string extends T
+  ? Record<string, string>
+  : { [k in T]?: unknown }
+
+function setWhereOptions<T>(whereOptions: WhereOptions<T>, attributes: readonly string[]): T {
+
+  const newWhereOptions = attributes.reduce((result: object, current: string): object => {
+    const currentPropValue = whereOptions[current]
+
+    if (currentPropValue == undefined)
+      throw new Error(`${[current]} value is missing`)
+
+    return {
+      ...result,
+      [current]: whereOptions[current]
+    }
+  }, {})
+
+  return newWhereOptions as T
+}
+
+function getAttributesKey(key: string, cacheKeys: readonly CacheKey[]): readonly string[] {
+  const cacheKey = cacheKeys.find(cache => cache.name === key)
+
+  if (!cacheKey || !cacheKey.attributes)
+    throw new Error(`cacheKey ${key} not exists`)
+
+  return cacheKey.attributes
+}
+
+
+
+function transformCacheToModel(modelClass: any, dataCache: string) {
+  const modelData = JSON.parse(dataCache)
+
+  if (!modelData) return null
+
+  console.log('modelClass', modelClass);
+
+  const model = new modelClass(modelData, { isNewRecord: false })
+
+  if (modelData.createdAt)
+    model.setDataValue('createdAt', modelData.createdAt)
+
+  if (modelData.updatedAt)
+    model.setDataValue('updatedAt', modelData.updatedAt)
+
+  return model
+}
+
+export function base<TModelAttributes extends {} = any, TCreationAttributes extends {} = TModelAttributes, M extends readonly CacheKey[] = []>(caches: M) {
   return class BaseModel extends Model<TModelAttributes, TCreationAttributes> {
 
+    static caches = caches
+    static modelTTL = 0
+    static notFoundMessage = 'Model Not Found'
+
     static async findOneCache<T extends Model>(this: { new(): T } & typeof BaseModel,
-      keys: M[number]['key'],
-      whereOptions: WhereOptions,
-      cacheOptions: { ttl?: number, rejectOnEmpty?: boolean } = { ttl: 1000, rejectOnEmpty: false }
+      cacheName: M[number]['name'],
+      options: FindOptions<ExtractRouteParams<M[number]['attributes'][number]>> & { ttl?: number, rejectOnEmpty?: boolean | Error },
     ): Promise<T> {
-      return await this.findOne<T>({ where: whereOptions })
+
+      console.log('modelTTL', this.modelTTL);
+      const ttl = options.ttl || this.modelTTL || RepositoryModule.defaultTTL
+
+      if (!caches.some(cache => cache.name === cacheName))
+        throw new Error(`cache name '${cacheName}' not exists at model ${this.name}`)
+
+
+      const attributesKey = getAttributesKey(cacheName, this.caches)
+      const whereOptions = setWhereOptions(options?.where, attributesKey)
+
+      const whereOptionsString = CacheUtility.setQueryOptions({ where: whereOptions })
+      const cacheKey = CacheUtility.setKey(this.name, whereOptionsString, cacheName)
+      let modelString = await RepositoryModule.catchGetter({ key: cacheKey })
+
+      if (!modelString) {
+
+        const newModel = await this.findOne<T>({ ...options, where: whereOptions })
+        modelString = JSON.stringify(newModel)
+
+        if (newModel)
+          RepositoryModule.catchSetter({ key: cacheKey, value: modelString, ttl })
+      }
+
+      const model = transformCacheToModel(this, modelString)
+
+      if (!model && options.rejectOnEmpty) {
+        throw Error(`${this.notFoundMessage}`)
+      }
+
+      return model
     }
   }
 }
