@@ -20,7 +20,7 @@ export interface FindOptionsCache<T extends PropertyKey> extends DefaultOptionsC
   group?: string[]
 }
 
-export interface FindAllOptionsCache<T extends PropertyKey> extends Omit<FindOptions<T>, 'lock' | 'raw'> {
+export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, 'lock' | 'raw'> {
   ttl?: number
 }
 
@@ -177,7 +177,7 @@ export function base<TModelAttributes extends {} = any, TCreationAttributes exte
     }
 
     static async findAllCache<T extends Model>(this: { new(): T } & typeof BaseModel,
-      { ttl, ...options }: FindAllOptionsCache<M[number]['attributes'][number]>,
+      { ttl, ...options }: FindAllOptionsCache<TModelAttributes>,
     ): Promise<T> {
 
       const TTL = ttl || this.modelTTL || RepositoryModule.defaultTTL
