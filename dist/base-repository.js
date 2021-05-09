@@ -176,7 +176,7 @@ class Repository {
             this.model.max('updatedAt', { where: options.where }),
             this.model.count({ where: options.where }),
         ]);
-        const max = date_utility_1.DateUtility.convertDatetimeToEpoch(maxUpdatedAt) + +count;
+        const max = date_utility_1.DateUtility.convertDateTimeToEpoch(maxUpdatedAt) + +count;
         const keyOpts = cache_utilty_1.default.setQueryOptions(options);
         const keyTime = cache_utilty_1.default.setKey(this.cacheModel, keyOpts);
         let timeCached = await this.getCacheStore().get(keyTime);

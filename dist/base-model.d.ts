@@ -1,9 +1,22 @@
-import { FindOptions } from 'sequelize';
+import { FindOptions, Identifier, WhereAttributeHash } from 'sequelize';
 import { Model } from 'sequelize-typescript';
 import { CacheKey } from './cache-utilty';
 declare type ExtractRouteParams<T extends PropertyKey> = string extends T ? Record<string, string> : {
     [k in T]?: unknown;
 };
+interface DefaultOptionsCache {
+    ttl?: number;
+    isThrow?: boolean;
+}
+export interface FindOptionsCache<T extends PropertyKey> extends DefaultOptionsCache {
+    where?: WhereAttributeHash<ExtractRouteParams<T>>;
+    order?: [string, string][];
+    having?: WhereAttributeHash<any>;
+    group?: string[];
+}
+export interface FindAllOptionsCache<T extends PropertyKey> extends Omit<FindOptions<T>, 'lock' | 'raw'> {
+    ttl?: number;
+}
 export declare function base<TModelAttributes extends {} = any, TCreationAttributes extends {} = TModelAttributes, M extends readonly CacheKey[] = []>(caches: M): {
     new (values?: TCreationAttributes, options?: import("sequelize/types").BuildOptions): {
         id?: any;
@@ -69,10 +82,9 @@ export declare function base<TModelAttributes extends {} = any, TCreationAttribu
     caches: M;
     modelTTL: number;
     notFoundMessage: string;
-    findOneCache<T extends Model<any, any>>(this: (new () => T) & any, cacheName: M[number]['name'], options: FindOptions<ExtractRouteParams<M[number]['attributes'][number]>> & {
-        ttl?: number;
-        rejectOnEmpty?: boolean | Error;
-    }): Promise<T>;
+    findOneCache<T extends Model<any, any>>(this: (new () => T) & any, cacheName: M[number]['name'], { isThrow, ttl, ...options }?: FindOptionsCache<M[number]['attributes'][number]>): Promise<T>;
+    findByPkCache<T_1 extends Model<any, any>>(this: (new () => T_1) & any, identifier: Identifier, { isThrow, ttl }: DefaultOptionsCache): Promise<T_1>;
+    findAllCache<T_2 extends Model<any, any>>(this: (new () => T_2) & any, { ttl, ...options }: FindAllOptionsCache<M[number]['attributes'][number]>): Promise<T_2>;
     isInitialized: boolean;
     init(attributes: import("sequelize/types").ModelAttributes<import("sequelize/types").Model<any, any>, any>, options: import("sequelize/types").InitOptions<import("sequelize/types").Model<any, any>>): Model<any, any>;
     readonly tableName: string;
@@ -95,15 +107,15 @@ export declare function base<TModelAttributes extends {} = any, TCreationAttribu
         schema: string;
         delimiter: string;
     };
-    scope<M_3 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_3>, options?: string | import("sequelize/types").ScopeOptions | import("sequelize/types").WhereAttributeHash<M_3> | readonly (string | import("sequelize/types").ScopeOptions)[]): import("sequelize/types").ModelCtor<M_3>;
+    scope<M_3 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_3>, options?: string | import("sequelize/types").ScopeOptions | WhereAttributeHash<M_3> | readonly (string | import("sequelize/types").ScopeOptions)[]): import("sequelize/types").ModelCtor<M_3>;
     addScope<M_4 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_4>, name: string, scope: FindOptions<M_4["_attributes"]>, options?: import("sequelize/types").AddScopeOptions): void;
     addScope<M_5 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_5>, name: string, scope: (...args: readonly any[]) => FindOptions<M_5["_attributes"]>, options?: import("sequelize/types").AddScopeOptions): void;
     findAll<M_6 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_6>, options?: FindOptions<M_6["_attributes"]>): Promise<M_6[]>;
-    findByPk<M_7 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_7>, identifier: import("sequelize/types").Identifier, options: Pick<import("sequelize/types").NonNullFindOptions<M_7["_attributes"]>, "type" | "logging" | "benchmark" | "transaction" | "rejectOnEmpty" | "include" | "order" | "group" | "limit" | "offset" | "lock" | "skipLocked" | "raw" | "having" | "subQuery" | "nest" | "plain" | "replacements" | "bind" | "instance" | "mapToModel" | "retry" | "fieldMap" | "useMaster" | "attributes" | "paranoid" | "indexHints">): Promise<M_7>;
-    findByPk<M_8 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_8>, identifier?: import("sequelize/types").Identifier, options?: Pick<FindOptions<M_8["_attributes"]>, "type" | "logging" | "benchmark" | "transaction" | "include" | "order" | "group" | "limit" | "offset" | "lock" | "skipLocked" | "raw" | "having" | "subQuery" | "nest" | "plain" | "replacements" | "bind" | "instance" | "mapToModel" | "retry" | "fieldMap" | "useMaster" | "attributes" | "paranoid" | "indexHints">): Promise<M_8>;
+    findByPk<M_7 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_7>, identifier: Identifier, options: Pick<import("sequelize/types").NonNullFindOptions<M_7["_attributes"]>, "type" | "logging" | "benchmark" | "transaction" | "rejectOnEmpty" | "include" | "order" | "group" | "limit" | "offset" | "lock" | "skipLocked" | "raw" | "having" | "subQuery" | "nest" | "plain" | "replacements" | "bind" | "instance" | "mapToModel" | "retry" | "fieldMap" | "useMaster" | "attributes" | "paranoid" | "indexHints">): Promise<M_7>;
+    findByPk<M_8 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_8>, identifier?: Identifier, options?: Pick<FindOptions<M_8["_attributes"]>, "type" | "logging" | "benchmark" | "transaction" | "include" | "order" | "group" | "limit" | "offset" | "lock" | "skipLocked" | "raw" | "having" | "subQuery" | "nest" | "plain" | "replacements" | "bind" | "instance" | "mapToModel" | "retry" | "fieldMap" | "useMaster" | "attributes" | "paranoid" | "indexHints">): Promise<M_8>;
     findOne<M_9 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_9>, options: import("sequelize/types").NonNullFindOptions<M_9["_attributes"]>): Promise<M_9>;
     findOne<M_10 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_10>, options?: FindOptions<M_10["_attributes"]>): Promise<M_10>;
-    aggregate<T_1, M_11 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_11>, field: keyof M_11["_attributes"] | "*", aggregateFunction: string, options?: import("sequelize/types").AggregateOptions<T_1, M_11["_attributes"]>): Promise<T_1>;
+    aggregate<T_3, M_11 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_11>, field: keyof M_11["_attributes"] | "*", aggregateFunction: string, options?: import("sequelize/types").AggregateOptions<T_3, M_11["_attributes"]>): Promise<T_3>;
     count<M_12 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_12>, options: import("sequelize/types").CountWithOptions<M_12["_attributes"]>): Promise<{
         [key: string]: number;
     }>;
@@ -112,9 +124,9 @@ export declare function base<TModelAttributes extends {} = any, TCreationAttribu
         rows: M_14[];
         count: number;
     }>;
-    max<T_2 extends unknown, M_15 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_15>, field: keyof M_15["_attributes"], options?: import("sequelize/types").AggregateOptions<T_2, M_15["_attributes"]>): Promise<T_2>;
-    min<T_3 extends unknown, M_16 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_16>, field: keyof M_16["_attributes"], options?: import("sequelize/types").AggregateOptions<T_3, M_16["_attributes"]>): Promise<T_3>;
-    sum<T_4 extends unknown, M_17 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_17>, field: keyof M_17["_attributes"], options?: import("sequelize/types").AggregateOptions<T_4, M_17["_attributes"]>): Promise<number>;
+    max<T_4 extends unknown, M_15 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_15>, field: keyof M_15["_attributes"], options?: import("sequelize/types").AggregateOptions<T_4, M_15["_attributes"]>): Promise<T_4>;
+    min<T_5 extends unknown, M_16 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_16>, field: keyof M_16["_attributes"], options?: import("sequelize/types").AggregateOptions<T_5, M_16["_attributes"]>): Promise<T_5>;
+    sum<T_6 extends unknown, M_17 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_17>, field: keyof M_17["_attributes"], options?: import("sequelize/types").AggregateOptions<T_6, M_17["_attributes"]>): Promise<number>;
     build<M_18 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_18>, record?: M_18["_creationAttributes"], options?: import("sequelize/types").BuildOptions): M_18;
     bulkBuild<M_19 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_19>, records: readonly M_19["_creationAttributes"][], options?: import("sequelize/types").BuildOptions): M_19[];
     create<M_20 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_20>, values?: M_20["_creationAttributes"], options?: import("sequelize/types").CreateOptions<M_20["_attributes"]>): Promise<M_20>;
@@ -185,10 +197,10 @@ export declare function base<TModelAttributes extends {} = any, TCreationAttribu
     beforeSync(fn: (options: import("sequelize/types").SyncOptions) => void | Promise<void>): void;
     afterSync(name: string, fn: (options: import("sequelize/types").SyncOptions) => void | Promise<void>): void;
     afterSync(fn: (options: import("sequelize/types").SyncOptions) => void | Promise<void>): void;
-    hasOne<M_77 extends import("sequelize/types").Model<any, any>, T_5 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_77>, target: import("sequelize/types").ModelStatic<T_5>, options?: import("sequelize/types").HasOneOptions): import("sequelize/types").HasOne<M_77, T_5>;
-    belongsTo<M_78 extends import("sequelize/types").Model<any, any>, T_6 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_78>, target: import("sequelize/types").ModelStatic<T_6>, options?: import("sequelize/types").BelongsToOptions): import("sequelize/types").BelongsTo<M_78, T_6>;
-    hasMany<M_79 extends import("sequelize/types").Model<any, any>, T_7 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_79>, target: import("sequelize/types").ModelStatic<T_7>, options?: import("sequelize/types").HasManyOptions): import("sequelize/types").HasMany<M_79, T_7>;
-    belongsToMany<M_80 extends import("sequelize/types").Model<any, any>, T_8 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_80>, target: import("sequelize/types").ModelStatic<T_8>, options: import("sequelize/types").BelongsToManyOptions): import("sequelize/types").BelongsToMany<M_80, T_8>;
+    hasOne<M_77 extends import("sequelize/types").Model<any, any>, T_7 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_77>, target: import("sequelize/types").ModelStatic<T_7>, options?: import("sequelize/types").HasOneOptions): import("sequelize/types").HasOne<M_77, T_7>;
+    belongsTo<M_78 extends import("sequelize/types").Model<any, any>, T_8 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_78>, target: import("sequelize/types").ModelStatic<T_8>, options?: import("sequelize/types").BelongsToOptions): import("sequelize/types").BelongsTo<M_78, T_8>;
+    hasMany<M_79 extends import("sequelize/types").Model<any, any>, T_9 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_79>, target: import("sequelize/types").ModelStatic<T_9>, options?: import("sequelize/types").HasManyOptions): import("sequelize/types").HasMany<M_79, T_9>;
+    belongsToMany<M_80 extends import("sequelize/types").Model<any, any>, T_10 extends import("sequelize/types").Model<any, any>>(this: import("sequelize/types").ModelStatic<M_80>, target: import("sequelize/types").ModelStatic<T_10>, options: import("sequelize/types").BelongsToManyOptions): import("sequelize/types").BelongsToMany<M_80, T_10>;
     addHook<H extends import("sequelize/types/lib/hooks").Hooks<import("sequelize/types").Model<any, any>, any, any>, K_17 extends "beforeDefine" | "afterDefine" | "beforeInit" | "afterInit" | "beforeConnect" | "afterConnect" | "beforeDisconnect" | "afterDisconnect" | "beforeValidate" | "afterValidate" | "beforeCreate" | "afterCreate" | "beforeDestroy" | "afterDestroy" | "beforeRestore" | "afterRestore" | "beforeUpdate" | "afterUpdate" | "beforeSave" | "afterSave" | "beforeBulkCreate" | "afterBulkCreate" | "beforeBulkDestroy" | "afterBulkDestroy" | "beforeBulkRestore" | "afterBulkRestore" | "beforeBulkUpdate" | "afterBulkUpdate" | "beforeFind" | "beforeCount" | "beforeFindAfterExpandIncludeAll" | "beforeFindAfterOptions" | "afterFind" | "beforeSync" | "afterSync" | "beforeBulkSync" | "afterBulkSync">(this: import("sequelize/types/lib/hooks").HooksStatic<H>, hookType: K_17, name: string, fn: import("sequelize/types/lib/hooks").SequelizeHooks<H["_model"], H["_attributes"], H["_creationAttributes"]>[K_17]): import("sequelize/types/lib/hooks").HooksCtor<H>;
     addHook<H_1 extends import("sequelize/types/lib/hooks").Hooks<import("sequelize/types").Model<any, any>, any, any>, K_18 extends "beforeDefine" | "afterDefine" | "beforeInit" | "afterInit" | "beforeConnect" | "afterConnect" | "beforeDisconnect" | "afterDisconnect" | "beforeValidate" | "afterValidate" | "beforeCreate" | "afterCreate" | "beforeDestroy" | "afterDestroy" | "beforeRestore" | "afterRestore" | "beforeUpdate" | "afterUpdate" | "beforeSave" | "afterSave" | "beforeBulkCreate" | "afterBulkCreate" | "beforeBulkDestroy" | "afterBulkDestroy" | "beforeBulkRestore" | "afterBulkRestore" | "beforeBulkUpdate" | "afterBulkUpdate" | "beforeFind" | "beforeCount" | "beforeFindAfterExpandIncludeAll" | "beforeFindAfterOptions" | "afterFind" | "beforeSync" | "afterSync" | "beforeBulkSync" | "afterBulkSync">(this: import("sequelize/types/lib/hooks").HooksStatic<H_1>, hookType: K_18, fn: import("sequelize/types/lib/hooks").SequelizeHooks<H_1["_model"], H_1["_attributes"], H_1["_creationAttributes"]>[K_18]): import("sequelize/types/lib/hooks").HooksCtor<H_1>;
     removeHook<H_2 extends import("sequelize/types/lib/hooks").Hooks<import("sequelize/types").Model<any, any>, any, any>>(this: import("sequelize/types/lib/hooks").HooksStatic<H_2>, hookType: "beforeDefine" | "afterDefine" | "beforeInit" | "afterInit" | "beforeConnect" | "afterConnect" | "beforeDisconnect" | "afterDisconnect" | "beforeValidate" | "afterValidate" | "beforeCreate" | "afterCreate" | "beforeDestroy" | "afterDestroy" | "beforeRestore" | "afterRestore" | "beforeUpdate" | "afterUpdate" | "beforeSave" | "afterSave" | "beforeBulkCreate" | "afterBulkCreate" | "beforeBulkDestroy" | "afterBulkDestroy" | "beforeBulkRestore" | "afterBulkRestore" | "beforeBulkUpdate" | "afterBulkUpdate" | "beforeFind" | "beforeCount" | "beforeFindAfterExpandIncludeAll" | "beforeFindAfterOptions" | "afterFind" | "beforeSync" | "afterSync" | "beforeBulkSync" | "afterBulkSync", name: string): import("sequelize/types/lib/hooks").HooksCtor<H_2>;

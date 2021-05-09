@@ -198,7 +198,7 @@ export abstract class Repository<T extends Model<T>> {
       this.model.count({ where: options.where }),
     ])
 
-    const max = DateUtility.convertDatetimeToEpoch(maxUpdatedAt) + +count
+    const max = DateUtility.convertDateTimeToEpoch(maxUpdatedAt) + +count
 
     // setting up key for FindOptions
     const keyOpts = CacheUtility.setQueryOptions(options);

@@ -161,6 +161,11 @@
         "signature": "d2f31f19e1ba6ed59be9259d660a239d9a3fcbbc8e038c6b2009bde34b175fed",
         "affectsGlobalScope": false
       },
+      "../src/date-utility.ts": {
+        "version": "4756238d2e2a465817c66715fece1194fa7c15ba91cdfa3757896d80728adc2f",
+        "signature": "27668ee3f4f45c05b7386b5467824eeab6d33fe501abe66dfd9a711dca88d6d0",
+        "affectsGlobalScope": false
+      },
       "../node_modules/reflect-metadata/index.d.ts": {
         "version": "8d6d51a5118d000ed3bfe6e1dd1335bebfff3fef23cd2af2f84a24d30f90cc90",
         "signature": "8d6d51a5118d000ed3bfe6e1dd1335bebfff3fef23cd2af2f84a24d30f90cc90",
@@ -1927,18 +1932,13 @@
         "affectsGlobalScope": false
       },
       "../src/cache-utilty.ts": {
-        "version": "008520bff63b7f0a74e6a76cf628f018d1334444e12d59ea50b05957b4c67b65",
-        "signature": "6410173efc067461cf943a20eace5ae5fa91f212205c1bfda4a37e9f6e5e9549",
+        "version": "d7d3db5201189ec43449a8d7638dc0c0803d15f359773271960ac8d9340ef4a1",
+        "signature": "29501e24c73bca75d11010ef3aea2b97880400e52ff6b64a8cbb4f9113f9dc73",
         "affectsGlobalScope": false
       },
       "../src/base-model.ts": {
-        "version": "13964710b0d507c8ca27dc5120bae12fadde8d11738d4c4169adc34f6bb2c268",
-        "signature": "ac6997b439a099e075536722e16a301741fb3774846def6169ec206f3fcf913c",
-        "affectsGlobalScope": false
-      },
-      "../src/date-utility.ts": {
-        "version": "126f9e603ef2567bb86089113c28e8361a4edc29d205c4dae484feef88af8632",
-        "signature": "e018f7a029729b0ef1396ed46e95dd3e1b45a645ecde660ba4f5f7c7bbb10141",
+        "version": "c0872269b1a45df57b25ddfd78e5ede4bf06dfe36a1885b081e31901ad7d16d5",
+        "signature": "34738d2671551645e32e924cd390c5325cd039efa6052076ff01afb8bfa4c5b7",
         "affectsGlobalScope": false
       },
       "../src/helpers.ts": {
@@ -2012,7 +2012,7 @@
         "affectsGlobalScope": true
       },
       "../src/base-repository.ts": {
-        "version": "a39b6d9a92377bde34675e9d69c1de5e1a81902148bf75698dc4b0631da1ca22",
+        "version": "b02cc76a9e0dc8a4591eaf172708f5b7e7b6439045d03e8780bb96e67a07231f",
         "signature": "77eacc9747279da105d1e49edb0174d56b7c4ae596c349986b9091cf78c703e8",
         "affectsGlobalScope": false
       },
@@ -4662,6 +4662,7 @@
         "../node_modules/sequelize-typescript/dist/index.d.ts",
         "../node_modules/sequelize/types/index.d.ts",
         "../src/cache-utilty.ts",
+        "../src/date-utility.ts",
         "../src/repository.module.ts"
       ],
       "../src/base-repository.ts": [

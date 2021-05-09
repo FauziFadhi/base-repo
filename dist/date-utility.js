@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DateUtility = void 0;
 class DateUtility {
-    static convertDatetimeToEpoch(datetime, onSec = false) {
+    static convertDateTimeToEpoch(datetime, onSec = false) {
         return new Date(String(datetime)).getTime();
     }
 }

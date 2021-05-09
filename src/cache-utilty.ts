@@ -4,6 +4,9 @@ import { FindOptions } from 'sequelize';
 export interface CacheKey {
   readonly name: string
   readonly attributes: readonly string[]
+  readonly havingAttributes?: readonly string[]
+  readonly order?: readonly string[]
+  readonly group?: readonly string[]
 }
 
 export class CacheUtility {
