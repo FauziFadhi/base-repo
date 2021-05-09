@@ -6,9 +6,6 @@ import CacheUtility, { CacheKey } from './cache-utilty';
 
 
 async function invalidateCache(model, options, { name, caches }: { name: string, caches: CacheKey[] }) {
-  console.log('model', model);
-  console.log('keys', caches);
-
   const previousModel = { ...model['dataValues'], ...circularToJSON(model['_previousDataValues']) }
 
   console.log('previousModel', previousModel);
@@ -44,7 +41,9 @@ function getWhereOptions(previousModel, attributes: readonly string[]) {
 }
 
 async function invalidationCache(previousModel, { name: modelName, caches }: { name: string, caches: CacheKey[] }) {
-  return caches.map(async ({ name: cacheName, attributes }) => {
+  findByPkInvalidation(previousModel, modelName)
+
+  return caches?.map(async ({ name: cacheName, attributes }) => {
     const whereOptions = getWhereOptions(previousModel, attributes)
     console.log(cacheName, whereOptions);
     const whereOptionsString = CacheUtility.setQueryOptions({ where: whereOptions })
@@ -53,27 +52,40 @@ async function invalidationCache(previousModel, { name: modelName, caches }: { n
     const invalidation = RepositoryModule.cacheInvalidate;
     return await invalidation({ key })
   })
+}
 
+async function findByPkInvalidation(previousModel, modelName) {
+  const key = CacheUtility.setKey(`${modelName}`, previousModel.id, 'id')
+  const invalidation = RepositoryModule.cacheInvalidate;
+  return await invalidation({ key })
 }
 
 
-export function Cache(target): void {
-  const options: { hooks } = Object.assign({},
-    {
-      hooks: {
-        afterUpdate: async (instance, options) => {
-          console.log('instance', instance);
-          return await invalidateCache(instance, options, target)
-        },
-        afterDestroy: async (instance, options) => {
-          return await invalidateCache(instance, options, target)
-        },
-        beforeBulkUpdate: function (options) {
-          options.individualHooks = true;
-        }
-      },
-    });
+export function Cache(cacheOptions: { ttl?: number, caches?: readonly CacheKey[] }) {
+  return (target) => {
 
-  console.log('cache2');
-  annotate(target, options);
+    const options: { hooks } = Object.assign({},
+      {
+        hooks: {
+          afterUpdate: async (instance, options) => {
+            console.log('instance', instance);
+            return await invalidateCache(instance, options, target)
+          },
+          afterDestroy: async (instance, options) => {
+            return await invalidateCache(instance, options, target)
+          },
+          beforeBulkUpdate: function (options) {
+            options.individualHooks = true;
+          }
+        },
+      });
+
+
+    console.log('cache2');
+    console.log('cacheOptions', cacheOptions);
+    target['caches'] = cacheOptions.caches || []
+    target[`modelTTL`] = cacheOptions.ttl || 0
+    annotate(target, options);
+  }
+
 }

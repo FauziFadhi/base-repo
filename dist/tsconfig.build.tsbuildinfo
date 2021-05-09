@@ -1687,8 +1687,8 @@
         "affectsGlobalScope": false
       },
       "../node_modules/sequelize-typescript/dist/model/table/table.d.ts": {
-        "version": "54b7ae6bb6f706e0b05c1200cca0061a62c3e6596a0aabfb29cee4ac53b7468c",
-        "signature": "54b7ae6bb6f706e0b05c1200cca0061a62c3e6596a0aabfb29cee4ac53b7468c",
+        "version": "2cfecc1c80f817d3ad1d03027c7498f97e0e27b633ff384019f4d557b6653eb9",
+        "signature": "2cfecc1c80f817d3ad1d03027c7498f97e0e27b633ff384019f4d557b6653eb9",
         "affectsGlobalScope": false
       },
       "../node_modules/sequelize-typescript/dist/model/index/index-service.d.ts": {
@@ -1937,8 +1937,8 @@
         "affectsGlobalScope": false
       },
       "../src/base-model.ts": {
-        "version": "c0872269b1a45df57b25ddfd78e5ede4bf06dfe36a1885b081e31901ad7d16d5",
-        "signature": "34738d2671551645e32e924cd390c5325cd039efa6052076ff01afb8bfa4c5b7",
+        "version": "95aaf90274fcd9c82d828264284ce7c2aad2ed87043f7de2256d672a967c767a",
+        "signature": "50f331df58e51f3eb1c56d85f36c47ab8daf08b3c7769e7ac0586d72200ec075",
         "affectsGlobalScope": false
       },
       "../src/helpers.ts": {
@@ -2017,8 +2017,8 @@
         "affectsGlobalScope": false
       },
       "../src/cache.ts": {
-        "version": "4fffb8f782c10e18e26819035fe51eaa2832267c5aa88531a95cf384e40dc482",
-        "signature": "fa2a59a679587f827ca24d45d0d375b7901fa5b33c14a05dd778b7c00d218bdc",
+        "version": "97cbd9924f6f5e4a4cdfc71b14fb27a09f14343bf3317f19fa6373cf2798d3e8",
+        "signature": "0b31e3fa3e1eef3022f2eeddbf63c3d9d1858dc92ba384e57c61f5689600028e",
         "affectsGlobalScope": false
       },
       "../src/index.ts": {
@@ -6638,10 +6638,7 @@
       ],
       "../src/base-model.ts": [
         "../node_modules/sequelize-typescript/dist/index.d.ts",
-        "../node_modules/sequelize-typescript/dist/model/model/association/association-create-options.d.ts",
         "../node_modules/sequelize/types/index.d.ts",
-        "../node_modules/sequelize/types/lib/hooks.d.ts",
-        "../node_modules/sequelize/types/lib/instance-validator.d.ts",
         "../src/cache-utilty.ts"
       ],
       "../src/base-repository.ts": [
@@ -6650,6 +6647,9 @@
       ],
       "../src/cache-utilty.ts": [
         "../node_modules/sequelize/types/index.d.ts"
+      ],
+      "../src/cache.ts": [
+        "../src/cache-utilty.ts"
       ],
       "../src/index.ts": [
         "../src/base-model.ts",
