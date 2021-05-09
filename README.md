@@ -1,75 +1,240 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Cache Invalidation at model level extended features for [sequelize-typescript](https://github.com/RobinBuschmann/sequelize-typescript) (v2.1.0)
 
 ## Installation
 
 ```bash
-$ npm install
+$ npm install base-repo sequelize@>6.6.2 sequelize-typescript@2.1.0
 ```
 
-## Running the app
+Your `tsconfig.json` needs the following flags:
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```json
+"target": "es6", // or a more recent ecmascript version
+"experimentalDecorators": true,
+"emitDecoratorMetadata": true
 ```
 
-## Test
+## Module Definition
 
-```bash
-# unit tests
-$ npm run test
+make sure define all mode of sequelize at this level
 
-# e2e tests
-$ npm run test:e2e
+```typescript
+@Module({
+  ...
+  imports: [
+    RepositoryModule.forRoot({
+      defaultTTL: 1000, // DEFINE TTL FOR ALL PROJECT
+      callbackGet: async ({ key }) => {
+        return AppModule.redisService.getClient().get(key) // DEFINE HOW TO GET CACHE FROM GIVEN KEY
+      },
+      callbackInvalidate: ({ key }) => { //
+        return AppModule.redisService.getClient().del(key) // DEFINE HOW TO INVALIDATE CACHE FROM GIVEN KEY
+      },
+      callbackSet: async ({ key, value, ttl }) => {
+        return AppModule.redisService.getClient().set(key, value, 'EX', ttl) // DEFINE HOW TO SET CACHE FROM GIVEN KEY VALUE AND TTL
+      }
+    }),
+   ...
+  ],
+})
 
-# test coverage
-$ npm run test:cov
+export class AppModule {
+  static redisService: RedisService
+
+  constructor(redisService: RedisService) {
+    AppModule.redisService = redisService // DEFINE CACHE SERVICE THAT CAN CALLED AT REPOSITORY DEFINITION
+
+  }
+}
 ```
 
-## Support
+## Model Definition
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### `@Cache(options)`
+
+the @Cache is used for defined ttl and cache for findOne
+
+#### `@Cache` API Options
+
+| Options                                               | Description                                                                    |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `options.ttl`                                         | set TTL for this model, this will override ttl at module                       |
+| `options.caches`                                      | this is for set cache for find One                                             |
+| `options.caches[index][name] : string`                | this is the name for cache that will be used when use [Model.findOneCache](##) |
+| `options.caches[index][attributes]: string[]`         | this is for defining attributes that will be mapped at whereOptions            |
+| `options.caches[index][group] ?: string[]`            | this is for defining group query                                               |
+| `options.caches[index][havingAttributes] ?: string[]` | this is for defining having query                                              |
+| `options.caches[index][order] ?: string[]`            | this is for defining order query                                               |
+
+```typescript
+const caches = [
+  {
+    name: 'byIsDeletedAndName', // this is name of cache key that will used for query
+    attributes: ['isDeleted', 'name'],
+    order: ['id', 'name'],
+  },
+  {
+    name: 'byType',
+    attributes: ['type'],
+  },
+] as const;
+
+@Cache({
+  caches: caches,
+  ttl: 100,
+})
+@Table()
+export class DmCourse extends BaseModel<typeof caches> {}
+```
+
+### Extend `BaseModel`
+
+```ts
+@Cache({
+  caches: caches,
+  ttl: 100,
+})
+@Table()
+export class DmCourse extends BaseModel<typeof caches> {}
+```
+
+the Model need to extends `BaseModel` with first generic type is typeof `caches` that we define for cache
+
+### More Strict
+
+```ts
+interface DmCourseAtt {
+  id: number
+  name: string;
+  type: number;
+}
+
+interface DmCreateAtt extends DmCourseAtt Omit<DmCourseAtt, 'id'>
+
+@Cache({
+  caches: caches,
+  ttl: 100,
+})
+@Table()
+export class DmCourse extends BaseModel<typeof caches, DmCourseAtt, DmCreateAtt> {}
+```
+
+for strict type that can used at default function from sequelize-typescript can be planted at generic type 2 and 3 [sequelize-typescript strict](https://github.com/RobinBuschmann/sequelize-typescript#more-strict)
+
+## How to use
+
+### `Model.findOneCache(cacheName, cacheOptions)`
+
+- `cacheName : string`
+- `cacheOptions : FindOptions` limited findOptions from sequelize-typescript
+
+```ts
+const caches = [
+  {
+    name: 'byIsDeletedAndName', // this is name of cache key that will used for query
+    attributes: ['isDeleted', 'name'],
+    order: ['id', 'name'],
+  },
+] as const;
+
+@Cache({
+  caches: caches,
+})
+@Table()
+export class DmCourse extends BaseModel<typeof caches, DmCourseAtt, DmCreateAtt> {}
+
+...
+
+class CourseController {
+  async getCourse() {
+    const course = await DmCourse.findOneCache('byIsDeletedAndName', {
+      where: {
+        isDeleted: false,
+        name: 'Math',
+        order: [
+          ['id', 'desc'],
+          ['name', 'asc']
+        ]
+      }
+    })
+  }
+}
+```
+
+- you have to use All defined cache attributes that has name `byIsDeletedAndName`
+- every query that outside of defined cache will not executed
+
+#### `findOneCache` API Options
+
+| Options                | Description                                                                       |
+| ---------------------- | --------------------------------------------------------------------------------- |
+| `cacheName`            | name that defined at model                                                        |
+| `cacheOptions.ttl`     | set TTL for this cache key, this will override ttl at module and model (Optional) |
+| `cacheOptions.isThrow` | will throw error when set `true` (Optional)                                       |
+| `cacheOptions.where`   | limited where from `FindOptions` sequelize-typescript                             |
+| `cacheOptions.group`   | limited group from `FindOptions` sequelize-typescript (Optional)                  |
+| `cacheOptions.having`  | limited having from `FindOptions` sequelize-typescript (Optional)                 |
+| `cacheOptions.order`   | limited order from `FindOptions` sequelize-typescript (Optional)                  |
+
+### `Model.findByPkCache(id, options)`
+
+```ts
+class CourseController {
+  async getCourse() {
+    const course = await DmCourse.findByPkCache(1, {
+      ttl: 100,
+      isThrow: true,
+    });
+  }
+}
+```
+
+- find By Primary Cache will invalidate when any destroy or update
+
+#### `findByPkCache` API Options
+
+| Options                | Description                                                                       |
+| ---------------------- | --------------------------------------------------------------------------------- |
+| `id`                   | value of id                                                                       |
+| `cacheOptions.ttl`     | set TTL for this cache key, this will override ttl at module and model (Optional) |
+| `cacheOptions.isThrow` | will throw error when set `true`                                                  |
+
+### `Model.findAllCache(cacheOptions)`
+
+```ts
+class CourseController {
+  async getCourse() {
+    const course = await DmCourse.findAllCache({
+     ttl: 100,
+     attributes: ['id','name','type']
+     where: {
+       isDeleted: false,
+     },
+     order: [
+       ['id','desc']
+     ],
+     include: [
+       {
+         // any association
+       }
+     ],
+     limit: 10,
+    })
+  }
+}
+```
+
+- find all data and Cache it when has value. will invalidate and update cache when ttl reach 0 or when get max updates or count is different from before
+
+#### `findAllCache` API Options
+
+| Options             | Description                                                                       |
+| ------------------- | --------------------------------------------------------------------------------- |
+| `cacheOptions.ttl`  | set TTL for this cache key, this will override ttl at module and model (Optional) |
+| `{...cacheOptions}` | is same with FindOptions from sequelize-typescript                                |
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-  Nest is [MIT licensed](LICENSE).
+- Author - [Fauzi Fadhillah](https://github.com/FauziFadhi)
