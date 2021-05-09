@@ -5,7 +5,7 @@ Cache Invalidation at model level extended features for [sequelize-typescript](h
 ## Installation
 
 ```bash
-$ npm install base-repo sequelize@>6.6.2 sequelize-typescript@2.1.0
+$ npm install base-repo@beta sequelize@>6.6.2 sequelize-typescript@2.1.0
 ```
 
 Your `tsconfig.json` needs the following flags:
