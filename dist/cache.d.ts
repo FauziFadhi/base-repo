@@ -1,5 +1,5 @@
 import { CacheKey } from './cache-utilty';
 export declare function Cache(cacheOptions: {
     ttl?: number;
-    caches?: readonly CacheKey[];
+    caches: CacheKey;
 }): (target: any) => void;

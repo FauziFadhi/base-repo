@@ -17,14 +17,14 @@ export interface FindOptionsCache<T extends PropertyKey> extends DefaultOptionsC
 export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, 'lock' | 'raw'> {
     ttl?: number;
 }
-export declare class BaseModel<M extends readonly CacheKey[] = readonly any[], TAttributes extends {} = any, TCreate extends {} = TAttributes> extends Model<TAttributes, TCreate> {
-    static caches: CacheKey[];
+export declare class BaseModel<M extends CacheKey = any, TAttributes extends {} = any, TCreate extends {} = TAttributes> extends Model<TAttributes, TCreate> {
+    static caches: CacheKey;
     static modelTTL: number;
     static notFoundMessage: string;
     caches: M;
-    static findOneCache<T extends BaseModel>(this: {
+    static findOneCache<T extends BaseModel, CacheName extends keyof T['caches']>(this: {
         new (): T;
-    }, cacheName: T['caches'][number]['name'], { isThrow, ttl, ...options }?: FindOptionsCache<T['caches'][number]['attributes'][number]>): Promise<T>;
+    }, cacheName: CacheName, { isThrow, ttl, ...options }?: FindOptionsCache<T['caches'][CacheName]['attributes'][number]>): Promise<T>;
     static findByPkCache<T extends BaseModel>(this: {
         new (): T;
     }, identifier: string | number, { isThrow, ttl }?: DefaultOptionsCache): Promise<T>;

@@ -2,10 +2,10 @@ import { circularToJSON } from 'helpers';
 import { RepositoryModule } from 'repository.module';
 import { addOptions } from 'sequelize-typescript';
 
-import CacheUtility, { CacheKey } from './cache-utilty';
+import CacheUtility, { CacheKey, CacheKeyAtt } from './cache-utilty';
 
 
-async function invalidateCache(model, options, { name, caches }: { name: string, caches: CacheKey[] }) {
+async function invalidateCache(model, options, { name, caches }: { name: string, caches: CacheKey }) {
   const previousModel = { ...model['dataValues'], ...circularToJSON(model['_previousDataValues']) }
 
   console.log('previousModel', previousModel);
@@ -27,12 +27,9 @@ function annotate(target, options: { hooks }) {
 }
 
 function getWhereOptions(previousModel, attributes: readonly string[]) {
-  return attributes.reduce((result: object, current: string): object => {
-    const currentPropValue = previousModel[current]
 
-    if (currentPropValue == undefined)
-      throw new Error(`${[current]} value is missing`)
-
+  if (!attributes?.length) return undefined
+  return attributes?.reduce((result: object, current: string): object => {
     return {
       ...result,
       [current]: previousModel[current]
@@ -40,18 +37,28 @@ function getWhereOptions(previousModel, attributes: readonly string[]) {
   }, {})
 }
 
-async function invalidationCache(previousModel, { name: modelName, caches }: { name: string, caches: CacheKey[] }) {
+function getOptions(previousModel, cache: CacheKeyAtt) {
+  const where = getWhereOptions(previousModel, cache.attributes)
+  const having = getWhereOptions(previousModel, cache.havingAttributes)
+  const group = cache.group as string[]
+  // const order = cache.order as [string, string][]
+
+  return { where, having, group }
+}
+
+async function invalidationCache(previousModel, { name: modelName, caches }: { name: string, caches: CacheKey }) {
   findByPkInvalidation(previousModel, modelName)
 
-  return caches?.map(async ({ name: cacheName, attributes }) => {
-    const whereOptions = getWhereOptions(previousModel, attributes)
-    console.log(cacheName, whereOptions);
-    const whereOptionsString = CacheUtility.setQueryOptions({ where: whereOptions })
-    const key = CacheUtility.setKey(modelName, whereOptionsString, cacheName)
+  const cacheInvalidate = []
+  const invalidation = RepositoryModule.cacheInvalidate;
+  for (const keyName in caches) {
+    const cache = caches[keyName];
+    const cacheOptions = getOptions(previousModel, cache)
+    const whereOptionsString = CacheUtility.setQueryOptions(cacheOptions)
+    const key = CacheUtility.setKey(modelName, whereOptionsString, keyName)
 
-    const invalidation = RepositoryModule.cacheInvalidate;
-    return await invalidation({ key })
-  })
+    cacheInvalidate.push(await invalidation({ key }))
+  }
 }
 
 async function findByPkInvalidation(previousModel, modelName) {
@@ -61,7 +68,7 @@ async function findByPkInvalidation(previousModel, modelName) {
 }
 
 
-export function Cache(cacheOptions: { ttl?: number, caches?: readonly CacheKey[] }) {
+export function Cache(cacheOptions: { ttl?: number, caches: CacheKey }) {
   return (target) => {
 
     const options: { hooks } = Object.assign({},
@@ -83,7 +90,7 @@ export function Cache(cacheOptions: { ttl?: number, caches?: readonly CacheKey[]
 
     console.log('cache2');
     console.log('cacheOptions', cacheOptions);
-    target['caches'] = cacheOptions.caches || []
+    target['caches'] = cacheOptions.caches || {}
     target[`modelTTL`] = cacheOptions.ttl || 0
     annotate(target, options);
   }

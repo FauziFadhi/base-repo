@@ -23,23 +23,29 @@ function annotate(target, options) {
     sequelize_typescript_1.addOptions(target.prototype, options);
 }
 function getWhereOptions(previousModel, attributes) {
-    return attributes.reduce((result, current) => {
-        const currentPropValue = previousModel[current];
-        if (currentPropValue == undefined)
-            throw new Error(`${[current]} value is missing`);
+    if (!(attributes === null || attributes === void 0 ? void 0 : attributes.length))
+        return undefined;
+    return attributes === null || attributes === void 0 ? void 0 : attributes.reduce((result, current) => {
         return Object.assign(Object.assign({}, result), { [current]: previousModel[current] });
     }, {});
 }
+function getOptions(previousModel, cache) {
+    const where = getWhereOptions(previousModel, cache.attributes);
+    const having = getWhereOptions(previousModel, cache.havingAttributes);
+    const group = cache.group;
+    return { where, having, group };
+}
 async function invalidationCache(previousModel, { name: modelName, caches }) {
     findByPkInvalidation(previousModel, modelName);
-    return caches === null || caches === void 0 ? void 0 : caches.map(async ({ name: cacheName, attributes }) => {
-        const whereOptions = getWhereOptions(previousModel, attributes);
-        console.log(cacheName, whereOptions);
-        const whereOptionsString = cache_utilty_1.default.setQueryOptions({ where: whereOptions });
-        const key = cache_utilty_1.default.setKey(modelName, whereOptionsString, cacheName);
-        const invalidation = repository_module_1.RepositoryModule.cacheInvalidate;
-        return await invalidation({ key });
-    });
+    const cacheInvalidate = [];
+    const invalidation = repository_module_1.RepositoryModule.cacheInvalidate;
+    for (const keyName in caches) {
+        const cache = caches[keyName];
+        const cacheOptions = getOptions(previousModel, cache);
+        const whereOptionsString = cache_utilty_1.default.setQueryOptions(cacheOptions);
+        const key = cache_utilty_1.default.setKey(modelName, whereOptionsString, keyName);
+        cacheInvalidate.push(await invalidation({ key }));
+    }
 }
 async function findByPkInvalidation(previousModel, modelName) {
     const key = cache_utilty_1.default.setKey(`${modelName}`, previousModel.id, 'id');
@@ -64,7 +70,7 @@ function Cache(cacheOptions) {
         });
         console.log('cache2');
         console.log('cacheOptions', cacheOptions);
-        target['caches'] = cacheOptions.caches || [];
+        target['caches'] = cacheOptions.caches || {};
         target[`modelTTL`] = cacheOptions.ttl || 0;
         annotate(target, options);
     };

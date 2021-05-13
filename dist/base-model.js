@@ -80,9 +80,10 @@ function TransformCacheToModels(modelClass, dataCache) {
 }
 class BaseModel extends sequelize_typescript_1.Model {
     static async findOneCache(cacheName, _a = { isThrow: false }) {
+        var _b;
         var { isThrow, ttl } = _a, options = __rest(_a, ["isThrow", "ttl"]);
         const TTL = ttl || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
-        const cache = this['caches'].find(cache => cache.name === cacheName);
+        const cache = (_b = this['caches']) === null || _b === void 0 ? void 0 : _b[cacheName];
         if (!cache)
             throw new Error(`cache name '${cacheName}' not exists at model ${this.name}`);
         const cacheOptions = setOptions(options, cache);
@@ -150,7 +151,7 @@ class BaseModel extends sequelize_typescript_1.Model {
     }
 }
 exports.BaseModel = BaseModel;
-BaseModel.caches = [];
+BaseModel.caches = {};
 BaseModel.modelTTL = 0;
 BaseModel.notFoundMessage = `${BaseModel.name} Model Not Found`;
 //# sourceMappingURL=base-model.js.map

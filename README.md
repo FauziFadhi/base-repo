@@ -18,12 +18,15 @@ Your `tsconfig.json` needs the following flags:
 
 ## Module Definition
 
-make sure define all mode of sequelize at this level
+make sure defined all model of sequelize at this level
+and
 
 ```typescript
 @Module({
   ...
   imports: [
+    RedisModule.register(cacheConfig() as RedisModuleOptions),
+
     RepositoryModule.forRoot({
       defaultTTL: 1000, // DEFINE TTL FOR ALL PROJECT
       callbackGet: async ({ key }) => {
@@ -35,6 +38,10 @@ make sure define all mode of sequelize at this level
       callbackSet: async ({ key, value, ttl }) => {
         return AppModule.redisService.getClient().set(key, value, 'EX', ttl) // DEFINE HOW TO SET CACHE FROM GIVEN KEY VALUE AND TTL
       }
+    }),
+
+    SequelizeModule.forRoot({
+      ...DBOptions,
     }),
    ...
   ],
@@ -58,29 +65,26 @@ the @Cache is used for defined ttl and cache for findOne
 
 #### `@Cache` API Options
 
-| Options                                               | Description                                                                    |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `options.ttl`                                         | set TTL for this model, this will override ttl at module                       |
-| `options.caches`                                      | this is for set cache for find One                                             |
-| `options.caches[index][name] : string`                | this is the name for cache that will be used when use [Model.findOneCache](##) |
-| `options.caches[index][attributes]: string[]`         | this is for defining attributes that will be mapped at whereOptions            |
-| `options.caches[index][group] ?: string[]`            | this is for defining group query                                               |
-| `options.caches[index][havingAttributes] ?: string[]` | this is for defining having query                                              |
-| `options.caches[index][order] ?: string[]`            | this is for defining order query                                               |
+| Options                                                 | Description                                                                    |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `options.ttl`                                           | set TTL for this model, this will override ttl at module (Optional)            |
+| `options.caches`                                        | this is for set cache for find One                                             |
+| `options.caches[keyName] : string`                      | this is the name for cache that will be used when use [Model.findOneCache](##) |
+| `options.caches[keyName][attributes]: string[]`         | this is for defining attributes that will be mapped at whereOptions            |
+| `options.caches[keyName][group] ?: string[]`            | this is for defining group query                                               |
+| `options.caches[keyName][havingAttributes] ?: string[]` | this is for defining having query                                              |
+| `options.caches[keyName][order] ?: string[]`            | this is for defining order query                                               |
 
 ```typescript
-const caches = [
-  {
-    name: 'byIsDeletedAndName', // this is name of cache key that will used for query
+const caches = {
+  byIsDeletedAndName: {
     attributes: ['isDeleted', 'name'],
     order: ['id', 'name'],
   },
-  {
-    name: 'byType',
+  byType: {
     attributes: ['type'],
   },
-] as const;
-
+} as const; // as  const is required, this for attributes recommend when using it;
 @Cache({
   caches: caches,
   ttl: 100,
@@ -131,13 +135,13 @@ for strict type that can used at default function from sequelize-typescript can 
 - `cacheOptions : FindOptions` limited findOptions from sequelize-typescript
 
 ```ts
-const caches = [
-  {
-    name: 'byIsDeletedAndName', // this is name of cache key that will used for query
+// file: DmCourse.ts
+const caches = {
+  byIsDeletedAndName: {
     attributes: ['isDeleted', 'name'],
     order: ['id', 'name'],
-  },
-] as const;
+  }
+} as const
 
 @Cache({
   caches: caches,
@@ -146,6 +150,8 @@ const caches = [
 export class DmCourse extends BaseModel<typeof caches, DmCourseAtt, DmCreateAtt> {}
 
 ...
+
+// file: Course.controller.ts
 
 class CourseController {
   async getCourse() {

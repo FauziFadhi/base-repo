@@ -3,7 +3,7 @@ import { RepositoryModule } from 'repository.module';
 import { FindOptions, WhereAttributeHash, WhereOptions } from 'sequelize';
 import { Model } from 'sequelize-typescript';
 
-import CacheUtility, { CacheKey } from './cache-utilty';
+import CacheUtility, { CacheKey, CacheKeyAtt } from './cache-utilty';
 
 type ExtractRouteParams<T extends PropertyKey> = string extends T
   ? Record<string, string>
@@ -66,7 +66,7 @@ function setGroup<T extends string[]>(groups: T, groupCache: readonly string[]):
   return groups
 }
 
-function setOptions(options: FindOptionsCache<any>, cache: CacheKey) {
+function setOptions(options: FindOptionsCache<any>, cache: CacheKeyAtt) {
   const where: WhereOptions = setWhereOptions(options?.where, cache.attributes)
   const order = setOrder(options?.order, cache.order)
   const having = setWhereOptions(options.having, cache.havingAttributes)
@@ -110,10 +110,10 @@ function TransformCacheToModels(modelClass: any, dataCache: string) {
   })
 }
 
-export class BaseModel<M extends readonly CacheKey[] = readonly any[], TAttributes extends {} = any, TCreate extends {} = TAttributes>
+export class BaseModel<M extends CacheKey = any, TAttributes extends {} = any, TCreate extends {} = TAttributes>
   extends Model<TAttributes, TCreate> {
 
-  static caches: CacheKey[] = []
+  static caches: CacheKey = {}
   static modelTTL: number = 0
   static notFoundMessage = `${BaseModel.name} Model Not Found`
 
@@ -133,14 +133,14 @@ export class BaseModel<M extends readonly CacheKey[] = readonly any[], TAttribut
    * @param options 
    * @returns 
    */
-  static async findOneCache<T extends BaseModel>(this: { new(): T },
-    cacheName: T['caches'][number]['name'],
-    { isThrow, ttl, ...options }: FindOptionsCache<T['caches'][number]['attributes'][number]> = { isThrow: false },
+  static async findOneCache<T extends BaseModel, CacheName extends keyof T['caches']>(this: { new(): T },
+    cacheName: CacheName,
+    { isThrow, ttl, ...options }: FindOptionsCache<T['caches'][CacheName]['attributes'][number]> = { isThrow: false },
   ): Promise<T> {
 
     const TTL = ttl || this['modelTTL'] || RepositoryModule.defaultTTL
 
-    const cache = this['caches'].find(cache => cache.name === cacheName)
+    const cache = this['caches']?.[cacheName]
     if (!cache)
       throw new Error(`cache name '${cacheName}' not exists at model ${this.name}`)
 
