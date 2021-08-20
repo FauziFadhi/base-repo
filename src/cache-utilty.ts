@@ -13,14 +13,12 @@ export interface CacheKey {
 
 export class CacheUtility {
 
-  static setKey(name: string, key: any, options?: any) {
-    // tslint:disable-next-line:prefer-template
-    const opt = (options) ? ':' + options : '';
-    // tslint:disable-next-line:prefer-template
-    return ':' + name + opt + '_' + key;
+  static setKey(name: string, key: string | number, options?: string): string {
+    const opt = (options) ? `:${options}` : '';
+    return `:${name}_${key}${opt}`;
   }
 
-  static setQueryOptions(options?: FindOptions) {
+  static setQueryOptions(options?: FindOptions): string {
     const hash = crypto.createHash('md5');
     return ((Object.keys(options).length === 0) ? 'all' : hash.update(JSON.stringify(options)).digest('base64'));
   }
@@ -31,12 +29,12 @@ export class CacheUtility {
   }
 
   // for list cache usage
-  static setResult(result: string) {
+  static setResult(result: string): Record<string, unknown> {
     return JSON.parse(result)
   }
 
 
-  static setOneQueryOptions(options?: FindOptions) {
+  static setOneQueryOptions(options?: FindOptions): string {
     const hash = crypto.createHash('md5');
     return ((Object.keys(options).length === 0) ? 'one' : hash.update(JSON.stringify(options)).digest('base64'));
   }

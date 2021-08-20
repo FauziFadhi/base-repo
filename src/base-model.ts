@@ -1,78 +1,24 @@
+import { NotFoundException } from '@nestjs/common';
 import { DateUtility } from 'date-utility';
 import { RepositoryModule } from 'repository.module';
-import { FindOptions, WhereAttributeHash, WhereOptions } from 'sequelize';
+import { FindOptions, IndexHintable, QueryOptions } from 'sequelize';
 import { Model } from 'sequelize-typescript';
 
-import CacheUtility, { CacheKey, CacheKeyAtt } from './cache-utilty';
+import CacheUtility, { CacheKey } from './cache-utilty';
 
-type ExtractRouteParams<T extends PropertyKey> = string extends T
-  ? Record<string, string>
-  : { [k in T]?: unknown }
-
+type UnusedOptionsAttribute = 'lock' | 'raw' | 'skipLocked' | keyof IndexHintable | keyof QueryOptions
 export interface DefaultOptionsCache {
   ttl?: number
-  isThrow?: boolean
+  /**
+     * Throw if nothing was found.
+     */
+  rejectOnEmpty?: boolean | Error;
 }
-export interface FindOptionsCache<T extends PropertyKey> extends DefaultOptionsCache {
-  where?: WhereAttributeHash<ExtractRouteParams<T>>
-  order?: [string, string][]
-  having?: WhereAttributeHash<any>
-  group?: string[]
-}
-
-export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, 'lock' | 'raw'> {
-  ttl?: number
+export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute>, DefaultOptionsCache {
+  ttl: number
 }
 
-function setWhereOptions<T>(whereOptions: WhereOptions<T>, attributes: readonly string[]): T {
-  if (whereOptions && Object.keys(whereOptions)?.length && !attributes)
-    throw new Error(`cacheKey attributes not exists`)
-
-
-  const newWhereOptions = attributes?.reduce((result: object, current: string): object => {
-    const currentPropValue = whereOptions[current]
-
-    if (currentPropValue == undefined)
-      throw new Error(`${[current]} value is missing`)
-
-    return {
-      ...result,
-      [current]: whereOptions[current]
-    }
-  }, {})
-
-  return newWhereOptions as T
-}
-
-function setOrder<T extends [string, string][]>(orders: T, orderCache: readonly string[]): T {
-  if (orders?.length && !orderCache?.length)
-    throw new Error(`order for this cache not set`)
-
-  orderCache?.forEach((order, index) => {
-    if (order !== orders[index][0])
-      throw new Error(`Order ${order} not set properly`)
-  })
-  return orders
-}
-
-function setGroup<T extends string[]>(groups: T, groupCache: readonly string[]): T {
-  if (groups?.length && !groupCache?.length)
-    throw new Error(`Group for this cache not set`)
-
-  groupCache?.forEach((group, index) => {
-    if (group !== groups[index])
-      throw new Error(`Order ${group} not set properly`)
-  })
-  return groups
-}
-
-function setOptions(options: FindOptionsCache<any>, cache: CacheKeyAtt) {
-  const where: WhereOptions = setWhereOptions(options?.where, cache.attributes)
-  const order = setOrder(options?.order, cache.order)
-  const having = setWhereOptions(options.having, cache.havingAttributes)
-  const group = setGroup(options.group, cache.group)
-
-  return { where, order, group, having }
+export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute>, DefaultOptionsCache {
 }
 
 function transformCacheToModel(modelClass: any, dataCache: string) {
@@ -92,34 +38,30 @@ function transformCacheToModel(modelClass: any, dataCache: string) {
 }
 
 function TransformCacheToModels(modelClass: any, dataCache: string) {
-  const modelDatas = JSON.parse(dataCache)
+  const modelData = JSON.parse(dataCache)
 
-  if (!modelDatas?.length) return []
+  if (!modelData?.length) return []
 
-  const models = modelClass.bulkBuild(modelDatas, { isNewRecord: false })
+  const models = modelClass.bulkBuild(modelData, { isNewRecord: false })
 
   return models.map((model, index) => {
-    const modelData = modelDatas[index]
-    if (modelData.createdAt)
-      model.setDataValue('createdAt', modelData.createdAt)
+    const data = modelData[index]
+    if (data.createdAt)
+      model.setDataValue('createdAt', data.createdAt)
 
-    if (modelData.updatedAt)
-      model.setDataValue('updatedAt', modelData.updatedAt)
+    if (data.updatedAt)
+      model.setDataValue('updatedAt', data.updatedAt)
 
     return model
   })
 }
 
-export class BaseModel<M extends CacheKey = any, TAttributes extends {} = any, TCreate extends {} = TAttributes>
+export class BaseModel<TAttributes extends Record<string, unknown> = any, TCreate extends Record<string, unknown> = TAttributes>
   extends Model<TAttributes, TCreate> {
 
   static caches: CacheKey = {}
-  static modelTTL: number = 0
+  static modelTTL = 0
   static notFoundMessage = `${BaseModel.name} Model Not Found`
-
-  caches: M
-
-
 
   /**
    * should define first object `caches` at model definition
@@ -133,37 +75,30 @@ export class BaseModel<M extends CacheKey = any, TAttributes extends {} = any, T
    * @param options 
    * @returns 
    */
-  static async findOneCache<T extends BaseModel, CacheName extends keyof T['caches']>(this: { new(): T },
-    cacheName: CacheName,
-    { isThrow, ttl, ...options }: FindOptionsCache<T['caches'][CacheName]['attributes'][number]> = { isThrow: false },
+  static async findOneCache<T extends BaseModel>(this: { new(): T },
+    { ttl, ...options }: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']>,
   ): Promise<T> {
 
     const TTL = ttl || this['modelTTL'] || RepositoryModule.defaultTTL
 
-    const cache = this['caches']?.[cacheName]
-    if (!cache)
-      throw new Error(`cache name '${cacheName}' not exists at model ${this.name}`)
-
-    const cacheOptions = setOptions(options, cache)
-
-    const optionsString = CacheUtility.setQueryOptions(cacheOptions)
-    const cacheKey = CacheUtility.setKey(this.name, optionsString, cacheName)
-    let modelString = await RepositoryModule.catchGetter({ key: cacheKey })
+    const optionsString = CacheUtility.setOneQueryOptions(options)
+    let modelString = await RepositoryModule.catchGetter({ key: `*_${optionsString}*` })
 
     if (!modelString) {
-
-      const newModel = await this['findOne'](cacheOptions)
+      const newModel = await this['findOne'](options)
       modelString = JSON.stringify(newModel)
 
-      if (newModel)
-        RepositoryModule.catchSetter({ key: cacheKey, value: modelString, ttl: TTL })
+
+      if (newModel) {
+        const key = CacheUtility.setKey(this.name, optionsString, newModel.primaryKeyAttribute)
+        RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL })
+      }
     }
 
     const model = transformCacheToModel(this, modelString)
 
-    const modelNullOrDeleted = Boolean(!model || model.isDeleted)
-    if (modelNullOrDeleted && isThrow) {
-      throw Error(`${this['notFoundMessage']}`)
+    if (!model && typeof options.rejectOnEmpty == 'boolean' && options.rejectOnEmpty) {
+      throw new NotFoundException(this['notFoundMessage'])
     }
 
     return model
@@ -178,28 +113,31 @@ export class BaseModel<M extends CacheKey = any, TAttributes extends {} = any, T
    */
   static async findByPkCache<T extends BaseModel>(this: { new(): T },
     identifier: string | number,
-    { isThrow, ttl }: DefaultOptionsCache = { isThrow: false, ttl: 0 },
+    { ttl, ...options }:
+      Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'>
+      | Omit<FindAllOptionsCache<T['_attributes']>, 'where'>,
   ): Promise<T> {
 
     const TTL = ttl || this['modelTTL'] || RepositoryModule.defaultTTL
 
-    const cacheKey = CacheUtility.setKey(`${this.name}`, identifier, 'id')
-    let modelString = await RepositoryModule.catchGetter({ key: cacheKey })
-
+    const optionsString = CacheUtility
+      .setOneQueryOptions({ ...options, where: { [this['primaryKeyAttribute']]: identifier } }) + 'pk'
+    let modelString = await RepositoryModule.catchGetter({ key: `*_${optionsString}*` })
     if (!modelString) {
 
       const newModel = await this['findByPk'](identifier)
       modelString = JSON.stringify(newModel)
 
-      if (newModel)
-        RepositoryModule.catchSetter({ key: cacheKey, value: modelString, ttl: TTL })
+      if (newModel) {
+        const key = CacheUtility.setKey(this.name, optionsString, newModel.primaryKeyAttribute)
+        RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL })
+      }
     }
 
     const model = transformCacheToModel(this, modelString)
 
-    const modelNullOrDeleted = Boolean(!model || model.isDeleted)
-    if (modelNullOrDeleted && isThrow) {
-      throw Error(`${this['notFoundMessage']}`)
+    if (!model && typeof options.rejectOnEmpty == 'boolean' && options.rejectOnEmpty) {
+      throw new NotFoundException(this['notFoundMessage'])
     }
 
     return model
