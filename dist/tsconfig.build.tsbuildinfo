@@ -161,11 +161,6 @@
         "signature": "d2f31f19e1ba6ed59be9259d660a239d9a3fcbbc8e038c6b2009bde34b175fed",
         "affectsGlobalScope": false
       },
-      "../src/date-utility.ts": {
-        "version": "4756238d2e2a465817c66715fece1194fa7c15ba91cdfa3757896d80728adc2f",
-        "signature": "27668ee3f4f45c05b7386b5467824eeab6d33fe501abe66dfd9a711dca88d6d0",
-        "affectsGlobalScope": false
-      },
       "../node_modules/reflect-metadata/index.d.ts": {
         "version": "8d6d51a5118d000ed3bfe6e1dd1335bebfff3fef23cd2af2f84a24d30f90cc90",
         "signature": "8d6d51a5118d000ed3bfe6e1dd1335bebfff3fef23cd2af2f84a24d30f90cc90",
@@ -1161,9 +1156,14 @@
         "signature": "ceadf8ae9b705cdfa854ab0efc44d22509e8e2a0d9ff35206bde3a954e469f07",
         "affectsGlobalScope": false
       },
+      "../src/date-utility.ts": {
+        "version": "4756238d2e2a465817c66715fece1194fa7c15ba91cdfa3757896d80728adc2f",
+        "signature": "27668ee3f4f45c05b7386b5467824eeab6d33fe501abe66dfd9a711dca88d6d0",
+        "affectsGlobalScope": false
+      },
       "../src/repository.module.ts": {
-        "version": "c3e6760087fedc26b0b6326ad7370aece8cc24c02b2541fef90aa31bde09b40b",
-        "signature": "a3ec02bbd67b0a989eec067726623969e09257cef0f7d9948298363db7c2e2ff",
+        "version": "85719472f268ad59706f3c6f6b69cfa8e08a338c9b6780a198fc55fab053d7e3",
+        "signature": "44aa5d370f19e5e45e1ee7b1cc9e190a4dae65cdce5602b867db9bd281dc982a",
         "affectsGlobalScope": false
       },
       "../node_modules/sequelize/types/lib/data-types.d.ts": {
@@ -1267,8 +1267,8 @@
         "affectsGlobalScope": false
       },
       "../node_modules/sequelize/types/lib/model.d.ts": {
-        "version": "005be7398bb9dc01cc929b91e590ce95ae0c5c0b869ed11a28cae7596460c443",
-        "signature": "005be7398bb9dc01cc929b91e590ce95ae0c5c0b869ed11a28cae7596460c443",
+        "version": "2603cfa5719b807dafd1b9534462ebf72424a75337664576714e127a0dd81c7c",
+        "signature": "2603cfa5719b807dafd1b9534462ebf72424a75337664576714e127a0dd81c7c",
         "affectsGlobalScope": false
       },
       "../node_modules/sequelize/types/lib/utils.d.ts": {
@@ -1687,8 +1687,8 @@
         "affectsGlobalScope": false
       },
       "../node_modules/sequelize-typescript/dist/model/table/table.d.ts": {
-        "version": "2cfecc1c80f817d3ad1d03027c7498f97e0e27b633ff384019f4d557b6653eb9",
-        "signature": "2cfecc1c80f817d3ad1d03027c7498f97e0e27b633ff384019f4d557b6653eb9",
+        "version": "54b7ae6bb6f706e0b05c1200cca0061a62c3e6596a0aabfb29cee4ac53b7468c",
+        "signature": "54b7ae6bb6f706e0b05c1200cca0061a62c3e6596a0aabfb29cee4ac53b7468c",
         "affectsGlobalScope": false
       },
       "../node_modules/sequelize-typescript/dist/model/index/index-service.d.ts": {
@@ -1932,13 +1932,13 @@
         "affectsGlobalScope": false
       },
       "../src/cache-utilty.ts": {
-        "version": "183919c64595b5d3e5d44f52a39d0560fda8d7741c9924986bb999602517013c",
-        "signature": "b1e081ffddc572bae73d16c484c7da810eb576999bd46a8d0bf3a1e94823a14a",
+        "version": "648e57ff5398426b4269b7ba343f8d3f295ef13c7d6df790e324d4212f5050dd",
+        "signature": "6f1d64cfcfba8d89319abdfd3eeda07291cc2b4cdaa9ca16080dd7547a58affa",
         "affectsGlobalScope": false
       },
       "../src/base-model.ts": {
-        "version": "b7647312fb0ffb40dcf015fd81bcdc164c26e800cd9bae1b96f636014d612dd5",
-        "signature": "8e3d92a6040ea9f508d90c8653817605a18acb52c2ac046a066488a871eb7d4d",
+        "version": "a551234c70e81fa3a9bd4b185a70670d35d769c70bf6ae507373995d9b6eedad",
+        "signature": "04f74ba97e0a9d21137a2ceadb482eb93d8f07526558d62563f0af76e64bdace",
         "affectsGlobalScope": false
       },
       "../src/helpers.ts": {
@@ -2012,18 +2012,18 @@
         "affectsGlobalScope": true
       },
       "../src/base-repository.ts": {
-        "version": "b02cc76a9e0dc8a4591eaf172708f5b7e7b6439045d03e8780bb96e67a07231f",
+        "version": "8e8f0854f6325180ccf7d55d7da0e1c5cb243c145669b5e7bce12ceec6d95446",
         "signature": "77eacc9747279da105d1e49edb0174d56b7c4ae596c349986b9091cf78c703e8",
         "affectsGlobalScope": false
       },
       "../src/cache.ts": {
-        "version": "f3b9302d2b74aaa895f0b5335095a5c7f91d88ba2058bc4310f928669ff90b07",
-        "signature": "db39faa48b67283e3d0a3405da55aa45cec85c42989cd1a35afdd4539e435139",
+        "version": "5c90cc5765db7851a6c2d0b19ae0eba4e70af1280fb7eb8ea05f68034035a383",
+        "signature": "13e10d72d67ed34d61a2c3faec1477307946d376bdbe65b6be24049d5b47e89b",
         "affectsGlobalScope": false
       },
       "../src/index.ts": {
-        "version": "38fc585157c00536b0dc35e0b6f0b987046b60996a6ee233d4616615e89322e3",
-        "signature": "8871e892512cf378798aae710d93cd714c140c11e796759c5ff67b025a56ee9c",
+        "version": "4687a79c5e37c2240582777b7c6a0690f3694b6faeabfd474680c6eb28e393c0",
+        "signature": "d31064984f2c762937f47dc563ef81a3aa6f7447c3354db53e2aa0c38471de5a",
         "affectsGlobalScope": false
       },
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts": {
@@ -4659,6 +4659,7 @@
         "../node_modules/@types/validator/index.d.ts"
       ],
       "../src/base-model.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/sequelize-typescript/dist/index.d.ts",
         "../node_modules/sequelize/types/index.d.ts",
         "../src/cache-utilty.ts",
@@ -4681,7 +4682,6 @@
       ],
       "../src/cache.ts": [
         "../node_modules/sequelize-typescript/dist/index.d.ts",
-        "../src/cache-utilty.ts",
         "../src/helpers.ts",
         "../src/repository.module.ts"
       ],
@@ -6647,9 +6647,6 @@
       ],
       "../src/cache-utilty.ts": [
         "../node_modules/sequelize/types/index.d.ts"
-      ],
-      "../src/cache.ts": [
-        "../src/cache-utilty.ts"
       ],
       "../src/index.ts": [
         "../src/base-model.ts",

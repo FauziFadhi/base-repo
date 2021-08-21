@@ -9,7 +9,7 @@ export interface CacheKey {
     readonly [key: string]: CacheKeyAtt;
 }
 export declare class CacheUtility {
-    static setKey(name: string, key: any, options?: any): string;
+    static setKey(name: string, key: string | number, options?: string): string;
     static setQueryOptions(options?: FindOptions): string;
     static getKeyTime(key: string): number;
     static setResult(result: string): any;

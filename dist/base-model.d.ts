@@ -1,33 +1,26 @@
-import { FindOptions, WhereAttributeHash } from 'sequelize';
+import { FindOptions, QueryOptions } from 'sequelize';
 import { Model } from 'sequelize-typescript';
 import { CacheKey } from './cache-utilty';
-declare type ExtractRouteParams<T extends PropertyKey> = string extends T ? Record<string, string> : {
-    [k in T]?: unknown;
-};
+declare type UnusedOptionsAttribute = 'lock' | 'raw' | 'skipLocked' | keyof QueryOptions;
 export interface DefaultOptionsCache {
     ttl?: number;
-    isThrow?: boolean;
+    rejectOnEmpty?: boolean | Error;
 }
-export interface FindOptionsCache<T extends PropertyKey> extends DefaultOptionsCache {
-    where?: WhereAttributeHash<ExtractRouteParams<T>>;
-    order?: [string, string][];
-    having?: WhereAttributeHash<any>;
-    group?: string[];
+export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute>, DefaultOptionsCache {
+    ttl: number;
 }
-export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, 'lock' | 'raw'> {
-    ttl?: number;
+export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute>, DefaultOptionsCache {
 }
-export declare class BaseModel<M extends CacheKey = any, TAttributes extends {} = any, TCreate extends {} = TAttributes> extends Model<TAttributes, TCreate> {
+export declare class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttributes> extends Model<TAttributes, TCreate> {
     static caches: CacheKey;
     static modelTTL: number;
     static notFoundMessage: string;
-    caches: M;
-    static findOneCache<T extends BaseModel, CacheName extends keyof T['caches']>(this: {
+    static findOneCache<T extends BaseModel>(this: {
         new (): T;
-    }, cacheName: CacheName, { isThrow, ttl, ...options }?: FindOptionsCache<T['caches'][CacheName]['attributes'][number]>): Promise<T>;
+    }, { ttl, ...options }: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']>): Promise<T>;
     static findByPkCache<T extends BaseModel>(this: {
         new (): T;
-    }, identifier: string | number, { isThrow, ttl }?: DefaultOptionsCache): Promise<T>;
+    }, identifier: string | number, options?: Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'> | Omit<FindAllOptionsCache<T['_attributes']>, 'where'>): Promise<T>;
     static findAllCache<T extends BaseModel>(this: {
         new (): T;
     }, { ttl, ...options }: FindAllOptionsCache<T>): Promise<T[]>;

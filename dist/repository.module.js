@@ -10,11 +10,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RepositoryModule = void 0;
 const common_1 = require("@nestjs/common");
 let RepositoryModule = RepositoryModule_1 = class RepositoryModule {
-    static forRoot({ defaultTTL, callbackGet, callbackSet, callbackInvalidate }) {
+    static forRoot({ defaultTTL, callbackGet, callbackSet, callbackInvalidate, callbackGetKey }) {
         RepositoryModule_1.defaultTTL = defaultTTL;
         RepositoryModule_1.catchGetter = callbackGet;
         RepositoryModule_1.catchSetter = callbackSet;
         RepositoryModule_1.cacheInvalidate = callbackInvalidate;
+        RepositoryModule_1.catchKeyGetter = callbackGetKey;
         return {
             module: RepositoryModule_1,
         };

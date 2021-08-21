@@ -4,8 +4,8 @@ exports.CacheUtility = void 0;
 const crypto = require("crypto");
 class CacheUtility {
     static setKey(name, key, options) {
-        const opt = (options) ? ':' + options : '';
-        return ':' + name + opt + '_' + key;
+        const opt = (options) ? `:${options}` : '';
+        return `:${name}_${key}${opt}`;
     }
     static setQueryOptions(options) {
         const hash = crypto.createHash('md5');

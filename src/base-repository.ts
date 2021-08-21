@@ -216,7 +216,7 @@ export abstract class Repository<T extends Model<T>> {
     const key = CacheUtility.setKey(this.cacheModel, timeCached, keyOpts)
 
     // flag for fetching data from database
-    let canFetch = false;
+    const canFetch = false;
     // if max updated model > time cache then invalidate cache
     if (max != timeCached) {
       // canFetch = await CacheUtility.invalidate(key, this.getCacheStore())

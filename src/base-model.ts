@@ -1,18 +1,18 @@
 import { NotFoundException } from '@nestjs/common';
 import { DateUtility } from 'date-utility';
 import { RepositoryModule } from 'repository.module';
-import { FindOptions, IndexHintable, QueryOptions } from 'sequelize';
+import { FindOptions, QueryOptions } from 'sequelize';
 import { Model } from 'sequelize-typescript';
 
 import CacheUtility, { CacheKey } from './cache-utilty';
 
-type UnusedOptionsAttribute = 'lock' | 'raw' | 'skipLocked' | keyof IndexHintable | keyof QueryOptions
+type UnusedOptionsAttribute = 'lock' | 'raw' | 'skipLocked' | keyof QueryOptions
 export interface DefaultOptionsCache {
   ttl?: number
   /**
      * Throw if nothing was found.
      */
-  rejectOnEmpty?: boolean | Error;
+  rejectOnEmpty?: boolean | Error
 }
 export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute>, DefaultOptionsCache {
   ttl: number
@@ -56,7 +56,7 @@ function TransformCacheToModels(modelClass: any, dataCache: string) {
   })
 }
 
-export class BaseModel<TAttributes extends Record<string, unknown> = any, TCreate extends Record<string, unknown> = TAttributes>
+export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttributes>
   extends Model<TAttributes, TCreate> {
 
   static caches: CacheKey = {}
@@ -82,15 +82,21 @@ export class BaseModel<TAttributes extends Record<string, unknown> = any, TCreat
     const TTL = ttl || this['modelTTL'] || RepositoryModule.defaultTTL
 
     const optionsString = CacheUtility.setOneQueryOptions(options)
-    let modelString = await RepositoryModule.catchGetter({ key: `*_${optionsString}*` })
+    console.log(options);
+    const keys = await RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` })
 
+    let modelString = await RepositoryModule.catchGetter({ key: keys?.[0] })
+
+    console.log(modelString);
     if (!modelString) {
       const newModel = await this['findOne'](options)
       modelString = JSON.stringify(newModel)
 
 
       if (newModel) {
-        const key = CacheUtility.setKey(this.name, optionsString, newModel.primaryKeyAttribute)
+        console.log(newModel.primaryKeyAttribute);
+        console.log(newModel);
+        const key = CacheUtility.setKey(this.name, optionsString, newModel[this['primaryKeyAttribute']])
         RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL })
       }
     }
@@ -113,23 +119,25 @@ export class BaseModel<TAttributes extends Record<string, unknown> = any, TCreat
    */
   static async findByPkCache<T extends BaseModel>(this: { new(): T },
     identifier: string | number,
-    { ttl, ...options }:
+    options?:
       Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'>
       | Omit<FindAllOptionsCache<T['_attributes']>, 'where'>,
   ): Promise<T> {
 
-    const TTL = ttl || this['modelTTL'] || RepositoryModule.defaultTTL
+    const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
+    delete options?.ttl
 
     const optionsString = CacheUtility
       .setOneQueryOptions({ ...options, where: { [this['primaryKeyAttribute']]: identifier } }) + 'pk'
-    let modelString = await RepositoryModule.catchGetter({ key: `*_${optionsString}*` })
+    const key = CacheUtility.setKey(this.name, optionsString, `${identifier}`)
+
+    let modelString = await RepositoryModule.catchGetter({ key })
     if (!modelString) {
 
       const newModel = await this['findByPk'](identifier)
       modelString = JSON.stringify(newModel)
 
       if (newModel) {
-        const key = CacheUtility.setKey(this.name, optionsString, newModel.primaryKeyAttribute)
         RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL })
       }
     }
@@ -151,7 +159,7 @@ export class BaseModel<TAttributes extends Record<string, unknown> = any, TCreat
 
     // get max updatedAt on model
     const [maxUpdatedAt, count] = await Promise.all([
-      this['max']('updatedAt', { where: options.where }),
+      this['max']('updatedAt', options),
       this['count'](options),
     ])
 

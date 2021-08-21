@@ -9,10 +9,13 @@ export declare class RepositoryModule {
     static catchGetter: ({ key }: {
         key: string;
     }) => Promise<string>;
+    static catchKeyGetter: ({ keyPattern }: {
+        keyPattern: string;
+    }) => Promise<any>;
     static cacheInvalidate: ({ key }: {
         key: string;
     }) => unknown;
-    static forRoot<Set, Invalidate>({ defaultTTL, callbackGet, callbackSet, callbackInvalidate }: {
+    static forRoot<Set, Invalidate>({ defaultTTL, callbackGet, callbackSet, callbackInvalidate, callbackGetKey }: {
         defaultTTL: number;
         callbackSet: ({ key, value, ttl }: {
             key: string;
@@ -25,5 +28,8 @@ export declare class RepositoryModule {
         callbackInvalidate: ({ key }: {
             key: string;
         }) => unknown;
+        callbackGetKey: ({ keyPattern }: {
+            keyPattern: string;
+        }) => Promise<any>;
     }): DynamicModule;
 }

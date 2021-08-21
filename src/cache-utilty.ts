@@ -29,7 +29,7 @@ export class CacheUtility {
   }
 
   // for list cache usage
-  static setResult(result: string): Record<string, unknown> {
+  static setResult(result: string): any {
     return JSON.parse(result)
   }
 

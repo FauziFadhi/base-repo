@@ -12,47 +12,11 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseModel = void 0;
+const common_1 = require("@nestjs/common");
 const date_utility_1 = require("./date-utility");
 const repository_module_1 = require("./repository.module");
 const sequelize_typescript_1 = require("sequelize-typescript");
 const cache_utilty_1 = require("./cache-utilty");
-function setWhereOptions(whereOptions, attributes) {
-    var _a;
-    if (whereOptions && ((_a = Object.keys(whereOptions)) === null || _a === void 0 ? void 0 : _a.length) && !attributes)
-        throw new Error(`cacheKey attributes not exists`);
-    const newWhereOptions = attributes === null || attributes === void 0 ? void 0 : attributes.reduce((result, current) => {
-        const currentPropValue = whereOptions[current];
-        if (currentPropValue == undefined)
-            throw new Error(`${[current]} value is missing`);
-        return Object.assign(Object.assign({}, result), { [current]: whereOptions[current] });
-    }, {});
-    return newWhereOptions;
-}
-function setOrder(orders, orderCache) {
-    if ((orders === null || orders === void 0 ? void 0 : orders.length) && !(orderCache === null || orderCache === void 0 ? void 0 : orderCache.length))
-        throw new Error(`order for this cache not set`);
-    orderCache === null || orderCache === void 0 ? void 0 : orderCache.forEach((order, index) => {
-        if (order !== orders[index][0])
-            throw new Error(`Order ${order} not set properly`);
-    });
-    return orders;
-}
-function setGroup(groups, groupCache) {
-    if ((groups === null || groups === void 0 ? void 0 : groups.length) && !(groupCache === null || groupCache === void 0 ? void 0 : groupCache.length))
-        throw new Error(`Group for this cache not set`);
-    groupCache === null || groupCache === void 0 ? void 0 : groupCache.forEach((group, index) => {
-        if (group !== groups[index])
-            throw new Error(`Order ${group} not set properly`);
-    });
-    return groups;
-}
-function setOptions(options, cache) {
-    const where = setWhereOptions(options === null || options === void 0 ? void 0 : options.where, cache.attributes);
-    const order = setOrder(options === null || options === void 0 ? void 0 : options.order, cache.order);
-    const having = setWhereOptions(options.having, cache.havingAttributes);
-    const group = setGroup(options.group, cache.group);
-    return { where, order, group, having };
-}
 function transformCacheToModel(modelClass, dataCache) {
     const modelData = JSON.parse(dataCache);
     if (!modelData)
@@ -65,58 +29,61 @@ function transformCacheToModel(modelClass, dataCache) {
     return model;
 }
 function TransformCacheToModels(modelClass, dataCache) {
-    const modelDatas = JSON.parse(dataCache);
-    if (!(modelDatas === null || modelDatas === void 0 ? void 0 : modelDatas.length))
+    const modelData = JSON.parse(dataCache);
+    if (!(modelData === null || modelData === void 0 ? void 0 : modelData.length))
         return [];
-    const models = modelClass.bulkBuild(modelDatas, { isNewRecord: false });
+    const models = modelClass.bulkBuild(modelData, { isNewRecord: false });
     return models.map((model, index) => {
-        const modelData = modelDatas[index];
-        if (modelData.createdAt)
-            model.setDataValue('createdAt', modelData.createdAt);
-        if (modelData.updatedAt)
-            model.setDataValue('updatedAt', modelData.updatedAt);
+        const data = modelData[index];
+        if (data.createdAt)
+            model.setDataValue('createdAt', data.createdAt);
+        if (data.updatedAt)
+            model.setDataValue('updatedAt', data.updatedAt);
         return model;
     });
 }
 class BaseModel extends sequelize_typescript_1.Model {
-    static async findOneCache(cacheName, _a = { isThrow: false }) {
-        var _b;
-        var { isThrow, ttl } = _a, options = __rest(_a, ["isThrow", "ttl"]);
+    static async findOneCache(_a) {
+        var { ttl } = _a, options = __rest(_a, ["ttl"]);
         const TTL = ttl || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
-        const cache = (_b = this['caches']) === null || _b === void 0 ? void 0 : _b[cacheName];
-        if (!cache)
-            throw new Error(`cache name '${cacheName}' not exists at model ${this.name}`);
-        const cacheOptions = setOptions(options, cache);
-        const optionsString = cache_utilty_1.default.setQueryOptions(cacheOptions);
-        const cacheKey = cache_utilty_1.default.setKey(this.name, optionsString, cacheName);
-        let modelString = await repository_module_1.RepositoryModule.catchGetter({ key: cacheKey });
+        const optionsString = cache_utilty_1.default.setOneQueryOptions(options);
+        console.log(options);
+        const keys = await repository_module_1.RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` });
+        let modelString = await repository_module_1.RepositoryModule.catchGetter({ key: keys === null || keys === void 0 ? void 0 : keys[0] });
+        console.log(modelString);
         if (!modelString) {
-            const newModel = await this['findOne'](cacheOptions);
+            const newModel = await this['findOne'](options);
             modelString = JSON.stringify(newModel);
-            if (newModel)
-                repository_module_1.RepositoryModule.catchSetter({ key: cacheKey, value: modelString, ttl: TTL });
+            if (newModel) {
+                console.log(newModel.primaryKeyAttribute);
+                console.log(newModel);
+                const key = cache_utilty_1.default.setKey(this.name, optionsString, newModel[this['primaryKeyAttribute']]);
+                repository_module_1.RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL });
+            }
         }
         const model = transformCacheToModel(this, modelString);
-        const modelNullOrDeleted = Boolean(!model || model.isDeleted);
-        if (modelNullOrDeleted && isThrow) {
-            throw Error(`${this['notFoundMessage']}`);
+        if (!model && typeof options.rejectOnEmpty == 'boolean' && options.rejectOnEmpty) {
+            throw new common_1.NotFoundException(this['notFoundMessage']);
         }
         return model;
     }
-    static async findByPkCache(identifier, { isThrow, ttl } = { isThrow: false, ttl: 0 }) {
-        const TTL = ttl || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
-        const cacheKey = cache_utilty_1.default.setKey(`${this.name}`, identifier, 'id');
-        let modelString = await repository_module_1.RepositoryModule.catchGetter({ key: cacheKey });
+    static async findByPkCache(identifier, options) {
+        const TTL = (options === null || options === void 0 ? void 0 : options.ttl) || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
+        options === null || options === void 0 ? true : delete options.ttl;
+        const optionsString = cache_utilty_1.default
+            .setOneQueryOptions(Object.assign(Object.assign({}, options), { where: { [this['primaryKeyAttribute']]: identifier } })) + 'pk';
+        const key = cache_utilty_1.default.setKey(this.name, optionsString, `${identifier}`);
+        let modelString = await repository_module_1.RepositoryModule.catchGetter({ key });
         if (!modelString) {
             const newModel = await this['findByPk'](identifier);
             modelString = JSON.stringify(newModel);
-            if (newModel)
-                repository_module_1.RepositoryModule.catchSetter({ key: cacheKey, value: modelString, ttl: TTL });
+            if (newModel) {
+                repository_module_1.RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL });
+            }
         }
         const model = transformCacheToModel(this, modelString);
-        const modelNullOrDeleted = Boolean(!model || model.isDeleted);
-        if (modelNullOrDeleted && isThrow) {
-            throw Error(`${this['notFoundMessage']}`);
+        if (!model && typeof options.rejectOnEmpty == 'boolean' && options.rejectOnEmpty) {
+            throw new common_1.NotFoundException(this['notFoundMessage']);
         }
         return model;
     }
@@ -124,7 +91,7 @@ class BaseModel extends sequelize_typescript_1.Model {
         var { ttl } = _a, options = __rest(_a, ["ttl"]);
         const TTL = ttl || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
         const [maxUpdatedAt, count] = await Promise.all([
-            this['max']('updatedAt', { where: options.where }),
+            this['max']('updatedAt', options),
             this['count'](options),
         ]);
         if (!count && !maxUpdatedAt)

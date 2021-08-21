@@ -185,7 +185,7 @@ class Repository {
             timeCached = max;
         }
         const key = cache_utilty_1.default.setKey(this.cacheModel, timeCached, keyOpts);
-        let canFetch = false;
+        const canFetch = false;
         if (max != timeCached) {
             this.getCacheStore().set(keyTime, max, 'EX', ttl);
         }
