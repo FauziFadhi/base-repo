@@ -62,30 +62,42 @@ class BaseModel extends sequelize_typescript_1.Model {
             }
         }
         const model = transformCacheToModel(this, modelString);
-        if (!model && typeof options.rejectOnEmpty == 'boolean' && options.rejectOnEmpty) {
-            throw new common_1.NotFoundException(this['notFoundMessage']);
-        }
+        if (!model)
+            this['rejectOnEmptyMode'](options, this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name));
         return model;
     }
     static async findByPkCache(identifier, options) {
         const TTL = (options === null || options === void 0 ? void 0 : options.ttl) || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
         options === null || options === void 0 ? true : delete options.ttl;
+        const rejectOnEmpty = options === null || options === void 0 ? void 0 : options.rejectOnEmpty;
+        options === null || options === void 0 ? true : delete options.rejectOnEmpty;
         const optionsString = cache_utilty_1.default
             .setOneQueryOptions(Object.assign(Object.assign({}, options), { where: { [this['primaryKeyAttribute']]: identifier } })) + 'pk';
         const key = cache_utilty_1.default.setKey(this.name, optionsString, `${identifier}`);
         let modelString = await repository_module_1.RepositoryModule.catchGetter({ key });
         if (!modelString) {
-            const newModel = await this['findByPk'](identifier);
+            const newModel = await this['findByPk'](identifier, options);
             modelString = JSON.stringify(newModel);
             if (newModel) {
                 repository_module_1.RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL });
             }
         }
         const model = transformCacheToModel(this, modelString);
-        if (!model && typeof options.rejectOnEmpty == 'boolean' && options.rejectOnEmpty) {
-            throw new common_1.NotFoundException(this['notFoundMessage']);
+        if (!model) {
+            const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name);
+            this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message));
         }
         return model;
+    }
+    static rejectOnEmptyMode(options, modelException) {
+        console.log('reject on Empty', options.rejectOnEmpty);
+        console.log(modelException);
+        if (typeof (options === null || options === void 0 ? void 0 : options.rejectOnEmpty) == 'boolean' && (options === null || options === void 0 ? void 0 : options.rejectOnEmpty)) {
+            throw modelException;
+        }
+        else if (typeof (options === null || options === void 0 ? void 0 : options.rejectOnEmpty) === 'object') {
+            throw options.rejectOnEmpty;
+        }
     }
     static async findAllCache(_a) {
         var { ttl } = _a, options = __rest(_a, ["ttl"]);
@@ -120,5 +132,7 @@ class BaseModel extends sequelize_typescript_1.Model {
 exports.BaseModel = BaseModel;
 BaseModel.caches = {};
 BaseModel.modelTTL = 0;
-BaseModel.notFoundMessage = `${BaseModel.name} Model Not Found`;
+BaseModel.defaultNotFoundMessage = (name) => `${name} Model Not Found`;
+BaseModel.notFoundException = (message) => new common_1.NotFoundException(message);
+BaseModel.notFoundMessage = null;
 //# sourceMappingURL=base-model.js.map

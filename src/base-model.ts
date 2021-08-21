@@ -11,14 +11,15 @@ export interface DefaultOptionsCache {
   ttl?: number
   /**
      * Throw if nothing was found.
-     */
+   */
   rejectOnEmpty?: boolean | Error
 }
 export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute>, DefaultOptionsCache {
   ttl: number
 }
 
-export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute>, DefaultOptionsCache {
+export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'>, DefaultOptionsCache {
+
 }
 
 function transformCacheToModel(modelClass: any, dataCache: string) {
@@ -61,7 +62,9 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
 
   static caches: CacheKey = {}
   static modelTTL = 0
-  static notFoundMessage = `${BaseModel.name} Model Not Found`
+  private static defaultNotFoundMessage = (name: string): string => `${name} Model Not Found`
+  private static notFoundException = (message: string): Error => new NotFoundException(message)
+  static notFoundMessage = null
 
   /**
    * should define first object `caches` at model definition
@@ -103,9 +106,9 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
 
     const model = transformCacheToModel(this, modelString)
 
-    if (!model && typeof options.rejectOnEmpty == 'boolean' && options.rejectOnEmpty) {
-      throw new NotFoundException(this['notFoundMessage'])
-    }
+    if (!model)
+      this['rejectOnEmptyMode'](options, this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name))
+
 
     return model
   }
@@ -126,6 +129,8 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
 
     const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
     delete options?.ttl
+    const rejectOnEmpty = options?.rejectOnEmpty
+    delete options?.rejectOnEmpty
 
     const optionsString = CacheUtility
       .setOneQueryOptions({ ...options, where: { [this['primaryKeyAttribute']]: identifier } }) + 'pk'
@@ -134,7 +139,7 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
     let modelString = await RepositoryModule.catchGetter({ key })
     if (!modelString) {
 
-      const newModel = await this['findByPk'](identifier)
+      const newModel = await this['findByPk'](identifier, options)
       modelString = JSON.stringify(newModel)
 
       if (newModel) {
@@ -144,11 +149,23 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
 
     const model = transformCacheToModel(this, modelString)
 
-    if (!model && typeof options.rejectOnEmpty == 'boolean' && options.rejectOnEmpty) {
-      throw new NotFoundException(this['notFoundMessage'])
+    if (!model) {
+      const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name)
+      this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message))
     }
 
     return model
+  }
+
+  private static rejectOnEmptyMode(options: { rejectOnEmpty: boolean | Error }, modelException: Error): void {
+    console.log('reject on Empty', options.rejectOnEmpty);
+    console.log(modelException);
+    if (typeof options?.rejectOnEmpty == 'boolean' && options?.rejectOnEmpty) {
+      throw modelException
+    }
+    else if (typeof options?.rejectOnEmpty === 'object') {
+      throw options.rejectOnEmpty;
+    }
   }
 
   static async findAllCache<T extends BaseModel>(this: { new(): T },

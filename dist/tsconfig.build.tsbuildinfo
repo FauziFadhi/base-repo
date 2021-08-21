@@ -1937,8 +1937,8 @@
         "affectsGlobalScope": false
       },
       "../src/base-model.ts": {
-        "version": "a551234c70e81fa3a9bd4b185a70670d35d769c70bf6ae507373995d9b6eedad",
-        "signature": "04f74ba97e0a9d21137a2ceadb482eb93d8f07526558d62563f0af76e64bdace",
+        "version": "5610850adff8d3daa6180e5ab3039e6aa64716595d97bea98af9e6ba62a8d064",
+        "signature": "1426e65e2347d536e2909a02a3b5f6eb232aa5f20c25707e885f4ccb0ecc47de",
         "affectsGlobalScope": false
       },
       "../src/helpers.ts": {

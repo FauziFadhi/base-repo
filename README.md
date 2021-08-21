@@ -38,6 +38,9 @@ and
       callbackSet: async ({ key, value, ttl }) => {
         return AppModule.redisService.getClient().set(key, value, 'EX', ttl) // DEFINE HOW TO SET CACHE FROM GIVEN KEY VALUE AND TTL
       }
+      callbackGetKey: async ({ keyPattern }) => {
+        return AppModule.redisService.getClient().keys(keyPattern); // TO FIND KEYS BY PATTERN
+      },
     }),
 
     SequelizeModule.forRoot({
@@ -61,50 +64,33 @@ export class AppModule {
 
 ### `@Cache(options)`
 
-the @Cache is used for defined ttl and cache for findOne
+the @Cache is used for defined ttl and cache for findOne and automatically invalidate findOneCache/findByPkCache
 
 #### `@Cache` API Options
 
-| Options                                                 | Description                                                                    |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `options.ttl`                                           | set TTL for this model, this will override ttl at module (Optional)            |
-| `options.caches`                                        | this is for set cache for find One                                             |
-| `options.caches[keyName] : string`                      | this is the name for cache that will be used when use [Model.findOneCache](##) |
-| `options.caches[keyName][attributes]: string[]`         | this is for defining attributes that will be mapped at whereOptions            |
-| `options.caches[keyName][group] ?: string[]`            | this is for defining group query                                               |
-| `options.caches[keyName][havingAttributes] ?: string[]` | this is for defining having query                                              |
-| `options.caches[keyName][order] ?: string[]`            | this is for defining order query                                               |
+| Options       | Description                                                         |
+| ------------- | ------------------------------------------------------------------- |
+| `options.ttl` | set TTL for this model, this will override ttl at module (Optional) |
 
 ```typescript
-const caches = {
-  byIsDeletedAndName: {
-    attributes: ['isDeleted', 'name'],
-    order: ['id', 'name'],
-  },
-  byType: {
-    attributes: ['type'],
-  },
-} as const; // as  const is required, this for attributes recommend when using it;
 @Cache({
-  caches: caches,
   ttl: 100,
 })
 @Table()
-export class DmCourse extends BaseModel<typeof caches> {}
+export class DmCourse extends BaseModel {}
 ```
 
 ### Extend `BaseModel`
 
 ```ts
 @Cache({
-  caches: caches,
   ttl: 100,
 })
 @Table()
-export class DmCourse extends BaseModel<typeof caches> {}
+export class DmCourse extends BaseModel {}
 ```
 
-the Model need to extends `BaseModel` with first generic type is typeof `caches` that we define for cache
+the Model need to extends `BaseModel`
 
 ### More Strict
 
@@ -118,36 +104,26 @@ interface DmCourseAtt {
 interface DmCreateAtt extends DmCourseAtt Omit<DmCourseAtt, 'id'>
 
 @Cache({
-  caches: caches,
   ttl: 100,
 })
 @Table()
-export class DmCourse extends BaseModel<typeof caches, DmCourseAtt, DmCreateAtt> {}
+export class DmCourse extends BaseModel<DmCourseAtt, DmCreateAtt> {}
 ```
 
 for strict type that can used at default function from sequelize-typescript can be planted at generic type 2 and 3 [sequelize-typescript strict](https://github.com/RobinBuschmann/sequelize-typescript#more-strict)
 
 ## How to use
 
-### `Model.findOneCache(cacheName, cacheOptions)`
+### `Model.findOneCache(cacheOptions)`
 
-- `cacheName : string`
 - `cacheOptions : FindOptions` limited findOptions from sequelize-typescript
 
 ```ts
 // file: DmCourse.ts
-const caches = {
-  byIsDeletedAndName: {
-    attributes: ['isDeleted', 'name'],
-    order: ['id', 'name'],
-  }
-} as const
 
-@Cache({
-  caches: caches,
-})
+@Cache() //default ttl module
 @Table()
-export class DmCourse extends BaseModel<typeof caches, DmCourseAtt, DmCreateAtt> {}
+export class DmCourse extends BaseModel<DmCourseAtt, DmCreateAtt> {}
 
 ...
 
@@ -155,14 +131,10 @@ export class DmCourse extends BaseModel<typeof caches, DmCourseAtt, DmCreateAtt>
 
 class CourseController {
   async getCourse() {
-    const course = await DmCourse.findOneCache('byIsDeletedAndName', {
+    const course = await DmCourse.findOneCache({
       where: {
         isDeleted: false,
         name: 'Math',
-        order: [
-          ['id', 'desc'],
-          ['name', 'asc']
-        ]
       }
     })
   }
@@ -174,15 +146,11 @@ class CourseController {
 
 #### `findOneCache` API Options
 
-| Options                | Description                                                                       |
-| ---------------------- | --------------------------------------------------------------------------------- |
-| `cacheName`            | name that defined at model                                                        |
-| `cacheOptions.ttl`     | set TTL for this cache key, this will override ttl at module and model (Optional) |
-| `cacheOptions.isThrow` | will throw error when set `true` (Optional)                                       |
-| `cacheOptions.where`   | limited where from `FindOptions` sequelize-typescript                             |
-| `cacheOptions.group`   | limited group from `FindOptions` sequelize-typescript (Optional)                  |
-| `cacheOptions.having`  | limited having from `FindOptions` sequelize-typescript (Optional)                 |
-| `cacheOptions.order`   | limited order from `FindOptions` sequelize-typescript (Optional)                  |
+| Options                      | Description                                                                                                              |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `cacheOptions`               | some function from `Sequelize FindOptions`                                                                               |
+| `cacheOptions.ttl`           | set TTL for this cache key, this will override ttl at module and model `(Optional)`, `(Required)` when has include Query |
+| `cacheOptions.rejectOnEmpty` | will throw error when set `true` (Optional)                                                                              |
 
 ### `Model.findByPkCache(id, options)`
 
@@ -191,7 +159,6 @@ class CourseController {
   async getCourse() {
     const course = await DmCourse.findByPkCache(1, {
       ttl: 100,
-      isThrow: true,
     });
   }
 }
@@ -201,11 +168,12 @@ class CourseController {
 
 #### `findByPkCache` API Options
 
-| Options                | Description                                                                       |
-| ---------------------- | --------------------------------------------------------------------------------- |
-| `id`                   | value of id                                                                       |
-| `cacheOptions.ttl`     | set TTL for this cache key, this will override ttl at module and model (Optional) |
-| `cacheOptions.isThrow` | will throw error when set `true`                                                  |
+| Options                      | Description                                                                                                              |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `id`                         | value of id                                                                                                              |
+| `cacheOptions`               | some function from `Sequelize FindOptions`                                                                               |
+| `cacheOptions.ttl`           | set TTL for this cache key, this will override ttl at module and model `(Optional)`, `(Required)` when has include Query |
+| `cacheOptions.rejectOnEmpty` | will throw error when set `true` (Optional)                                                                              |
 
 ### `Model.findAllCache(cacheOptions)`
 
@@ -244,3 +212,4 @@ class CourseController {
 ## Stay in touch
 
 - Author - [Fauzi Fadhillah](https://github.com/FauziFadhi)
+- [Email](fauzifadhi@gmail.com)
