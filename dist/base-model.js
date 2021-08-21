@@ -47,10 +47,10 @@ class BaseModel extends sequelize_typescript_1.Model {
         var { ttl } = _a, options = __rest(_a, ["ttl"]);
         const TTL = ttl || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
         const optionsString = cache_utilty_1.default.setOneQueryOptions(options);
-        console.log(options);
+        const rejectOnEmpty = options === null || options === void 0 ? void 0 : options.rejectOnEmpty;
+        options === null || options === void 0 ? true : delete options.rejectOnEmpty;
         const keys = await repository_module_1.RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` });
         let modelString = await repository_module_1.RepositoryModule.catchGetter({ key: keys === null || keys === void 0 ? void 0 : keys[0] });
-        console.log(modelString);
         if (!modelString) {
             const newModel = await this['findOne'](options);
             modelString = JSON.stringify(newModel);
@@ -62,8 +62,10 @@ class BaseModel extends sequelize_typescript_1.Model {
             }
         }
         const model = transformCacheToModel(this, modelString);
-        if (!model)
-            this['rejectOnEmptyMode'](options, this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name));
+        if (!model) {
+            const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name);
+            this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message));
+        }
         return model;
     }
     static async findByPkCache(identifier, options) {
@@ -90,8 +92,6 @@ class BaseModel extends sequelize_typescript_1.Model {
         return model;
     }
     static rejectOnEmptyMode(options, modelException) {
-        console.log('reject on Empty', options.rejectOnEmpty);
-        console.log(modelException);
         if (typeof (options === null || options === void 0 ? void 0 : options.rejectOnEmpty) == 'boolean' && (options === null || options === void 0 ? void 0 : options.rejectOnEmpty)) {
             throw modelException;
         }

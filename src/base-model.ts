@@ -85,12 +85,13 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
     const TTL = ttl || this['modelTTL'] || RepositoryModule.defaultTTL
 
     const optionsString = CacheUtility.setOneQueryOptions(options)
-    console.log(options);
+    const rejectOnEmpty = options?.rejectOnEmpty
+    delete options?.rejectOnEmpty
+
     const keys = await RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` })
 
     let modelString = await RepositoryModule.catchGetter({ key: keys?.[0] })
 
-    console.log(modelString);
     if (!modelString) {
       const newModel = await this['findOne'](options)
       modelString = JSON.stringify(newModel)
@@ -106,9 +107,10 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
 
     const model = transformCacheToModel(this, modelString)
 
-    if (!model)
-      this['rejectOnEmptyMode'](options, this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name))
-
+    if (!model) {
+      const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name)
+      this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message))
+    }
 
     return model
   }
@@ -158,8 +160,6 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
   }
 
   private static rejectOnEmptyMode(options: { rejectOnEmpty: boolean | Error }, modelException: Error): void {
-    console.log('reject on Empty', options.rejectOnEmpty);
-    console.log(modelException);
     if (typeof options?.rejectOnEmpty == 'boolean' && options?.rejectOnEmpty) {
       throw modelException
     }
