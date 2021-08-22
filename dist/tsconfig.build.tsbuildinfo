@@ -1937,7 +1937,7 @@
         "affectsGlobalScope": false
       },
       "../src/base-model.ts": {
-        "version": "caec9bc79c6a2888a5eb4f49634fd75878be2787618800fcc5eb4ff51198e287",
+        "version": "d9f508eebd220dcfe0169bb67a4dbcbaaff44244ebcfe16410a37cb30360c3ba",
         "signature": "1426e65e2347d536e2909a02a3b5f6eb232aa5f20c25707e885f4ccb0ecc47de",
         "affectsGlobalScope": false
       },
@@ -2017,7 +2017,7 @@
         "affectsGlobalScope": false
       },
       "../src/cache.ts": {
-        "version": "5c90cc5765db7851a6c2d0b19ae0eba4e70af1280fb7eb8ea05f68034035a383",
+        "version": "83620f6c91d5f60c259d2c75cd0ce77ed0b7415511ea1277fc9b6ce1938f9b22",
         "signature": "13e10d72d67ed34d61a2c3faec1477307946d376bdbe65b6be24049d5b47e89b",
         "affectsGlobalScope": false
       },

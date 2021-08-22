@@ -31,11 +31,12 @@ function Cache(cacheOptions) {
         const options = Object.assign({}, {
             hooks: {
                 afterUpdate: async (instance, options) => {
-                    console.log('instance', instance);
-                    return await invalidateCache(instance, options, target);
+                    invalidateCache(instance, options, target);
+                    return instance;
                 },
                 afterDestroy: async (instance, options) => {
-                    return await invalidateCache(instance, options, target);
+                    invalidateCache(instance, options, target);
+                    return instance;
                 },
                 beforeBulkUpdate: function (options) {
                     options.individualHooks = true;

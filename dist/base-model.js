@@ -55,8 +55,6 @@ class BaseModel extends sequelize_typescript_1.Model {
             const newModel = await this['findOne'](options);
             modelString = JSON.stringify(newModel);
             if (newModel) {
-                console.log(newModel.primaryKeyAttribute);
-                console.log(newModel);
                 const key = cache_utilty_1.default.setKey(this.name, optionsString, newModel[this['primaryKeyAttribute']]);
                 repository_module_1.RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL });
             }
@@ -132,7 +130,7 @@ class BaseModel extends sequelize_typescript_1.Model {
 exports.BaseModel = BaseModel;
 BaseModel.caches = {};
 BaseModel.modelTTL = 0;
-BaseModel.defaultNotFoundMessage = (name) => `${name} Model Not Found`;
+BaseModel.defaultNotFoundMessage = (name) => `${name} data not found`;
 BaseModel.notFoundException = (message) => new common_1.NotFoundException(message);
 BaseModel.notFoundMessage = null;
 //# sourceMappingURL=base-model.js.map
