@@ -37,7 +37,6 @@ export function Cache(cacheOptions: { ttl?: number }) {
       {
         hooks: {
           afterUpdate: async (instance, options) => {
-            console.log('instance', instance);
             return await invalidateCache(instance, options, target)
           },
           afterDestroy: async (instance, options) => {

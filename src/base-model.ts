@@ -98,8 +98,6 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
 
 
       if (newModel) {
-        console.log(newModel.primaryKeyAttribute);
-        console.log(newModel);
         const key = CacheUtility.setKey(this.name, optionsString, newModel[this['primaryKeyAttribute']])
         RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL })
       }
