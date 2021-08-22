@@ -37,10 +37,12 @@ export function Cache(cacheOptions: { ttl?: number }) {
       {
         hooks: {
           afterUpdate: async (instance, options) => {
-            return await invalidateCache(instance, options, target)
+            invalidateCache(instance, options, target)
+            return instance
           },
           afterDestroy: async (instance, options) => {
-            return await invalidateCache(instance, options, target)
+            invalidateCache(instance, options, target)
+            return instance
           },
           beforeBulkUpdate: function (options) {
             options.individualHooks = true;
