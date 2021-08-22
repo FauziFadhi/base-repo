@@ -5,7 +5,7 @@ Cache Invalidation at model level extended features for [sequelize-typescript](h
 ## Installation
 
 ```bash
-$ npm install base-repo@beta sequelize@>6.6.2 sequelize-typescript@2.1.0
+$ npm install base-repo sequelize@6.6.2 sequelize-typescript@2.1.0
 ```
 
 Your `tsconfig.json` needs the following flags:
@@ -87,7 +87,10 @@ export class DmCourse extends BaseModel {}
   ttl: 100,
 })
 @Table()
-export class DmCourse extends BaseModel {}
+export class DmCourse extends BaseModel {
+  // default `{modelName} data not found'
+  static notFoundMessage = 'your model not found message';
+}
 ```
 
 the Model need to extends `BaseModel`
@@ -135,7 +138,9 @@ class CourseController {
       where: {
         isDeleted: false,
         name: 'Math',
-      }
+      },
+      rejectOnEmpty: true, // use model default throw, or use use throw Exception
+      // rejectOnEmpty: new BadRequestException('message')
     })
   }
 }

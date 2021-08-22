@@ -62,7 +62,7 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
 
   static caches: CacheKey = {}
   static modelTTL = 0
-  private static defaultNotFoundMessage = (name: string): string => `${name} Model Not Found`
+  private static defaultNotFoundMessage = (name: string): string => `${name} data not found`
   private static notFoundException = (message: string): Error => new NotFoundException(message)
   static notFoundMessage = null
 
