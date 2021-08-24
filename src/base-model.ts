@@ -84,13 +84,15 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
 
     const TTL = ttl || this['modelTTL'] || RepositoryModule.defaultTTL
 
-    const optionsString = CacheUtility.setOneQueryOptions(options)
     const rejectOnEmpty = options?.rejectOnEmpty
     delete options?.rejectOnEmpty
 
+    const optionsString = CacheUtility.setOneQueryOptions(options)
     const keys = await RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` })
+    const firstKey = keys?.[0]
+    const key = firstKey?.substring(firstKey.indexOf(":"))
 
-    let modelString = await RepositoryModule.catchGetter({ key: keys?.[0] })
+    let modelString = await RepositoryModule.catchGetter({ key: key })
 
     if (!modelString) {
       const newModel = await this['findOne'](options)

@@ -46,11 +46,13 @@ class BaseModel extends sequelize_typescript_1.Model {
     static async findOneCache(_a) {
         var { ttl } = _a, options = __rest(_a, ["ttl"]);
         const TTL = ttl || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
-        const optionsString = cache_utilty_1.default.setOneQueryOptions(options);
         const rejectOnEmpty = options === null || options === void 0 ? void 0 : options.rejectOnEmpty;
         options === null || options === void 0 ? true : delete options.rejectOnEmpty;
+        const optionsString = cache_utilty_1.default.setOneQueryOptions(options);
         const keys = await repository_module_1.RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` });
-        let modelString = await repository_module_1.RepositoryModule.catchGetter({ key: keys === null || keys === void 0 ? void 0 : keys[0] });
+        const firstKey = keys === null || keys === void 0 ? void 0 : keys[0];
+        const key = firstKey === null || firstKey === void 0 ? void 0 : firstKey.substring(firstKey.indexOf(":"));
+        let modelString = await repository_module_1.RepositoryModule.catchGetter({ key: key });
         if (!modelString) {
             const newModel = await this['findOne'](options);
             modelString = JSON.stringify(newModel);
