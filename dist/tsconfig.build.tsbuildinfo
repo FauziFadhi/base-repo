@@ -2017,8 +2017,8 @@
         "affectsGlobalScope": false
       },
       "../src/cache.ts": {
-        "version": "83620f6c91d5f60c259d2c75cd0ce77ed0b7415511ea1277fc9b6ce1938f9b22",
-        "signature": "13e10d72d67ed34d61a2c3faec1477307946d376bdbe65b6be24049d5b47e89b",
+        "version": "2b1c857423fdcdca99ee8ca96dd52930ff7acc87db550e84a608f8cf50768a35",
+        "signature": "c3304b597f360a320bb7e8c4472ec9486fe335d2b1db41ed6dd1d9e0bf820b87",
         "affectsGlobalScope": false
       },
       "../src/index.ts": {

@@ -30,9 +30,8 @@ async function invalidationCache(previousModel, modelClass) {
 }
 
 
-export function Cache(cacheOptions: { ttl?: number }) {
+export function Cache(cacheOptions?: { ttl?: number }) {
   return (target) => {
-
     const options: { hooks } = Object.assign({},
       {
         hooks: {
