@@ -50,7 +50,7 @@ export function Cache(cacheOptions?: { ttl?: number }) {
       });
 
 
-    target[`modelTTL`] = cacheOptions.ttl || 0
+    target[`modelTTL`] = cacheOptions?.ttl || 0
     annotate(target, options);
   }
 

@@ -43,7 +43,7 @@ function Cache(cacheOptions) {
                 }
             },
         });
-        target[`modelTTL`] = cacheOptions.ttl || 0;
+        target[`modelTTL`] = (cacheOptions === null || cacheOptions === void 0 ? void 0 : cacheOptions.ttl) || 0;
         annotate(target, options);
     };
 }

@@ -2017,7 +2017,7 @@
         "affectsGlobalScope": false
       },
       "../src/cache.ts": {
-        "version": "2b1c857423fdcdca99ee8ca96dd52930ff7acc87db550e84a608f8cf50768a35",
+        "version": "2ac86213da8e48d3f3e6c764d2b4af0a8138c650e1a90d41e46975a6dc212595",
         "signature": "c3304b597f360a320bb7e8c4472ec9486fe335d2b1db41ed6dd1d9e0bf820b87",
         "affectsGlobalScope": false
       },
