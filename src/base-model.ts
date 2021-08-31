@@ -1,7 +1,15 @@
 import { NotFoundException } from '@nestjs/common';
 import { DateUtility } from 'date-utility';
+import { cloneDeep } from 'lodash';
 import { RepositoryModule } from 'repository.module';
-import { FindOptions, QueryOptions } from 'sequelize';
+import {
+  FindOptions,
+  Model as SequelizeModel,
+  ModelStatic,
+  QueryOptions,
+  ScopeOptions,
+  WhereAttributeHash,
+} from 'sequelize';
 import { Model } from 'sequelize-typescript';
 
 import CacheUtility, { CacheKey } from './cache-utilty';
@@ -79,20 +87,24 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
    * @returns 
    */
   static async findOneCache<T extends BaseModel>(this: { new(): T },
-    { ttl, ...options }: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']>,
+    options: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']> = {},
   ): Promise<T> {
 
-    const TTL = ttl || this['modelTTL'] || RepositoryModule.defaultTTL
-
+    const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
+    delete options?.ttl
     const rejectOnEmpty = options?.rejectOnEmpty
     delete options?.rejectOnEmpty
 
-    const optionsString = CacheUtility.setOneQueryOptions(options)
+    const scope = cloneDeep(this['_scope'])
+    const defaultOptions = this['_defaultsOptions']({...options, limit: 1 }, scope)
+
+    const optionsString = CacheUtility.setOneQueryOptions(defaultOptions)
     const keys = await RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` })
-    const firstKey = keys?.[0] || 'random';
+    const firstKey = keys?.[0];
     const key = firstKey?.substring(firstKey.indexOf(":"))
 
-    let modelString = await RepositoryModule.catchGetter({ key: key })
+
+    let modelString = key ? await RepositoryModule.catchGetter({ key: key }) : null
 
     if (!modelString) {
       const newModel = await this['findOne'](options)
@@ -124,9 +136,9 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
    */
   static async findByPkCache<T extends BaseModel>(this: { new(): T },
     identifier: string | number,
-    options?:
+    options:
       Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'>
-      | Omit<FindAllOptionsCache<T['_attributes']>, 'where'>,
+      | Omit<FindAllOptionsCache<T['_attributes']>, 'where'> = {},
   ): Promise<T> {
 
     const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
@@ -134,8 +146,11 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
     const rejectOnEmpty = options?.rejectOnEmpty
     delete options?.rejectOnEmpty
 
+    const scope = cloneDeep(this['_scope'])
+    const defaultOptions = this['_defaultsOptions'](options, scope)
+
     const optionsString = CacheUtility
-      .setOneQueryOptions({ ...options, where: { [this['primaryKeyAttribute']]: identifier } }) + 'pk'
+      .setOneQueryOptions({ ...defaultOptions, where: { [this['primaryKeyAttribute']]: identifier, ...defaultOptions?.where } }) + 'pk'
     const key = CacheUtility.setKey(this.name, optionsString, `${identifier}`)
 
     let modelString = await RepositoryModule.catchGetter({ key })
@@ -169,10 +184,11 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
   }
 
   static async findAllCache<T extends BaseModel>(this: { new(): T },
-    { ttl, ...options }: FindAllOptionsCache<T>,
+    options: FindAllNestedOptionsCache<T> | FindAllOptionsCache<T> = {},
   ): Promise<T[]> {
 
-    const TTL = ttl || this['modelTTL'] || RepositoryModule.defaultTTL
+    const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
+    delete options?.ttl
 
     // get max updatedAt on model
     const [maxUpdatedAt, count] = await Promise.all([
@@ -184,8 +200,10 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
 
     const max = DateUtility.convertDateTimeToEpoch(maxUpdatedAt) + +count
 
+    const scope = cloneDeep(this['_scope'])
+    const defaultOptions = this['_defaultsOptions'](options, scope)
     // setting up key for FindOptions
-    const keyOpts = CacheUtility.setQueryOptions(options);
+    const keyOpts = CacheUtility.setQueryOptions(defaultOptions);
 
     // get what time is cached on this model based on keyOpts
     const keyTime = CacheUtility.setKey(this.name, keyOpts)
@@ -218,6 +236,13 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
     }
 
     return TransformCacheToModels(this, modelString)
+  }
+
+  static scopes<M extends SequelizeModel>(
+    this: ModelStatic<M>,
+    options?: string | ScopeOptions | readonly (string | ScopeOptions)[] | WhereAttributeHash<M>
+  ): typeof BaseModel & { new(): M } {
+    return this['scope'](options)
   }
 }
 

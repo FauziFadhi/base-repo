@@ -1,4 +1,4 @@
-import { FindOptions, QueryOptions } from 'sequelize';
+import { FindOptions, Model as SequelizeModel, ModelStatic, QueryOptions, ScopeOptions, WhereAttributeHash } from 'sequelize';
 import { Model } from 'sequelize-typescript';
 import { CacheKey } from './cache-utilty';
 declare type UnusedOptionsAttribute = 'lock' | 'raw' | 'skipLocked' | keyof QueryOptions;
@@ -19,13 +19,16 @@ export declare class BaseModel<TAttributes extends {} = any, TCreate extends {} 
     static notFoundMessage: any;
     static findOneCache<T extends BaseModel>(this: {
         new (): T;
-    }, { ttl, ...options }: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']>): Promise<T>;
+    }, options?: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']>): Promise<T>;
     static findByPkCache<T extends BaseModel>(this: {
         new (): T;
     }, identifier: string | number, options?: Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'> | Omit<FindAllOptionsCache<T['_attributes']>, 'where'>): Promise<T>;
     private static rejectOnEmptyMode;
     static findAllCache<T extends BaseModel>(this: {
         new (): T;
-    }, { ttl, ...options }: FindAllOptionsCache<T>): Promise<T[]>;
+    }, options?: FindAllNestedOptionsCache<T> | FindAllOptionsCache<T>): Promise<T[]>;
+    static scopes<M extends SequelizeModel>(this: ModelStatic<M>, options?: string | ScopeOptions | readonly (string | ScopeOptions)[] | WhereAttributeHash<M>): typeof BaseModel & {
+        new (): M;
+    };
 }
 export {};

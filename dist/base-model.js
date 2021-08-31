@@ -1,19 +1,9 @@
 "use strict";
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseModel = void 0;
 const common_1 = require("@nestjs/common");
 const date_utility_1 = require("./date-utility");
+const lodash_1 = require("lodash");
 const repository_module_1 = require("./repository.module");
 const sequelize_typescript_1 = require("sequelize-typescript");
 const cache_utilty_1 = require("./cache-utilty");
@@ -43,16 +33,18 @@ function TransformCacheToModels(modelClass, dataCache) {
     });
 }
 class BaseModel extends sequelize_typescript_1.Model {
-    static async findOneCache(_a) {
-        var { ttl } = _a, options = __rest(_a, ["ttl"]);
-        const TTL = ttl || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
+    static async findOneCache(options = {}) {
+        const TTL = (options === null || options === void 0 ? void 0 : options.ttl) || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
+        options === null || options === void 0 ? true : delete options.ttl;
         const rejectOnEmpty = options === null || options === void 0 ? void 0 : options.rejectOnEmpty;
         options === null || options === void 0 ? true : delete options.rejectOnEmpty;
-        const optionsString = cache_utilty_1.default.setOneQueryOptions(options);
+        const scope = lodash_1.cloneDeep(this['_scope']);
+        const defaultOptions = this['_defaultsOptions'](Object.assign(Object.assign({}, options), { limit: 1 }), scope);
+        const optionsString = cache_utilty_1.default.setOneQueryOptions(defaultOptions);
         const keys = await repository_module_1.RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` });
-        const firstKey = (keys === null || keys === void 0 ? void 0 : keys[0]) || 'random';
+        const firstKey = keys === null || keys === void 0 ? void 0 : keys[0];
         const key = firstKey === null || firstKey === void 0 ? void 0 : firstKey.substring(firstKey.indexOf(":"));
-        let modelString = await repository_module_1.RepositoryModule.catchGetter({ key: key });
+        let modelString = key ? await repository_module_1.RepositoryModule.catchGetter({ key: key }) : null;
         if (!modelString) {
             const newModel = await this['findOne'](options);
             modelString = JSON.stringify(newModel);
@@ -68,13 +60,15 @@ class BaseModel extends sequelize_typescript_1.Model {
         }
         return model;
     }
-    static async findByPkCache(identifier, options) {
+    static async findByPkCache(identifier, options = {}) {
         const TTL = (options === null || options === void 0 ? void 0 : options.ttl) || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
         options === null || options === void 0 ? true : delete options.ttl;
         const rejectOnEmpty = options === null || options === void 0 ? void 0 : options.rejectOnEmpty;
         options === null || options === void 0 ? true : delete options.rejectOnEmpty;
+        const scope = lodash_1.cloneDeep(this['_scope']);
+        const defaultOptions = this['_defaultsOptions'](options, scope);
         const optionsString = cache_utilty_1.default
-            .setOneQueryOptions(Object.assign(Object.assign({}, options), { where: { [this['primaryKeyAttribute']]: identifier } })) + 'pk';
+            .setOneQueryOptions(Object.assign(Object.assign({}, defaultOptions), { where: Object.assign({ [this['primaryKeyAttribute']]: identifier }, defaultOptions === null || defaultOptions === void 0 ? void 0 : defaultOptions.where) })) + 'pk';
         const key = cache_utilty_1.default.setKey(this.name, optionsString, `${identifier}`);
         let modelString = await repository_module_1.RepositoryModule.catchGetter({ key });
         if (!modelString) {
@@ -99,9 +93,9 @@ class BaseModel extends sequelize_typescript_1.Model {
             throw options.rejectOnEmpty;
         }
     }
-    static async findAllCache(_a) {
-        var { ttl } = _a, options = __rest(_a, ["ttl"]);
-        const TTL = ttl || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
+    static async findAllCache(options = {}) {
+        const TTL = (options === null || options === void 0 ? void 0 : options.ttl) || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
+        options === null || options === void 0 ? true : delete options.ttl;
         const [maxUpdatedAt, count] = await Promise.all([
             this['max']('updatedAt', options),
             this['count'](options),
@@ -109,7 +103,9 @@ class BaseModel extends sequelize_typescript_1.Model {
         if (!count && !maxUpdatedAt)
             return TransformCacheToModels(this, '[]');
         const max = date_utility_1.DateUtility.convertDateTimeToEpoch(maxUpdatedAt) + +count;
-        const keyOpts = cache_utilty_1.default.setQueryOptions(options);
+        const scope = lodash_1.cloneDeep(this['_scope']);
+        const defaultOptions = this['_defaultsOptions'](options, scope);
+        const keyOpts = cache_utilty_1.default.setQueryOptions(defaultOptions);
         const keyTime = cache_utilty_1.default.setKey(this.name, keyOpts);
         let timeCached = await repository_module_1.RepositoryModule.catchGetter({ key: keyTime });
         let canFetch = false;
@@ -127,6 +123,9 @@ class BaseModel extends sequelize_typescript_1.Model {
             repository_module_1.RepositoryModule.catchSetter({ key: newKeyModel, value: modelString, ttl: TTL });
         }
         return TransformCacheToModels(this, modelString);
+    }
+    static scopes(options) {
+        return this['scope'](options);
     }
 }
 exports.BaseModel = BaseModel;
