@@ -10,7 +10,7 @@ import {
   ScopeOptions,
   WhereAttributeHash,
 } from 'sequelize';
-import { Model } from 'sequelize-typescript';
+import { Model as TSModel } from 'sequelize-typescript';
 
 import CacheUtility, { CacheKey } from './cache-utilty';
 
@@ -65,8 +65,8 @@ function TransformCacheToModels(modelClass: any, dataCache: string) {
   })
 }
 
-export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttributes>
-  extends Model<TAttributes, TCreate> {
+export class Model<TAttributes extends {} = any, TCreate extends {} = TAttributes>
+  extends TSModel<TAttributes, TCreate> {
 
   static caches: CacheKey = {}
   static modelTTL = 0
@@ -86,7 +86,7 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
    * @param options 
    * @returns 
    */
-  static async findOneCache<T extends BaseModel>(this: { new(): T },
+  static async findOneCache<T extends Model>(this: { new(): T },
     options: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']> = {},
   ): Promise<T> {
 
@@ -134,7 +134,7 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
    * @param {isThrow, ttl} 
    * @returns 
    */
-  static async findByPkCache<T extends BaseModel>(this: { new(): T },
+  static async findByPkCache<T extends Model>(this: { new(): T },
     identifier: string | number,
     options:
       Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'>
@@ -183,7 +183,7 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
     }
   }
 
-  static async findAllCache<T extends BaseModel>(this: { new(): T },
+  static async findAllCache<T extends Model>(this: { new(): T },
     options: FindAllNestedOptionsCache<T> | FindAllOptionsCache<T> = {},
   ): Promise<T[]> {
 
@@ -241,7 +241,7 @@ export class BaseModel<TAttributes extends {} = any, TCreate extends {} = TAttri
   static scopes<M extends SequelizeModel>(
     this: ModelStatic<M>,
     options?: string | ScopeOptions | readonly (string | ScopeOptions)[] | WhereAttributeHash<M>
-  ): typeof BaseModel & { new(): M } {
+  ): typeof Model & { new(): M } {
     return this['scope'](options)
   }
 }

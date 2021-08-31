@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseModel = void 0;
+exports.Model = void 0;
 const common_1 = require("@nestjs/common");
 const date_utility_1 = require("./date-utility");
 const lodash_1 = require("lodash");
@@ -32,7 +32,7 @@ function TransformCacheToModels(modelClass, dataCache) {
         return model;
     });
 }
-class BaseModel extends sequelize_typescript_1.Model {
+class Model extends sequelize_typescript_1.Model {
     static async findOneCache(options = {}) {
         const TTL = (options === null || options === void 0 ? void 0 : options.ttl) || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
         options === null || options === void 0 ? true : delete options.ttl;
@@ -128,10 +128,10 @@ class BaseModel extends sequelize_typescript_1.Model {
         return this['scope'](options);
     }
 }
-exports.BaseModel = BaseModel;
-BaseModel.caches = {};
-BaseModel.modelTTL = 0;
-BaseModel.defaultNotFoundMessage = (name) => `${name} data not found`;
-BaseModel.notFoundException = (message) => new common_1.NotFoundException(message);
-BaseModel.notFoundMessage = null;
+exports.Model = Model;
+Model.caches = {};
+Model.modelTTL = 0;
+Model.defaultNotFoundMessage = (name) => `${name} data not found`;
+Model.notFoundException = (message) => new common_1.NotFoundException(message);
+Model.notFoundMessage = null;
 //# sourceMappingURL=base-model.js.map
