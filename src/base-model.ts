@@ -35,7 +35,7 @@ function transformCacheToModel(modelClass: any, dataCache: string) {
 
   if (!modelData) return null
 
-  const model = new modelClass.build(modelData, { isNewRecord: false, include: { all: true } })
+  const model = modelClass.build(modelData, { isNewRecord: false, include: { all: true } })
 
   if (modelData.createdAt)
     model.setDataValue('createdAt', modelData.createdAt)
