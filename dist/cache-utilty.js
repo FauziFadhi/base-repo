@@ -9,6 +9,7 @@ class CacheUtility {
     }
     static setQueryOptions(options) {
         const hash = crypto.createHash('md5');
+        CacheUtility.cleanOptions(options);
         return ((Object.keys(options).length === 0) ? 'all' : hash.update(JSON.stringify(options)).digest('base64'));
     }
     static getKeyTime(key) {
@@ -20,7 +21,23 @@ class CacheUtility {
     }
     static setOneQueryOptions(options) {
         const hash = crypto.createHash('md5');
+        CacheUtility.cleanOptions(options);
         return ((Object.keys(options).length === 0) ? 'one' : hash.update(JSON.stringify(options)).digest('base64'));
+    }
+    static cleanOptions(options) {
+        CacheUtility.cleanIncludeOptions(options === null || options === void 0 ? void 0 : options.include);
+    }
+    static cleanIncludeOptions(include) {
+        if (!include)
+            return;
+        if (Array.isArray(include)) {
+            include.forEach((include) => {
+                delete include.association;
+            });
+        }
+        else {
+            delete include.association;
+        }
     }
 }
 exports.CacheUtility = CacheUtility;

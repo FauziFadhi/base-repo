@@ -14,5 +14,7 @@ export declare class CacheUtility {
     static getKeyTime(key: string): number;
     static setResult(result: string): any;
     static setOneQueryOptions(options?: FindOptions): string;
+    private static cleanOptions;
+    private static cleanIncludeOptions;
 }
 export default CacheUtility;

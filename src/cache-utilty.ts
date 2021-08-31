@@ -1,5 +1,5 @@
 import * as crypto from 'crypto';
-import { FindOptions } from 'sequelize';
+import { FindOptions, IncludeOptions } from 'sequelize';
 
 export interface CacheKeyAtt {
   readonly attributes: readonly string[]
@@ -20,6 +20,7 @@ export class CacheUtility {
 
   static setQueryOptions(options?: FindOptions): string {
     const hash = crypto.createHash('md5');
+    CacheUtility.cleanOptions(options)
     return ((Object.keys(options).length === 0) ? 'all' : hash.update(JSON.stringify(options)).digest('base64'));
   }
 
@@ -36,7 +37,24 @@ export class CacheUtility {
 
   static setOneQueryOptions(options?: FindOptions): string {
     const hash = crypto.createHash('md5');
+    CacheUtility.cleanOptions(options)
     return ((Object.keys(options).length === 0) ? 'one' : hash.update(JSON.stringify(options)).digest('base64'));
+  }
+
+  private static cleanOptions(options?: FindOptions) {
+    CacheUtility.cleanIncludeOptions(options?.include as IncludeOptions)
+  }
+
+  private static cleanIncludeOptions<T extends IncludeOptions>(include: T | T[]): T | T[] {
+    if(!include)
+    return;
+    if(Array.isArray(include)) {
+      include.forEach((include) => {
+        delete include.association;
+      })
+    } else {
+      delete include.association;
+    }
   }
 }
 
