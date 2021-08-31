@@ -35,7 +35,7 @@ function transformCacheToModel(modelClass: any, dataCache: string) {
 
   if (!modelData) return null
 
-  const model = new modelClass(modelData, { isNewRecord: false, raw: true })
+  const model = new modelClass.build(modelData, { isNewRecord: false, include: { all: true } })
 
   if (modelData.createdAt)
     model.setDataValue('createdAt', modelData.createdAt)
@@ -51,7 +51,7 @@ function TransformCacheToModels(modelClass: any, dataCache: string) {
 
   if (!modelData?.length) return []
 
-  const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true })
+  const models = modelClass.bulkBuild(modelData, { isNewRecord: false, include: { all: true } })
 
   return models.map((model, index) => {
     const data = modelData[index]

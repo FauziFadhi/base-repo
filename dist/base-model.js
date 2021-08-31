@@ -11,7 +11,7 @@ function transformCacheToModel(modelClass, dataCache) {
     const modelData = JSON.parse(dataCache);
     if (!modelData)
         return null;
-    const model = new modelClass(modelData, { isNewRecord: false, raw: true });
+    const model = new modelClass.build(modelData, { isNewRecord: false, include: { all: true } });
     if (modelData.createdAt)
         model.setDataValue('createdAt', modelData.createdAt);
     if (modelData.updatedAt)
@@ -22,7 +22,7 @@ function TransformCacheToModels(modelClass, dataCache) {
     const modelData = JSON.parse(dataCache);
     if (!(modelData === null || modelData === void 0 ? void 0 : modelData.length))
         return [];
-    const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true });
+    const models = modelClass.bulkBuild(modelData, { isNewRecord: false, include: { all: true } });
     return models.map((model, index) => {
         const data = modelData[index];
         if (data.createdAt)
