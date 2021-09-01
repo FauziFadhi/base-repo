@@ -47,7 +47,7 @@ class Model extends sequelize_typescript_1.Model {
         const optionsString = cache_utilty_1.default.setOneQueryOptions(defaultOptions);
         const keys = await repository_module_1.RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` });
         const firstKey = keys === null || keys === void 0 ? void 0 : keys[0];
-        const key = firstKey === null || firstKey === void 0 ? void 0 : firstKey.substring(firstKey.indexOf(":"));
+        const key = firstKey === null || firstKey === void 0 ? void 0 : firstKey.substring(firstKey === null || firstKey === void 0 ? void 0 : firstKey.indexOf(":"));
         let modelString = key ? await repository_module_1.RepositoryModule.catchGetter({ key: key }) : null;
         if (!modelString) {
             const newModel = await this['findOne'](options);

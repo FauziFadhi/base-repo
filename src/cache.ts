@@ -26,7 +26,11 @@ function annotate(target, options: { hooks }) {
 async function invalidationCache(previousModel, modelClass) {
   const keys: string[] = await RepositoryModule.catchKeyGetter({ keyPattern: `*:${modelClass.name}*:${previousModel[modelClass['primaryKeyAttribute']]}` })
   const invalidation = RepositoryModule.cacheInvalidate;
-  await Promise.all(keys.map(async (key) => await invalidation({ key })))
+  await Promise.all(keys.map(async (key) => {
+    const usedKey = key?.substring(key?.indexOf(":"))
+    if(usedKey)
+      return await invalidation({ key: usedKey })
+  }))
 }
 
 

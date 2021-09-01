@@ -107,7 +107,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     const optionsString = CacheUtility.setOneQueryOptions(defaultOptions)
     const keys = await RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` })
     const firstKey = keys?.[0];
-    const key = firstKey?.substring(firstKey.indexOf(":"))
+    const key = firstKey?.substring(firstKey?.indexOf(":"))
 
 
     let modelString = key ? await RepositoryModule.catchGetter({ key: key }) : null

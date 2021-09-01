@@ -24,7 +24,11 @@ function annotate(target, options) {
 async function invalidationCache(previousModel, modelClass) {
     const keys = await repository_module_1.RepositoryModule.catchKeyGetter({ keyPattern: `*:${modelClass.name}*:${previousModel[modelClass['primaryKeyAttribute']]}` });
     const invalidation = repository_module_1.RepositoryModule.cacheInvalidate;
-    await Promise.all(keys.map(async (key) => await invalidation({ key })));
+    await Promise.all(keys.map(async (key) => {
+        const usedKey = key === null || key === void 0 ? void 0 : key.substring(key === null || key === void 0 ? void 0 : key.indexOf(":"));
+        if (usedKey)
+            return await invalidation({ key: usedKey });
+    }));
 }
 function Cache(cacheOptions) {
     return (target) => {
