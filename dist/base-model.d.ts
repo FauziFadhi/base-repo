@@ -1,6 +1,5 @@
 import { FindOptions, Model as SequelizeModel, ModelStatic, QueryOptions, ScopeOptions, WhereAttributeHash } from 'sequelize';
 import { Model as TSModel } from 'sequelize-typescript';
-import { CacheKey } from './cache-utilty';
 declare type UnusedOptionsAttribute = 'lock' | 'raw' | 'skipLocked' | keyof QueryOptions;
 export interface DefaultOptionsCache {
     ttl?: number;
@@ -12,7 +11,6 @@ export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>,
 export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'>, DefaultOptionsCache {
 }
 export declare class Model<TAttributes extends {} = any, TCreate extends {} = TAttributes> extends TSModel<TAttributes, TCreate> {
-    static caches: CacheKey;
     static modelTTL: number;
     private static defaultNotFoundMessage;
     private static notFoundException;

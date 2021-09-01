@@ -32,6 +32,21 @@ function TransformCacheToModels(modelClass, dataCache) {
         return model;
     });
 }
+function getMaxUpdateOptions(options) {
+    const maxOptions = lodash_1.cloneDeep(options || {});
+    cleanIncludeAttribute(maxOptions === null || maxOptions === void 0 ? void 0 : maxOptions.include);
+    return Object.assign(Object.assign({}, maxOptions), { dataType: sequelize_typescript_1.DataType.DATE });
+}
+function cleanIncludeAttribute(include) {
+    if (Array.isArray(include)) {
+        include.forEach((include) => {
+            include.attributes = [];
+        });
+    }
+    else {
+        include.attributes = [];
+    }
+}
 class Model extends sequelize_typescript_1.Model {
     static async findOneCache(options = {}) {
         const TTL = (options === null || options === void 0 ? void 0 : options.ttl) || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
@@ -96,8 +111,11 @@ class Model extends sequelize_typescript_1.Model {
     static async findAllCache(options = {}) {
         const TTL = (options === null || options === void 0 ? void 0 : options.ttl) || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
         options === null || options === void 0 ? true : delete options.ttl;
+        const maxUpdateOptions = getMaxUpdateOptions(options);
         const [maxUpdatedAt, count] = await Promise.all([
-            this['max']('updatedAt', options),
+            this['rawAttributes']['updatedAt']
+                ? this['max'](`${this.name}.updated_at`, maxUpdateOptions)
+                : undefined,
             this['count'](options),
         ]);
         if (!count && !maxUpdatedAt)
@@ -129,7 +147,6 @@ class Model extends sequelize_typescript_1.Model {
     }
 }
 exports.Model = Model;
-Model.caches = {};
 Model.modelTTL = 0;
 Model.defaultNotFoundMessage = (name) => `${name} data not found`;
 Model.notFoundException = (message) => new common_1.NotFoundException(message);

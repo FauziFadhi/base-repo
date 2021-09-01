@@ -1157,7 +1157,7 @@
         "affectsGlobalScope": false
       },
       "../src/date-utility.ts": {
-        "version": "4756238d2e2a465817c66715fece1194fa7c15ba91cdfa3757896d80728adc2f",
+        "version": "f971987952bcc1377873b720a0f0a3c478c7fe2adffc1808337141999cdb2783",
         "signature": "27668ee3f4f45c05b7386b5467824eeab6d33fe501abe66dfd9a711dca88d6d0",
         "affectsGlobalScope": false
       },
@@ -2002,8 +2002,8 @@
         "affectsGlobalScope": false
       },
       "../src/base-model.ts": {
-        "version": "813c0c85fe815b1b723b841f4e4b788d0841b3f350b425e15f05f12af3ce226b",
-        "signature": "76729111e6a0fcaf3b26835a26af953b8b761211490581b3f1b860dd8f5f8081",
+        "version": "a2ee7dd4ec0dfad22f86be7ff5e185e718e98334ac8a1dca5e8b058fef703259",
+        "signature": "93db11cbd1f2110822f01633a4c2b8b9f8be1147e3de71682ff77fde9e304d9a",
         "affectsGlobalScope": false
       },
       "../src/helpers.ts": {
@@ -6639,8 +6639,7 @@
       ],
       "../src/base-model.ts": [
         "../node_modules/sequelize-typescript/dist/index.d.ts",
-        "../node_modules/sequelize/types/index.d.ts",
-        "../src/cache-utilty.ts"
+        "../node_modules/sequelize/types/index.d.ts"
       ],
       "../src/base-repository.ts": [
         "../node_modules/sequelize-typescript/dist/index.d.ts",

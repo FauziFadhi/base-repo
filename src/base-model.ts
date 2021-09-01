@@ -3,16 +3,18 @@ import { DateUtility } from 'date-utility';
 import { cloneDeep } from 'lodash';
 import { RepositoryModule } from 'repository.module';
 import {
+  AggregateOptions,
   FindOptions,
+  IncludeOptions,
   Model as SequelizeModel,
   ModelStatic,
   QueryOptions,
   ScopeOptions,
   WhereAttributeHash,
 } from 'sequelize';
-import { Model as TSModel } from 'sequelize-typescript';
+import { DataType, Model as TSModel } from 'sequelize-typescript';
 
-import CacheUtility, { CacheKey } from './cache-utilty';
+import CacheUtility from './cache-utilty';
 
 type UnusedOptionsAttribute = 'lock' | 'raw' | 'skipLocked' | keyof QueryOptions
 export interface DefaultOptionsCache {
@@ -65,10 +67,29 @@ function TransformCacheToModels(modelClass: any, dataCache: string) {
   })
 }
 
+function getMaxUpdateOptions(options: FindOptions): AggregateOptions<unknown> {
+  const maxOptions = cloneDeep(options || {})
+  cleanIncludeAttribute(maxOptions?.include as any)
+  
+  return {
+    ...maxOptions,
+    dataType: DataType.DATE,
+  }
+}
+
+function cleanIncludeAttribute(include: IncludeOptions | IncludeOptions[]) {
+  if(Array.isArray(include)) {
+    include.forEach((include) => {
+      include.attributes = [];
+    })
+    } else {
+    include.attributes = [];
+  }
+}
+
 export class Model<TAttributes extends {} = any, TCreate extends {} = TAttributes>
   extends TSModel<TAttributes, TCreate> {
 
-  static caches: CacheKey = {}
   static modelTTL = 0
   private static defaultNotFoundMessage = (name: string): string => `${name} data not found`
   private static notFoundException = (message: string): Error => new NotFoundException(message)
@@ -190,9 +211,13 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
     delete options?.ttl
 
+    const maxUpdateOptions = getMaxUpdateOptions(options)
+
     // get max updatedAt on model
     const [maxUpdatedAt, count] = await Promise.all([
-      this['max']('updatedAt', options),
+      this['rawAttributes']['updatedAt'] 
+      ? this['max'](`${this.name}.updated_at`, maxUpdateOptions) 
+      : undefined,
       this['count'](options),
     ])
 
