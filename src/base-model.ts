@@ -37,13 +37,7 @@ function transformCacheToModel(modelClass: any, dataCache: string) {
 
   if (!modelData) return null
 
-  const model = modelClass.build(modelData, { isNewRecord: false, include: { all: true } })
-
-  if (modelData.createdAt)
-    model.setDataValue('createdAt', modelData.createdAt)
-
-  if (modelData.updatedAt)
-    model.setDataValue('updatedAt', modelData.updatedAt)
+  const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include: { all: true } })
 
   return model
 }
@@ -53,18 +47,9 @@ function TransformCacheToModels(modelClass: any, dataCache: string) {
 
   if (!modelData?.length) return []
 
-  const models = modelClass.bulkBuild(modelData, { isNewRecord: false, include: { all: true } })
+  const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include: { all: true } })
 
-  return models.map((model, index) => {
-    const data = modelData[index]
-    if (data.createdAt)
-      model.setDataValue('createdAt', data.createdAt)
-
-    if (data.updatedAt)
-      model.setDataValue('updatedAt', data.updatedAt)
-
-    return model
-  })
+  return models
 }
 
 function getMaxUpdateOptions(options: FindOptions): AggregateOptions<unknown> {
