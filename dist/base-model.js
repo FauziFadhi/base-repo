@@ -38,6 +38,7 @@ function cleanIncludeAttribute(include) {
 }
 class Model extends sequelize_typescript_1.Model {
     static async findOneCache(options = {}) {
+        options = options !== null && options !== void 0 ? options : {};
         const TTL = (options === null || options === void 0 ? void 0 : options.ttl) || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
         options === null || options === void 0 ? true : delete options.ttl;
         const rejectOnEmpty = options === null || options === void 0 ? void 0 : options.rejectOnEmpty;
@@ -65,6 +66,7 @@ class Model extends sequelize_typescript_1.Model {
         return model;
     }
     static async findByPkCache(identifier, options = {}) {
+        options = options !== null && options !== void 0 ? options : {};
         const TTL = (options === null || options === void 0 ? void 0 : options.ttl) || this['modelTTL'] || repository_module_1.RepositoryModule.defaultTTL;
         options === null || options === void 0 ? true : delete options.ttl;
         const rejectOnEmpty = options === null || options === void 0 ? void 0 : options.rejectOnEmpty;

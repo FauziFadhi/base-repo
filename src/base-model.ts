@@ -5,6 +5,7 @@ import { RepositoryModule } from 'repository.module';
 import {
   AggregateOptions,
   FindOptions,
+  Includeable,
   IncludeOptions,
   Model as SequelizeModel,
   ModelStatic,
@@ -18,20 +19,19 @@ import CacheUtility from './cache-utilty';
 
 type UnusedOptionsAttribute = 'lock' | 'raw' | 'skipLocked' | keyof QueryOptions
 export interface DefaultOptionsCache {
-  ttl?: number
   /**
      * Throw if nothing was found.
    */
   rejectOnEmpty?: boolean | Error
 }
-export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute>, DefaultOptionsCache {
+export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'>, DefaultOptionsCache {
   ttl: number
+  include: Includeable | Includeable[];
 }
 
 export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'>, DefaultOptionsCache {
-
+  ttl?: number
 }
-
 function transformCacheToModel(modelClass: any, dataCache: string) {
   const modelData = JSON.parse(dataCache)
 
@@ -93,9 +93,17 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
    * @returns 
    */
   static async findOneCache<T extends Model>(this: { new(): T },
+    options?: FindAllOptionsCache<T['_attributes']>,
+  ): Promise<T> 
+  static async findOneCache<T extends Model>(this: { new(): T },
+    options?: FindAllNestedOptionsCache<T['_attributes']>,
+  ): Promise<T> 
+  static async findOneCache<T extends Model>(this: { new(): T },
     options: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']> = {},
-  ): Promise<T> {
+  ): Promise<T> 
+  {
 
+    options = options ?? {} as any
     const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
     delete options?.ttl
     const rejectOnEmpty = options?.rejectOnEmpty
@@ -142,10 +150,20 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
    */
   static async findByPkCache<T extends Model>(this: { new(): T },
     identifier: string | number,
+    options?: Omit<FindAllOptionsCache<T['_attributes']>, 'where'>,
+  ): Promise<T>
+  static async findByPkCache<T extends Model>(this: { new(): T },
+    identifier: string | number,
+    options?: Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'>,
+  ): Promise<T>
+  static async findByPkCache<T extends Model>(this: { new(): T },
+    identifier: string | number,
     options:
       Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'>
       | Omit<FindAllOptionsCache<T['_attributes']>, 'where'> = {},
   ): Promise<T> {
+
+    options = options ?? {} as any
 
     const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
     delete options?.ttl
@@ -190,8 +208,15 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
   }
 
   static async findAllCache<T extends Model>(this: { new(): T },
-    options: FindAllNestedOptionsCache<T> | FindAllOptionsCache<T> = {},
-  ): Promise<T[]> {
+    options?: FindAllOptionsCache<T['_attributes']>,
+  ): Promise<T[]> 
+  static async findAllCache<T extends Model>(this: { new(): T },
+    options?: FindAllNestedOptionsCache<T['_attributes']>,
+  ): Promise<T[]> 
+  static async findAllCache<T extends Model>(this: { new(): T },
+    options: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']> = {},
+  ): Promise<T[]> 
+  {
 
     const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
     delete options?.ttl
