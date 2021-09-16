@@ -33,10 +33,14 @@ class CacheUtility {
         if (Array.isArray(include)) {
             include.forEach((include) => {
                 delete include.association;
+                if (include === null || include === void 0 ? void 0 : include.include)
+                    CacheUtility.cleanIncludeOptions(include === null || include === void 0 ? void 0 : include.include);
             });
         }
         else {
             delete include.association;
+            if (include === null || include === void 0 ? void 0 : include.include)
+                CacheUtility.cleanIncludeOptions(include === null || include === void 0 ? void 0 : include.include);
         }
     }
 }

@@ -51,9 +51,15 @@ export class CacheUtility {
     if(Array.isArray(include)) {
       include.forEach((include) => {
         delete include.association;
+
+        if(include?.include) 
+          CacheUtility.cleanIncludeOptions(include?.include as IncludeOptions)
       })
     } else {
       delete include.association;
+      
+      if(include?.include) 
+          CacheUtility.cleanIncludeOptions(include?.include as IncludeOptions)
     }
   }
 }
