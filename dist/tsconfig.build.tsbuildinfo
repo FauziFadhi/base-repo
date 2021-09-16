@@ -2002,8 +2002,8 @@
         "affectsGlobalScope": false
       },
       "../src/base-model.ts": {
-        "version": "ba8f7f3e017f8100fcd5061814adea76f6b5038b4a57e69f4c8b9891f2ba9f6c",
-        "signature": "4fa97aaece0a897d903626baacaab623beb6f832fd9e155321c012d5009835e1",
+        "version": "9110d7ee06b2a5f77dd9715aa31c07890474cfadbaa4871979094df048ff46ad",
+        "signature": "ef70210467a33922b6dfb9fbb0429ba48dfc5696b795ebe21c302b793a6d6dc9",
         "affectsGlobalScope": false
       },
       "../src/helpers.ts": {

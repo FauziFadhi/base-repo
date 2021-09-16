@@ -24,9 +24,8 @@ export interface DefaultOptionsCache {
    */
   rejectOnEmpty?: boolean | Error
 }
-export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'>, DefaultOptionsCache {
+export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute>, DefaultOptionsCache {
   ttl: number
-  include: Includeable | Includeable[];
 }
 
 export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'>, DefaultOptionsCache {
@@ -93,10 +92,10 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
    * @returns 
    */
   static async findOneCache<T extends Model>(this: { new(): T },
-    options?: FindAllOptionsCache<T['_attributes']>,
+    options?: FindAllNestedOptionsCache<T['_attributes']>,
   ): Promise<T> 
   static async findOneCache<T extends Model>(this: { new(): T },
-    options?: FindAllNestedOptionsCache<T['_attributes']>,
+    options?: FindAllOptionsCache<T['_attributes']>,
   ): Promise<T> 
   static async findOneCache<T extends Model>(this: { new(): T },
     options: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']> = {},
@@ -150,11 +149,11 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
    */
   static async findByPkCache<T extends Model>(this: { new(): T },
     identifier: string | number,
-    options?: Omit<FindAllOptionsCache<T['_attributes']>, 'where'>,
+    options?: Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'>,
   ): Promise<T>
   static async findByPkCache<T extends Model>(this: { new(): T },
     identifier: string | number,
-    options?: Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'>,
+    options?: Omit<FindAllOptionsCache<T['_attributes']>, 'where'>,
   ): Promise<T>
   static async findByPkCache<T extends Model>(this: { new(): T },
     identifier: string | number,
@@ -208,10 +207,10 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
   }
 
   static async findAllCache<T extends Model>(this: { new(): T },
-    options?: FindAllOptionsCache<T['_attributes']>,
+    options?: FindAllNestedOptionsCache<T['_attributes']>,
   ): Promise<T[]> 
   static async findAllCache<T extends Model>(this: { new(): T },
-    options?: FindAllNestedOptionsCache<T['_attributes']>,
+    options?: FindAllOptionsCache<T['_attributes']>,
   ): Promise<T[]> 
   static async findAllCache<T extends Model>(this: { new(): T },
     options: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']> = {},
