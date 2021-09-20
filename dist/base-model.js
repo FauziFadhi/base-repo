@@ -11,14 +11,14 @@ function transformCacheToModel(modelClass, dataCache) {
     const modelData = JSON.parse(dataCache);
     if (!modelData)
         return null;
-    const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include: { all: true } });
+    const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include: { all: true, nested: true } });
     return model;
 }
 function TransformCacheToModels(modelClass, dataCache) {
     const modelData = JSON.parse(dataCache);
     if (!(modelData === null || modelData === void 0 ? void 0 : modelData.length))
         return [];
-    const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include: { all: true } });
+    const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include: { all: true, nested: true } });
     return models;
 }
 function getMaxUpdateOptions(options) {

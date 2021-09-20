@@ -5,7 +5,6 @@ import { RepositoryModule } from 'repository.module';
 import {
   AggregateOptions,
   FindOptions,
-  Includeable,
   IncludeOptions,
   Model as SequelizeModel,
   ModelStatic,
@@ -36,7 +35,7 @@ function transformCacheToModel(modelClass: any, dataCache: string) {
 
   if (!modelData) return null
 
-  const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include: { all: true } })
+  const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include: { all: true, nested: true } })
 
   return model
 }
@@ -46,7 +45,7 @@ function TransformCacheToModels(modelClass: any, dataCache: string) {
 
   if (!modelData?.length) return []
 
-  const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include: { all: true } })
+  const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include: { all: true, nested: true } })
 
   return models
 }
