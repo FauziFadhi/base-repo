@@ -69,13 +69,19 @@ function cleanIncludeAttribute(include: IncludeOptions | IncludeOptions[]) {
     include.forEach((include) => {
       include.attributes = [];
       delete include.order
+
+      if(include?.through)
+        cleanIncludeAttribute(include?.through as IncludeOptions)
       
       if(include?.include) 
-      cleanIncludeAttribute(include.include as IncludeOptions)
+        cleanIncludeAttribute(include.include as IncludeOptions)
     })
   } else {
     include.attributes = [];
     delete include.order
+
+    if(include?.through)
+      cleanIncludeAttribute(include?.through as IncludeOptions)
 
     if(include?.include) 
         cleanIncludeAttribute(include.include as IncludeOptions)

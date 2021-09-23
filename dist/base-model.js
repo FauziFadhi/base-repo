@@ -34,6 +34,8 @@ function cleanIncludeAttribute(include) {
         include.forEach((include) => {
             include.attributes = [];
             delete include.order;
+            if (include === null || include === void 0 ? void 0 : include.through)
+                cleanIncludeAttribute(include === null || include === void 0 ? void 0 : include.through);
             if (include === null || include === void 0 ? void 0 : include.include)
                 cleanIncludeAttribute(include.include);
         });
@@ -41,6 +43,8 @@ function cleanIncludeAttribute(include) {
     else {
         include.attributes = [];
         delete include.order;
+        if (include === null || include === void 0 ? void 0 : include.through)
+            cleanIncludeAttribute(include === null || include === void 0 ? void 0 : include.through);
         if (include === null || include === void 0 ? void 0 : include.include)
             cleanIncludeAttribute(include.include);
     }
