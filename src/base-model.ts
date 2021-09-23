@@ -5,7 +5,6 @@ import { RepositoryModule } from 'repository.module';
 import {
   AggregateOptions,
   FindOptions,
-  IncludeOptions,
   Model as SequelizeModel,
   ModelStatic,
   QueryOptions,
@@ -50,43 +49,43 @@ function TransformCacheToModels(modelClass: any, dataCache: string) {
   return models
 }
 
-function getMaxUpdateOptions(options: FindOptions): AggregateOptions<unknown> {
+function getMaxUpdateOptions(options: FindAllOptionsCache | FindAllNestedOptionsCache): AggregateOptions<unknown> {
+  if(!options) return {};
   const maxOptions = cloneDeep(options || {})
   delete maxOptions?.order
-  cleanIncludeAttribute(maxOptions?.include as any)
-  
+
   return {
-    ...maxOptions,
+    where: maxOptions?.where,
     dataType: DataType.DATE,
   }
 }
 
-function cleanIncludeAttribute(include: IncludeOptions | IncludeOptions[]) {
-  if(!include)
-    return;
+// function cleanIncludeAttribute(include: IncludeOptions | IncludeOptions[]) {
+//   if(!include)
+//     return;
     
-  if(Array.isArray(include)) {
-    include.forEach((include) => {
-      include.attributes = [];
-      delete include.order
+//   if(Array.isArray(include)) {
+//     include.forEach((include) => {
+//       include.attributes = [];
+//       delete include.order
 
-      if(include?.through)
-        cleanIncludeAttribute(include?.through as IncludeOptions)
+//       if(include?.through)
+//         cleanIncludeAttribute(include?.through as IncludeOptions)
       
-      if(include?.include) 
-        cleanIncludeAttribute(include.include as IncludeOptions)
-    })
-  } else {
-    include.attributes = [];
-    delete include.order
+//       if(include?.include) 
+//         cleanIncludeAttribute(include.include as IncludeOptions)
+//     })
+//   } else {
+//     include.attributes = [];
+//     delete include.order
 
-    if(include?.through)
-      cleanIncludeAttribute(include?.through as IncludeOptions)
+//     if(include?.through)
+//       cleanIncludeAttribute(include?.through as IncludeOptions)
 
-    if(include?.include) 
-        cleanIncludeAttribute(include.include as IncludeOptions)
-  }
-}
+//     if(include?.include) 
+//         cleanIncludeAttribute(include.include as IncludeOptions)
+//   }
+// }
 
 export class Model<TAttributes extends {} = any, TCreate extends {} = TAttributes>
   extends TSModel<TAttributes, TCreate> {
