@@ -61,12 +61,21 @@ function getMaxUpdateOptions(options: FindOptions): AggregateOptions<unknown> {
 }
 
 function cleanIncludeAttribute(include: IncludeOptions | IncludeOptions[]) {
+  if(!include)
+    return;
+    
   if(Array.isArray(include)) {
     include.forEach((include) => {
       include.attributes = [];
+
+      if(include?.include) 
+        cleanIncludeAttribute(include.include as IncludeOptions)
     })
     } else {
     include.attributes = [];
+
+    if(include?.include) 
+        cleanIncludeAttribute(include.include as IncludeOptions)
   }
 }
 

@@ -2002,7 +2002,7 @@
         "affectsGlobalScope": false
       },
       "../src/base-model.ts": {
-        "version": "6f1009cd55040997a06d2914cdca9d1b14776a3c8e84de1e86deea23596578b9",
+        "version": "783ab4037ca6500d00257c9fc36b8564c4d3db12a4b45e0d9012745fc2f2082a",
         "signature": "ef70210467a33922b6dfb9fbb0429ba48dfc5696b795ebe21c302b793a6d6dc9",
         "affectsGlobalScope": false
       },
