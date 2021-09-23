@@ -23,6 +23,7 @@ function TransformCacheToModels(modelClass, dataCache) {
 }
 function getMaxUpdateOptions(options) {
     const maxOptions = lodash_1.cloneDeep(options || {});
+    maxOptions === null || maxOptions === void 0 ? true : delete maxOptions.order;
     cleanIncludeAttribute(maxOptions === null || maxOptions === void 0 ? void 0 : maxOptions.include);
     return Object.assign(Object.assign({}, maxOptions), { dataType: sequelize_typescript_1.DataType.DATE });
 }
@@ -32,12 +33,14 @@ function cleanIncludeAttribute(include) {
     if (Array.isArray(include)) {
         include.forEach((include) => {
             include.attributes = [];
+            delete include.order;
             if (include === null || include === void 0 ? void 0 : include.include)
                 cleanIncludeAttribute(include.include);
         });
     }
     else {
         include.attributes = [];
+        delete include.order;
         if (include === null || include === void 0 ? void 0 : include.include)
             cleanIncludeAttribute(include.include);
     }

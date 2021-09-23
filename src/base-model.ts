@@ -52,6 +52,7 @@ function TransformCacheToModels(modelClass: any, dataCache: string) {
 
 function getMaxUpdateOptions(options: FindOptions): AggregateOptions<unknown> {
   const maxOptions = cloneDeep(options || {})
+  delete maxOptions?.order
   cleanIncludeAttribute(maxOptions?.include as any)
   
   return {
@@ -67,12 +68,14 @@ function cleanIncludeAttribute(include: IncludeOptions | IncludeOptions[]) {
   if(Array.isArray(include)) {
     include.forEach((include) => {
       include.attributes = [];
-
+      delete include.order
+      
       if(include?.include) 
-        cleanIncludeAttribute(include.include as IncludeOptions)
+      cleanIncludeAttribute(include.include as IncludeOptions)
     })
-    } else {
+  } else {
     include.attributes = [];
+    delete include.order
 
     if(include?.include) 
         cleanIncludeAttribute(include.include as IncludeOptions)
