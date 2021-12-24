@@ -7,18 +7,18 @@ const lodash_1 = require("lodash");
 const repository_module_1 = require("./repository.module");
 const sequelize_typescript_1 = require("sequelize-typescript");
 const cache_utilty_1 = require("./cache-utilty");
-function transformCacheToModel(modelClass, dataCache) {
+function transformCacheToModel(modelClass, dataCache, include) {
     const modelData = JSON.parse(dataCache);
     if (!modelData)
         return null;
-    const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include: { all: true, nested: true } });
+    const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include });
     return model;
 }
-function TransformCacheToModels(modelClass, dataCache) {
+function TransformCacheToModels(modelClass, dataCache, include) {
     const modelData = JSON.parse(dataCache);
     if (!(modelData === null || modelData === void 0 ? void 0 : modelData.length))
         return [];
-    const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include: { all: true, nested: true } });
+    const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include });
     return models;
 }
 function getMaxUpdateOptions(options) {
@@ -53,7 +53,8 @@ class Model extends sequelize_typescript_1.Model {
                 repository_module_1.RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL });
             }
         }
-        const model = transformCacheToModel(this, modelString);
+        const include = options && 'include' in options ? options === null || options === void 0 ? void 0 : options.include : undefined;
+        const model = transformCacheToModel(this, modelString, include);
         if (!model) {
             const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name);
             this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message));
@@ -79,7 +80,8 @@ class Model extends sequelize_typescript_1.Model {
                 repository_module_1.RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL });
             }
         }
-        const model = transformCacheToModel(this, modelString);
+        const include = options && 'include' in options ? options === null || options === void 0 ? void 0 : options.include : undefined;
+        const model = transformCacheToModel(this, modelString, include);
         if (!model) {
             const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name);
             this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message));
@@ -126,7 +128,8 @@ class Model extends sequelize_typescript_1.Model {
             const newKeyModel = cache_utilty_1.default.setKey(this.name, max, keyOpts);
             repository_module_1.RepositoryModule.catchSetter({ key: newKeyModel, value: modelString, ttl: TTL });
         }
-        return TransformCacheToModels(this, modelString);
+        const include = options && 'include' in options ? options === null || options === void 0 ? void 0 : options.include : undefined;
+        return TransformCacheToModels(this, modelString, include);
     }
     static scopes(options) {
         return this['scope'](options);

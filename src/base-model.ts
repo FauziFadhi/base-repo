@@ -5,6 +5,7 @@ import { RepositoryModule } from 'repository.module';
 import {
   AggregateOptions,
   FindOptions,
+  Includeable,
   Model as SequelizeModel,
   ModelStatic,
   QueryOptions,
@@ -29,22 +30,22 @@ export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>,
 export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'>, DefaultOptionsCache {
   ttl?: number
 }
-function transformCacheToModel(modelClass: any, dataCache: string) {
+function transformCacheToModel(modelClass: any, dataCache: string, include?: Includeable | Includeable[]) {
   const modelData = JSON.parse(dataCache)
 
   if (!modelData) return null
 
-  const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include: { all: true, nested: true } })
+  const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include })
 
   return model
 }
 
-function TransformCacheToModels(modelClass: any, dataCache: string) {
+function TransformCacheToModels(modelClass: any, dataCache: string, include?: Includeable | Includeable[]) {
   const modelData = JSON.parse(dataCache)
 
   if (!modelData?.length) return []
 
-  const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include: { all: true, nested: true } })
+  const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include })
 
   return models
 }
@@ -145,8 +146,8 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
         RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL })
       }
     }
-
-    const model = transformCacheToModel(this, modelString)
+    const include = options && 'include' in options ? options?.include : undefined
+    const model = transformCacheToModel(this, modelString, include)
 
     if (!model) {
       const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name)
@@ -203,7 +204,8 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
       }
     }
 
-    const model = transformCacheToModel(this, modelString)
+    const include = options && 'include' in options ? options?.include : undefined
+    const model = transformCacheToModel(this, modelString, include)
 
     if (!model) {
       const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name)
@@ -285,7 +287,8 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
       RepositoryModule.catchSetter({ key: newKeyModel, value: modelString, ttl: TTL })
     }
 
-    return TransformCacheToModels(this, modelString)
+    const include = options && 'include' in options ? options?.include : undefined
+    return TransformCacheToModels(this, modelString, include)
   }
 
   static scopes<M extends SequelizeModel>(
