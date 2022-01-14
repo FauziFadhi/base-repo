@@ -1,4 +1,15 @@
 "use strict";
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cache = void 0;
 const helpers_1 = require("./helpers");
@@ -42,8 +53,16 @@ function Cache(cacheOptions) {
                     invalidateCache(instance, options, target);
                     return instance;
                 },
-                beforeBulkUpdate: function (options) {
-                    options.individualHooks = true;
+                beforeBulkUpdate: async (options) => {
+                    var _a;
+                    const _b = options || { transaction: undefined }, { transaction } = _b, customOptions = __rest(_b, ["transaction"]);
+                    (_a = target === null || target === void 0 ? void 0 : target['findAll']) === null || _a === void 0 ? void 0 : _a.call(target, customOptions).then(async (models) => {
+                        await Promise.all((models || []).map(async (model) => {
+                            if (model) {
+                                invalidateCache(model, options, target);
+                            }
+                        }));
+                    });
                 }
             },
         });

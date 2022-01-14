@@ -33,7 +33,6 @@ async function invalidationCache(previousModel, modelClass) {
   }))
 }
 
-
 export function Cache(cacheOptions?: { ttl?: number }) {
   return (target) => {
     const options: { hooks } = Object.assign({},
@@ -47,8 +46,15 @@ export function Cache(cacheOptions?: { ttl?: number }) {
             invalidateCache(instance, options, target)
             return instance
           },
-          beforeBulkUpdate: function (options) {
-            options.individualHooks = true;
+          beforeBulkUpdate: async (options) => {
+            const { transaction, ...customOptions } = options || { transaction: undefined }
+            target?.['findAll']?.(customOptions).then(async (models: any[]) => {
+              await Promise.all((models || []).map(async(model) => {
+                if(model) {
+                  invalidateCache(model, options, target)
+                }
+              }))
+            });
           }
         },
       });
