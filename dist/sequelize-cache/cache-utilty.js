@@ -25,7 +25,7 @@ class CacheUtility {
         return ((Object.keys(options).length === 0) ? 'one' : hash.update(JSON.stringify(options)).digest('base64'));
     }
     static cleanOptions(options) {
-        CacheUtility.cleanIncludeOptions(options === null || options === void 0 ? void 0 : options.include);
+        CacheUtility.cleanIncludeOptions(options?.include);
     }
     static cleanIncludeOptions(include) {
         if (!include)
@@ -33,14 +33,14 @@ class CacheUtility {
         if (Array.isArray(include)) {
             include.forEach((include) => {
                 delete include.association;
-                if (include === null || include === void 0 ? void 0 : include.include)
-                    CacheUtility.cleanIncludeOptions(include === null || include === void 0 ? void 0 : include.include);
+                if (include?.include)
+                    CacheUtility.cleanIncludeOptions(include?.include);
             });
         }
         else {
             delete include.association;
-            if (include === null || include === void 0 ? void 0 : include.include)
-                CacheUtility.cleanIncludeOptions(include === null || include === void 0 ? void 0 : include.include);
+            if (include?.include)
+                CacheUtility.cleanIncludeOptions(include?.include);
         }
     }
 }

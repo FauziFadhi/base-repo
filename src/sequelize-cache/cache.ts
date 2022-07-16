@@ -1,21 +1,21 @@
 import { circularToJSON } from 'helpers';
-import { RepositoryModule } from 'repository.module';
+import { SequelizeCache } from './sequelize-cache';
 import { addOptions } from 'sequelize-typescript';
 
 
 async function invalidateCache(model, options, modelClass) {
   const previousModel = { ...model['dataValues'], ...circularToJSON(model['_previousDataValues']) }
 
-  console.log('previousModel', previousModel);
+  SequelizeCache.logging(previousModel)
   if (options?.transaction) {
     options.transaction.afterCommit(() => {
       invalidationCache(previousModel, modelClass)
     })
-    console.log('hooks after update transaction');
+    SequelizeCache.logging('hooks after update transaction')
     return model
   }
   invalidationCache(previousModel, modelClass)
-  console.log('hooks after update');
+  SequelizeCache.logging('hooks after update')
   return model
 
 }
@@ -24,8 +24,8 @@ function annotate(target, options: { hooks }) {
   addOptions(target.prototype, options)
 }
 async function invalidationCache(previousModel, modelClass) {
-  const keys: string[] = await RepositoryModule.catchKeyGetter({ keyPattern: `*:${modelClass.name}*:${previousModel[modelClass['primaryKeyAttribute']]}` })
-  const invalidation = RepositoryModule.cacheInvalidate;
+  const keys: string[] = await SequelizeCache.catchKeyGetter({ keyPattern: `*:${modelClass.name}*:${previousModel[modelClass['primaryKeyAttribute']]}` })
+  const invalidation = SequelizeCache.cacheInvalidate;
   await Promise.all(keys.map(async (key) => {
     const usedKey = key?.substring(key?.indexOf(":"))
     if(usedKey)

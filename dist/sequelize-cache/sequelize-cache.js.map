@@ -1,0 +1,1 @@
+{"version":3,"file":"sequelize-cache.js","sourceRoot":"","sources":["../../src/sequelize-cache/sequelize-cache.ts"],"names":[],"mappings":";;;AAEA,MAAa,cAAc;IAKzB,MAAM,CAAC,OAAO,CAAC,KAAK;QAClB,IAAI,CAAC,cAAc,CAAC,OAAO;YAC3B,OAAO;QAEP,IAAG,cAAc,CAAC,GAAG;YACnB,cAAc,CAAC,GAAG,CAAC,KAAK,CAAC,CAAA;QAE3B,OAAO,CAAC,GAAG,CAAC,KAAK,CAAC,CAAC;IACrB,CAAC;CAKF;AAlBD,wCAkBC"}

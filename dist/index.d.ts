@@ -1,4 +1,3 @@
-export { Repository, getOptionsCache, GetOptions, ListGetOptionsCache } from './base-repository';
-export { RepositoryModule } from './repository.module';
-export * from './base-model';
-export { Cache } from './cache';
+export { SequelizeCacheModule as RepositoryModule } from './sequelize-cache/sequelize-cache.module';
+export * from './sequelize-cache/base-model';
+export { Cache } from './sequelize-cache/cache';

@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { DateUtility } from 'date-utility';
 import { cloneDeep } from 'lodash';
-import { RepositoryModule } from 'repository.module';
+import { SequelizeCache } from './sequelize-cache';
 import {
   AggregateOptions,
   FindOptions,
@@ -120,7 +120,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
   {
 
     options = options ?? {} as any
-    const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
+    const TTL = options?.ttl || this['modelTTL'] || SequelizeCache.defaultTTL
     delete options?.ttl
     const rejectOnEmpty = options?.rejectOnEmpty
     delete options?.rejectOnEmpty
@@ -129,12 +129,12 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     const defaultOptions = this['_defaultsOptions']({...options, limit: 1 }, scope)
 
     const optionsString = CacheUtility.setOneQueryOptions(defaultOptions)
-    const keys = await RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` })
+    const keys = await SequelizeCache.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` })
     const firstKey = keys?.[0];
     const key = firstKey?.substring(firstKey?.indexOf(":"))
 
 
-    let modelString = key ? await RepositoryModule.catchGetter({ key: key }) : null
+    let modelString = key ? await SequelizeCache.catchGetter({ key: key }) : null
 
     if (!modelString) {
       const newModel = await this['findOne'](options)
@@ -143,7 +143,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
       if (newModel) {
         const key = CacheUtility.setKey(this.name, optionsString, newModel[this['primaryKeyAttribute']])
-        RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL })
+        SequelizeCache.catchSetter({ key, value: modelString, ttl: TTL })
       }
     }
     const include = options && 'include' in options ? options?.include : undefined
@@ -181,7 +181,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
     options = options ?? {} as any
 
-    const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
+    const TTL = options?.ttl || this['modelTTL'] || SequelizeCache.defaultTTL
     delete options?.ttl
     const rejectOnEmpty = options?.rejectOnEmpty
     delete options?.rejectOnEmpty
@@ -193,14 +193,14 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
       .setOneQueryOptions({ ...defaultOptions, where: { [this['primaryKeyAttribute']]: identifier, ...defaultOptions?.where } }) + 'pk'
     const key = CacheUtility.setKey(this.name, optionsString, `${identifier}`)
 
-    let modelString = await RepositoryModule.catchGetter({ key })
+    let modelString = await SequelizeCache.catchGetter({ key })
     if (!modelString) {
 
       const newModel = await this['findByPk'](identifier, options)
       modelString = JSON.stringify(newModel)
 
       if (newModel) {
-        RepositoryModule.catchSetter({ key, value: modelString, ttl: TTL })
+        SequelizeCache.catchSetter({ key, value: modelString, ttl: TTL })
       }
     }
 
@@ -235,7 +235,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
   ): Promise<T[]> 
   {
 
-    const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
+    const TTL = options?.ttl || this['modelTTL'] || SequelizeCache.defaultTTL
     delete options?.ttl
 
     const maxUpdateOptions = getMaxUpdateOptions(options)
@@ -259,21 +259,21 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
     // get what time is cached on this model based on keyOpts
     const keyTime = CacheUtility.setKey(this.name, keyOpts)
-    let timeCached = await RepositoryModule.catchGetter({ key: keyTime })
+    let timeCached = await SequelizeCache.catchGetter({ key: keyTime })
 
     let canFetch = false
     // set time cache if timeCached is null
     if (!timeCached || max.toString() != timeCached) {
       canFetch = true
 
-      await RepositoryModule.catchSetter({ key: keyTime, value: max.toString(), ttl: TTL })
+      await SequelizeCache.catchSetter({ key: keyTime, value: max.toString(), ttl: TTL })
       timeCached = max.toString()
     }
 
     // set key for get model
     const keyModel = CacheUtility.setKey(this.name, timeCached, keyOpts)
     // get the model result based on key
-    let modelString = await RepositoryModule.catchGetter({ key: keyModel })
+    let modelString = await SequelizeCache.catchGetter({ key: keyModel })
 
     // check if result is null or can fetch
     // then can fetch row on database
@@ -284,7 +284,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
       // set cache model based on new key
       const newKeyModel = CacheUtility.setKey(this.name, max, keyOpts)
-      RepositoryModule.catchSetter({ key: newKeyModel, value: modelString, ttl: TTL })
+      SequelizeCache.catchSetter({ key: newKeyModel, value: modelString, ttl: TTL })
     }
 
     const include = options && 'include' in options ? options?.include : undefined
@@ -295,7 +295,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     this: ModelStatic<M>,
     options?: string | ScopeOptions | readonly (string | ScopeOptions)[] | WhereAttributeHash<M>
   ): typeof Model & { new(): M } {
-    return this['scope'](options)
+    return this['scope'](options) as any
   }
 }
 
