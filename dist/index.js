@@ -14,10 +14,11 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Cache = exports.RepositoryModule = void 0;
+exports.Cache = exports.SequelizeCacheModule = void 0;
 var sequelize_cache_module_1 = require("./sequelize-cache/sequelize-cache.module");
-Object.defineProperty(exports, "RepositoryModule", { enumerable: true, get: function () { return sequelize_cache_module_1.SequelizeCacheModule; } });
+Object.defineProperty(exports, "SequelizeCacheModule", { enumerable: true, get: function () { return sequelize_cache_module_1.SequelizeCacheModule; } });
 __exportStar(require("./sequelize-cache/base-model"), exports);
+__exportStar(require("./sequelize-cache/module-options.interface"), exports);
 var cache_1 = require("./sequelize-cache/cache");
 Object.defineProperty(exports, "Cache", { enumerable: true, get: function () { return cache_1.Cache; } });
 //# sourceMappingURL=index.js.map

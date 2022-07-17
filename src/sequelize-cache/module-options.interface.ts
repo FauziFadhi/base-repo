@@ -1,5 +1,7 @@
 export interface SequelizeCacheModuleOptions {
-  /** in Seconds */
+  /**
+   *  in Seconds 
+  */
   defaultTTL: number;
 
   /** show log */
@@ -7,7 +9,9 @@ export interface SequelizeCacheModuleOptions {
 
   log?: (value: any) => void;
 
-  /** use provider value from this closure for create cache */
+  /** 
+   * use provider value from this closure for create cache 
+   * */
   callbackSet: ({ key, value, ttl }: { key: string, value: string, ttl: number }) => Promise<unknown>
 
   /**
