@@ -1,6 +1,6 @@
 import { FindOptions, Model as SequelizeModel, ModelStatic, QueryOptions, ScopeOptions, WhereAttributeHash } from 'sequelize';
 import { Model as TSModel } from 'sequelize-typescript';
-declare type UnusedOptionsAttribute = 'lock' | 'raw' | 'skipLocked' | keyof QueryOptions;
+declare type UnusedOptionsAttribute = 'lock' | 'skipLocked' | keyof Omit<QueryOptions, 'replacements' | 'bind' | 'type' | 'nest' | 'raw'>;
 export interface DefaultOptionsCache {
     rejectOnEmpty?: boolean | Error;
 }

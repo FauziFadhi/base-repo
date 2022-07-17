@@ -16,7 +16,7 @@ import { DataType, Model as TSModel } from 'sequelize-typescript';
 
 import CacheUtility from './cache-utilty';
 
-type UnusedOptionsAttribute = 'lock' | 'raw' | 'skipLocked' | keyof QueryOptions
+type UnusedOptionsAttribute = 'lock' | 'skipLocked' | keyof Omit<QueryOptions, 'replacements' | 'bind' | 'type' | 'nest' | 'raw'>
 export interface DefaultOptionsCache {
   /**
      * Throw if nothing was found.
