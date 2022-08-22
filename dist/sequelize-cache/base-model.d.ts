@@ -12,7 +12,7 @@ export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, Unuse
 }
 export declare class Model<TAttributes extends {} = any, TCreate extends {} = TAttributes> extends TSModel<TAttributes, TCreate> {
     static modelTTL: number;
-    static onUpdateField: string;
+    static onUpdateAttribute: string;
     private static defaultNotFoundMessage;
     private static notFoundException;
     static notFoundMessage: any;

@@ -122,7 +122,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
   extends TSModel<TAttributes, TCreate> {
 
   static modelTTL = 0
-  static onUpdateField = 'updated_at'
+  static onUpdateAttribute = 'updatedAt'
   private static defaultNotFoundMessage = (name: string): string => `${name} data not found`
   private static notFoundException = (message: string): Error => new NotFoundException(message)
   static notFoundMessage = null
@@ -269,13 +269,16 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     const TTL = options?.ttl || this['modelTTL'] || SequelizeCache.defaultTTL
     delete options?.ttl
 
-    const maxUpdateOptions = getMaxUpdateOptions(options)
+    const maxUpdateOptions = getMaxUpdateOptions(options);
+
+    const onUpdateAttribute = this['getAttributes']()?.[this['onUpdateAttribute']];
+    const maxUpdatedAtPromise = onUpdateAttribute?.field
+    ? getCustomCache({key: 'max', maxUpdateOptions}, 2, () => (this['max'](`${this.name}.${onUpdateAttribute?.field}`, maxUpdateOptions))) 
+    : undefined
 
     // get max updatedAt on model
     const [maxUpdatedAt, count] = await Promise.all([
-      this['rawAttributes']['updatedAt']  && this['onUpdateField']
-      ? getCustomCache({key: 'max', maxUpdateOptions}, 2, () => (this['max'](`${this.name}.${this['onUpdateField']}`, maxUpdateOptions))) 
-      : undefined,
+      maxUpdatedAtPromise,
       this['countCache'](2, options),
     ])
 
