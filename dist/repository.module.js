@@ -22,7 +22,7 @@ let RepositoryModule = RepositoryModule_1 = class RepositoryModule {
     }
 };
 RepositoryModule = RepositoryModule_1 = __decorate([
-    common_1.Module({})
+    (0, common_1.Module)({})
 ], RepositoryModule);
 exports.RepositoryModule = RepositoryModule;
 //# sourceMappingURL=repository.module.js.map

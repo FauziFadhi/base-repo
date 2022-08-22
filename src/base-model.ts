@@ -1,10 +1,15 @@
 import { NotFoundException } from '@nestjs/common';
 import { DateUtility } from 'date-utility';
 import { cloneDeep } from 'lodash';
+import * as crypto from 'crypto';
 import { RepositoryModule } from 'repository.module';
 import {
   AggregateOptions,
+  Attributes,
+  CountOptions,
+  CountWithOptions,
   FindOptions,
+  GroupedCountResultItem,
   Includeable,
   Model as SequelizeModel,
   ModelStatic,
@@ -16,7 +21,32 @@ import { DataType, Model as TSModel } from 'sequelize-typescript';
 
 import CacheUtility from './cache-utilty';
 
-type UnusedOptionsAttribute = 'lock' | 'raw' | 'skipLocked' | keyof QueryOptions
+async function getCustomCache<T>(
+  key: unknown,
+  ttl: number,
+  setValue: () => T | Promise<T>,
+): Promise<T | null> {
+  const hash = crypto.createHash('md5');
+  const generatedKey = hash.update(JSON.stringify(key)).digest('base64');
+
+  let cacheValue = await RepositoryModule.catchGetter({ key: generatedKey })
+
+  if (cacheValue) {
+    return JSON.parse(cacheValue as string) as T;
+  }
+
+  const value = await setValue();
+
+  if (!value) return null;
+
+  cacheValue = JSON.stringify(value);
+
+  RepositoryModule.catchSetter({ key: generatedKey, value: cacheValue, ttl })
+
+  return value as T;
+}
+
+type UnusedOptionsAttribute = 'lock' | 'skipLocked' | keyof Omit<QueryOptions, 'replacements' | 'bind' | 'type' | 'nest' | 'raw'>
 export interface DefaultOptionsCache {
   /**
      * Throw if nothing was found.
@@ -92,6 +122,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
   extends TSModel<TAttributes, TCreate> {
 
   static modelTTL = 0
+  static onUpdateAttribute = 'updatedAt'
   private static defaultNotFoundMessage = (name: string): string => `${name} data not found`
   private static notFoundException = (message: string): Error => new NotFoundException(message)
   static notFoundMessage = null
@@ -238,19 +269,22 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     const TTL = options?.ttl || this['modelTTL'] || RepositoryModule.defaultTTL
     delete options?.ttl
 
-    const maxUpdateOptions = getMaxUpdateOptions(options)
+    const maxUpdateOptions = getMaxUpdateOptions(options);
+
+    const onUpdateAttribute = this['getAttributes']()?.[this['onUpdateAttribute']];
+    const maxUpdatedAtPromise = onUpdateAttribute?.field
+    ? getCustomCache({key: 'max', maxUpdateOptions}, 2, () => (this['max'](`${this.name}.${onUpdateAttribute?.field}`, maxUpdateOptions))) 
+    : undefined
 
     // get max updatedAt on model
     const [maxUpdatedAt, count] = await Promise.all([
-      this['rawAttributes']['updatedAt'] 
-      ? this['max'](`${this.name}.updated_at`, maxUpdateOptions) 
-      : undefined,
-      this['count'](options),
+      maxUpdatedAtPromise,
+      this['countCache'](2, options),
     ])
 
     if (!count && !maxUpdatedAt) return TransformCacheToModels(this, '[]')
 
-    const max = DateUtility.convertDateTimeToEpoch(maxUpdatedAt) + +count
+    const max = DateUtility.convertDateTimeToEpoch(new Date(maxUpdatedAt)) + +count
 
     const scope = cloneDeep(this['_scope'])
     const defaultOptions = this['_defaultsOptions'](options, scope)
@@ -295,7 +329,28 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     this: ModelStatic<M>,
     options?: string | ScopeOptions | readonly (string | ScopeOptions)[] | WhereAttributeHash<M>
   ): typeof Model & { new(): M } {
-    return this['scope'](options)
+    return this['scope'](options) as any
+  }
+
+  static async countCache<M extends Model>(
+    this: ModelStatic<M>,
+    ttl: number,
+    options?: Omit<CountOptions<Attributes<M>>, 'group'>
+  ): Promise<number>;
+  static async countCache<M extends Model>(
+    this: ModelStatic<M>,
+    ttl: number,
+    options: CountWithOptions<Attributes<M>>
+  ): Promise<GroupedCountResultItem[]>;
+  static async countCache<M extends Model>(
+    this: ModelStatic<M>,
+    ttl: number,
+    options?: Omit<CountOptions<Attributes<M>>, 'group'> | CountWithOptions<Attributes<M>>
+  ): Promise<number | GroupedCountResultItem[]> {
+    return getCustomCache({
+      key: 'count',
+      options,
+    }, ttl, () =>  this.count(options))
   }
 }
 
