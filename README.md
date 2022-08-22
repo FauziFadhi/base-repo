@@ -1,11 +1,11 @@
 ## Description
 
-Cache Invalidation at model level extended features for [sequelize-typescript](https://github.com/RobinBuschmann/sequelize-typescript) (v2.1.0)
+Cache Invalidation at model level extended features for [sequelize-typescript](https://github.com/RobinBuschmann/sequelize-typescript) (v2.1.0 or later)
 
 ## Installation
 
 ```bash
-$ npm install base-repo sequelize@6.6.2 sequelize-typescript@2.1.0
+$ npm install base-repo sequelize@^6.x.x sequelize-typescript@^2.x.x
 ```
 
 Your `tsconfig.json` needs the following flags:
@@ -27,20 +27,15 @@ and
   imports: [
     RedisModule.register(cacheConfig() as RedisModuleOptions),
 
-    RepositoryModule.forRoot({
-      defaultTTL: 1000, // DEFINE TTL FOR ALL PROJECT
-      callbackGet: async ({ key }) => {
-        return AppModule.redisService.getClient().get(key) // DEFINE HOW TO GET CACHE FROM GIVEN KEY
-      },
-      callbackInvalidate: ({ key }) => { //
-        return AppModule.redisService.getClient().del(key) // DEFINE HOW TO INVALIDATE CACHE FROM GIVEN KEY
-      },
-      callbackSet: async ({ key, value, ttl }) => {
-        return AppModule.redisService.getClient().set(key, value, 'EX', ttl) // DEFINE HOW TO SET CACHE FROM GIVEN KEY VALUE AND TTL
-      }
-      callbackGetKey: async ({ keyPattern }) => {
-        return AppModule.redisService.getClient().keys(keyPattern); // TO FIND KEYS BY PATTERN
-      },
+    SequelizeCacheModule.register({
+      defaultTTL: 5, // DEFINE TTL FOR ALL PROJECT seconds
+      // DEFINE HOW TO GET CACHE FROM GIVEN KEY
+      callbackGet: async ({ key }) => CacheConfigModule.store.get(key),
+      // DEFINE HOW TO INVALIDATE CACHE FROM GIVEN KEY
+      callbackInvalidate: ({ key }) => (CacheConfigModule?.store?.del?.(key) || null),
+      // DEFINE HOW TO SET CACHE FROM GIVEN KEY VALUE AND TTL
+      callbackSet: async ({ key, value, ttl }) => CacheConfigModule.store.set(key, value, { ttl }),
+      callbackGetKey: async ({ keyPattern }) => CacheConfigModule.store.keys?.(`${process.env.CACHE_PREFIX}${keyPattern}`) || [],
     }),
 
     SequelizeModule.forRoot({
@@ -50,12 +45,11 @@ and
   ],
 })
 
-export class AppModule {
-  static redisService: RedisService
+export class CacheConfigModule {
+  static store: Store;
 
-  constructor(redisService: RedisService) {
-    AppModule.redisService = redisService // DEFINE CACHE SERVICE THAT CAN CALLED AT REPOSITORY DEFINITION
-
+  constructor(@Inject(CACHE_MANAGER) private store: Store) {
+    CacheConfigModule.store = this.store;
   }
 }
 ```
@@ -204,15 +198,14 @@ class CourseController {
   }
 }
 ```
-
 - find all data and Cache it when has value. will invalidate and update cache when ttl reach 0 or when get max updates or count is different from before
 
 #### `findAllCache` API Options
 
-| Options             | Description                                                                       |
-| ------------------- | --------------------------------------------------------------------------------- |
-| `cacheOptions.ttl`  | set TTL for this cache key, this will override ttl at module and model (Optional) |
-| `{...cacheOptions}` | is same with FindOptions from sequelize-typescript                                |
+| Options             | Description                                                                                                            |
+| ------------------- | ---------------------------------------------------------------------------------                                      |
+| `cacheOptions.ttl`  | set TTL for this cache key, this will override ttl at module and model (Optional), `(Required)` when has include Query |
+| `{...cacheOptions}` | is same with FindOptions from sequelize-typescript                                                                     |
 
 ## Stay in touch
 

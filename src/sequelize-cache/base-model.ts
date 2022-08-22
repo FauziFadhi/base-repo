@@ -1,10 +1,15 @@
 import { NotFoundException } from '@nestjs/common';
 import { DateUtility } from 'date-utility';
 import { cloneDeep } from 'lodash';
+import * as crypto from 'crypto';
 import { SequelizeCache } from './sequelize-cache';
 import {
   AggregateOptions,
+  Attributes,
+  CountOptions,
+  CountWithOptions,
   FindOptions,
+  GroupedCountResultItem,
   Includeable,
   Model as SequelizeModel,
   ModelStatic,
@@ -15,6 +20,31 @@ import {
 import { DataType, Model as TSModel } from 'sequelize-typescript';
 
 import CacheUtility from './cache-utilty';
+
+async function getCustomCache<T>(
+  key: unknown,
+  ttl: number,
+  setValue: () => T | Promise<T>,
+): Promise<T | null> {
+  const hash = crypto.createHash('md5');
+  const generatedKey = hash.update(JSON.stringify(key)).digest('base64');
+
+  let cacheValue = await SequelizeCache.catchGetter({ key: generatedKey })
+
+  if (cacheValue) {
+    return JSON.parse(cacheValue as string) as T;
+  }
+
+  const value = await setValue();
+
+  if (!value) return null;
+
+  cacheValue = JSON.stringify(value);
+
+  SequelizeCache.catchSetter({ key: generatedKey, value: cacheValue, ttl })
+
+  return value as T;
+}
 
 type UnusedOptionsAttribute = 'lock' | 'skipLocked' | keyof Omit<QueryOptions, 'replacements' | 'bind' | 'type' | 'nest' | 'raw'>
 export interface DefaultOptionsCache {
@@ -245,7 +275,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
       this['rawAttributes']['updatedAt'] 
       ? this['max'](`${this.name}.updated_at`, maxUpdateOptions) 
       : undefined,
-      this['count'](options),
+      this['countCache'](options),
     ])
 
     if (!count && !maxUpdatedAt) return TransformCacheToModels(this, '[]')
@@ -296,6 +326,26 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     options?: string | ScopeOptions | readonly (string | ScopeOptions)[] | WhereAttributeHash<M>
   ): typeof Model & { new(): M } {
     return this['scope'](options) as any
+  }
+
+  static async countCache<M extends Model>(
+    this: ModelStatic<M>,
+    options?: Omit<CountOptions<Attributes<M>>, 'group'>
+  ): Promise<number>;
+  static async countCache<M extends Model>(
+    this: ModelStatic<M>,
+    options: CountWithOptions<Attributes<M>>
+  ): Promise<GroupedCountResultItem[]>;
+  static async countCache<M extends Model>(
+    this: ModelStatic<M>,
+    options?: Omit<CountOptions<Attributes<M>>, 'group'> | CountWithOptions<Attributes<M>>
+  ): Promise<number | GroupedCountResultItem[]> {
+    return getCustomCache({
+      key: 'count',
+      options,
+    }, 2, () => {
+      return this.count(options);
+    })
   }
 }
 
