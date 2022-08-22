@@ -84,6 +84,12 @@ export class DmCourse extends BaseModel {}
 export class DmCourse extends BaseModel {
   // default `{modelName} data not found'
   static notFoundMessage = 'your model not found message';
+
+  /**
+   *  @default `updatedAt`
+   * @description `this is for checking newest updated timestamp for cached list.`
+  */
+  static onUpdateAttribute = 'updatedAt'
 }
 ```
 
