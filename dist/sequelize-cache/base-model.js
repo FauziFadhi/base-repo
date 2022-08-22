@@ -125,7 +125,7 @@ class Model extends sequelize_typescript_1.Model {
         ]);
         if (!count && !maxUpdatedAt)
             return TransformCacheToModels(this, '[]');
-        const max = date_utility_1.DateUtility.convertDateTimeToEpoch(maxUpdatedAt) + +count;
+        const max = date_utility_1.DateUtility.convertDateTimeToEpoch(new Date(maxUpdatedAt)) + +count;
         const scope = (0, lodash_1.cloneDeep)(this['_scope']);
         const defaultOptions = this['_defaultsOptions'](options, scope);
         const keyOpts = cache_utilty_1.default.setQueryOptions(defaultOptions);

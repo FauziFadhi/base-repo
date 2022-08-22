@@ -284,7 +284,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
     if (!count && !maxUpdatedAt) return TransformCacheToModels(this, '[]')
 
-    const max = DateUtility.convertDateTimeToEpoch(maxUpdatedAt) + +count
+    const max = DateUtility.convertDateTimeToEpoch(new Date(maxUpdatedAt)) + +count
 
     const scope = cloneDeep(this['_scope'])
     const defaultOptions = this['_defaultsOptions'](options, scope)
