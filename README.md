@@ -89,7 +89,11 @@ export class DmCourse extends BaseModel {
    *  @default `updatedAt`
    * @description `this is for checking newest updated timestamp for cached list.`
   */
-  static onUpdateAttribute = 'updatedAt'
+  static onUpdateAttribute = 'modifiedAt'
+
+   @UpdatedAt
+  @Column({ field: 'UpdatedAt' })
+    modifiedAt: Date;
 }
 ```
 
