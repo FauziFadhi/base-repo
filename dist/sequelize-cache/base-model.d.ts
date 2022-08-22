@@ -12,6 +12,7 @@ export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, Unuse
 }
 export declare class Model<TAttributes extends {} = any, TCreate extends {} = TAttributes> extends TSModel<TAttributes, TCreate> {
     static modelTTL: number;
+    static onUpdateField: string;
     private static defaultNotFoundMessage;
     private static notFoundException;
     static notFoundMessage: any;
@@ -37,7 +38,7 @@ export declare class Model<TAttributes extends {} = any, TCreate extends {} = TA
     static scopes<M extends SequelizeModel>(this: ModelStatic<M>, options?: string | ScopeOptions | readonly (string | ScopeOptions)[] | WhereAttributeHash<M>): typeof Model & {
         new (): M;
     };
-    static countCache<M extends Model>(this: ModelStatic<M>, options?: Omit<CountOptions<Attributes<M>>, 'group'>): Promise<number>;
-    static countCache<M extends Model>(this: ModelStatic<M>, options: CountWithOptions<Attributes<M>>): Promise<GroupedCountResultItem[]>;
+    static countCache<M extends Model>(this: ModelStatic<M>, ttl: number, options?: Omit<CountOptions<Attributes<M>>, 'group'>): Promise<number>;
+    static countCache<M extends Model>(this: ModelStatic<M>, ttl: number, options: CountWithOptions<Attributes<M>>): Promise<GroupedCountResultItem[]>;
 }
 export {};

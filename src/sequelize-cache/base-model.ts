@@ -122,6 +122,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
   extends TSModel<TAttributes, TCreate> {
 
   static modelTTL = 0
+  static onUpdateField = 'updated_at'
   private static defaultNotFoundMessage = (name: string): string => `${name} data not found`
   private static notFoundException = (message: string): Error => new NotFoundException(message)
   static notFoundMessage = null
@@ -272,10 +273,10 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
     // get max updatedAt on model
     const [maxUpdatedAt, count] = await Promise.all([
-      this['rawAttributes']['updatedAt'] 
-      ? this['max'](`${this.name}.updated_at`, maxUpdateOptions) 
+      this['rawAttributes']['updatedAt']  && this['onUpdateField']
+      ? getCustomCache({key: 'max', maxUpdateOptions}, 2, () => (this['max'](`${this.name}.${this['onUpdateField']}`, maxUpdateOptions))) 
       : undefined,
-      this['countCache'](options),
+      this['countCache'](2, options),
     ])
 
     if (!count && !maxUpdatedAt) return TransformCacheToModels(this, '[]')
@@ -330,22 +331,23 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
   static async countCache<M extends Model>(
     this: ModelStatic<M>,
+    ttl: number,
     options?: Omit<CountOptions<Attributes<M>>, 'group'>
   ): Promise<number>;
   static async countCache<M extends Model>(
     this: ModelStatic<M>,
+    ttl: number,
     options: CountWithOptions<Attributes<M>>
   ): Promise<GroupedCountResultItem[]>;
   static async countCache<M extends Model>(
     this: ModelStatic<M>,
+    ttl: number,
     options?: Omit<CountOptions<Attributes<M>>, 'group'> | CountWithOptions<Attributes<M>>
   ): Promise<number | GroupedCountResultItem[]> {
     return getCustomCache({
       key: 'count',
       options,
-    }, 2, () => {
-      return this.count(options);
-    })
+    }, ttl, () =>  this.count(options))
   }
 }
 

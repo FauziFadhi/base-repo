@@ -116,10 +116,10 @@ class Model extends sequelize_typescript_1.Model {
         delete options?.ttl;
         const maxUpdateOptions = getMaxUpdateOptions(options);
         const [maxUpdatedAt, count] = await Promise.all([
-            this['rawAttributes']['updatedAt']
-                ? this['max'](`${this.name}.updated_at`, maxUpdateOptions)
+            this['rawAttributes']['updatedAt'] && this['onUpdateField']
+                ? this['max'](`${this.name}.${this['onUpdateField']}`, maxUpdateOptions)
                 : undefined,
-            this['countCache'](options),
+            this['countCache'](2, options),
         ]);
         if (!count && !maxUpdatedAt)
             return TransformCacheToModels(this, '[]');
@@ -149,17 +149,18 @@ class Model extends sequelize_typescript_1.Model {
     static scopes(options) {
         return this['scope'](options);
     }
-    static async countCache(options) {
+    static async countCache(ttl, options) {
         return getCustomCache({
             key: 'count',
             options,
-        }, 2, () => {
+        }, ttl, () => {
             return this.count(options);
         });
     }
 }
 exports.Model = Model;
 Model.modelTTL = 0;
+Model.onUpdateField = 'updated_at';
 Model.defaultNotFoundMessage = (name) => `${name} data not found`;
 Model.notFoundException = (message) => new common_1.NotFoundException(message);
 Model.notFoundMessage = null;
