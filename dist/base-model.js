@@ -39,7 +39,7 @@ function TransformCacheToModels(modelClass, dataCache, include) {
 function getMaxUpdateOptions(options) {
     if (!options)
         return {};
-    const maxOptions = (0, lodash_1.cloneDeep)(options || {});
+    const maxOptions = lodash_1.cloneDeep(options || {});
     maxOptions === null || maxOptions === void 0 ? true : delete maxOptions.order;
     return {
         where: maxOptions === null || maxOptions === void 0 ? void 0 : maxOptions.where,
@@ -53,10 +53,10 @@ class Model extends sequelize_typescript_1.Model {
         options === null || options === void 0 ? true : delete options.ttl;
         const rejectOnEmpty = options === null || options === void 0 ? void 0 : options.rejectOnEmpty;
         options === null || options === void 0 ? true : delete options.rejectOnEmpty;
-        const scope = (0, lodash_1.cloneDeep)(this['_scope']);
+        const scope = lodash_1.cloneDeep(this['_scope']);
         const defaultOptions = this['_defaultsOptions'](Object.assign(Object.assign({}, options), { limit: 1 }), scope);
         const optionsString = cache_utilty_1.default.setOneQueryOptions(defaultOptions);
-        const keys = await repository_module_1.RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` });
+        const keys = await repository_module_1.RepositoryModule.catchKeyGetter({ keyPattern: `*:${this.name}_*${optionsString}*` });
         const firstKey = keys === null || keys === void 0 ? void 0 : keys[0];
         const key = firstKey === null || firstKey === void 0 ? void 0 : firstKey.substring(firstKey === null || firstKey === void 0 ? void 0 : firstKey.indexOf(":"));
         let modelString = key ? await repository_module_1.RepositoryModule.catchGetter({ key: key }) : null;
@@ -82,7 +82,7 @@ class Model extends sequelize_typescript_1.Model {
         options === null || options === void 0 ? true : delete options.ttl;
         const rejectOnEmpty = options === null || options === void 0 ? void 0 : options.rejectOnEmpty;
         options === null || options === void 0 ? true : delete options.rejectOnEmpty;
-        const scope = (0, lodash_1.cloneDeep)(this['_scope']);
+        const scope = lodash_1.cloneDeep(this['_scope']);
         const defaultOptions = this['_defaultsOptions'](options, scope);
         const optionsString = cache_utilty_1.default
             .setOneQueryOptions(Object.assign(Object.assign({}, defaultOptions), { where: Object.assign({ [this['primaryKeyAttribute']]: identifier }, defaultOptions === null || defaultOptions === void 0 ? void 0 : defaultOptions.where) })) + 'pk';
@@ -117,8 +117,7 @@ class Model extends sequelize_typescript_1.Model {
         options === null || options === void 0 ? true : delete options.ttl;
         const maxUpdateOptions = getMaxUpdateOptions(options);
         const onUpdateAttribute = (_a = this['getAttributes']()) === null || _a === void 0 ? void 0 : _a[this['onUpdateAttribute']];
-        const maxUpdatedAtPromise = (onUpdateAttribute === null || onUpdateAttribute === void 0 ? void 0 : onUpdateAttribute.field)
-            ? getCustomCache({ key: 'max', maxUpdateOptions }, 2, () => (this['max'](`${this.name}.${onUpdateAttribute === null || onUpdateAttribute === void 0 ? void 0 : onUpdateAttribute.field}`, maxUpdateOptions)))
+        const maxUpdatedAtPromise = (onUpdateAttribute === null || onUpdateAttribute === void 0 ? void 0 : onUpdateAttribute.field) ? getCustomCache({ key: 'max', maxUpdateOptions }, 2, () => (this['max'](`${this.name}.${onUpdateAttribute === null || onUpdateAttribute === void 0 ? void 0 : onUpdateAttribute.field}`, maxUpdateOptions)))
             : undefined;
         const [maxUpdatedAt, count] = await Promise.all([
             maxUpdatedAtPromise,
@@ -127,7 +126,7 @@ class Model extends sequelize_typescript_1.Model {
         if (!count && !maxUpdatedAt)
             return TransformCacheToModels(this, '[]');
         const max = date_utility_1.DateUtility.convertDateTimeToEpoch(new Date(maxUpdatedAt)) + +count;
-        const scope = (0, lodash_1.cloneDeep)(this['_scope']);
+        const scope = lodash_1.cloneDeep(this['_scope']);
         const defaultOptions = this['_defaultsOptions'](options, scope);
         const keyOpts = cache_utilty_1.default.setQueryOptions(defaultOptions);
         const keyTime = cache_utilty_1.default.setKey(this.name, keyOpts);
@@ -156,7 +155,7 @@ class Model extends sequelize_typescript_1.Model {
         return getCustomCache({
             key: 'count',
             options,
-        }, ttl, () => this.count(options));
+        }, ttl, () => this['count'](options));
     }
 }
 exports.Model = Model;

@@ -58,7 +58,7 @@ class Repository {
         this.model = model;
         this.cacheModel = cacheModel;
         this.model.afterUpdate((model, options) => {
-            const previousModel = Object.assign(Object.assign({}, (0, helpers_1.circularToJSON)(model)), (0, helpers_1.circularToJSON)(model._previousDataValues));
+            const previousModel = Object.assign(Object.assign({}, helpers_1.circularToJSON(model)), helpers_1.circularToJSON(model._previousDataValues));
             console.log(previousModel, 'invalidatedModel');
             if (options.transaction) {
                 options.transaction.afterCommit(() => {
@@ -71,7 +71,7 @@ class Repository {
             this.invalidateAllCache(previousModel);
         });
         this.model.afterDestroy((model, options) => {
-            const previousModel = Object.assign(Object.assign({}, (0, helpers_1.circularToJSON)(model)), (0, helpers_1.circularToJSON)(model._previousDataValues));
+            const previousModel = Object.assign(Object.assign({}, helpers_1.circularToJSON(model)), helpers_1.circularToJSON(model._previousDataValues));
             console.log(previousModel, 'invalidatedModel');
             if (options.transaction) {
                 options.transaction.afterCommit(() => {
@@ -161,14 +161,14 @@ class Repository {
     async paginate(options) {
         var _a;
         options.includeDeleted = options.includeDeleted || false;
-        options.where = (0, lodash_1.omitBy)(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
-        return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: !(0, lodash_1.isEmpty)(options === null || options === void 0 ? void 0 : options.order) && (options === null || options === void 0 ? void 0 : options.order) || [[(_a = this.model) === null || _a === void 0 ? void 0 : _a.primaryKeyAttribute, 'asc']] }));
+        options.where = lodash_1.omitBy(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
+        return await this.model.findAndCountAll(Object.assign(Object.assign({}, options), { order: !lodash_1.isEmpty(options === null || options === void 0 ? void 0 : options.order) && (options === null || options === void 0 ? void 0 : options.order) || [[(_a = this.model) === null || _a === void 0 ? void 0 : _a.primaryKeyAttribute, 'asc']] }));
     }
     async list(options) {
         var _a;
         options.includeDeleted = options.includeDeleted || false;
-        options.where = (0, lodash_1.omitBy)(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
-        return await this.model.findAll(Object.assign(Object.assign({}, options), { order: !(0, lodash_1.isEmpty)(options === null || options === void 0 ? void 0 : options.order) && (options === null || options === void 0 ? void 0 : options.order) || [[(_a = this.model) === null || _a === void 0 ? void 0 : _a.primaryKeyAttribute, 'asc']] }));
+        options.where = lodash_1.omitBy(Object.assign({ isDeleted: this.model.rawAttributes.isDeleted && !options.includeDeleted ? false : undefined }, options.where), lodash_1.isUndefined);
+        return await this.model.findAll(Object.assign(Object.assign({}, options), { order: !lodash_1.isEmpty(options === null || options === void 0 ? void 0 : options.order) && (options === null || options === void 0 ? void 0 : options.order) || [[(_a = this.model) === null || _a === void 0 ? void 0 : _a.primaryKeyAttribute, 'asc']] }));
     }
     async listCache(option = {}) {
         const _a = Object.assign(Object.assign({}, new ListGetOptionsCache()), option), { ttl, includeDeleted } = _a, options = __rest(_a, ["ttl", "includeDeleted"]);
@@ -224,7 +224,7 @@ class Repository {
         const key = this.setKeyOneAttribute(name, value);
         let result = await this.getCacheStore().get(key);
         if (!result) {
-            const snakeCaseName = (0, helpers_1.textToSnakeCase)(name);
+            const snakeCaseName = helpers_1.textToSnakeCase(name);
             let model = null;
             if (typeof value === 'string')
                 model = await this.findOne(Object.assign(Object.assign({}, options), { where: this.getDbConfig().literal(`${snakeCaseName} = '${value}'`), includeDeleted: true }));

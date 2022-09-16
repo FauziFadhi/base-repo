@@ -1,4 +1,4 @@
-import { Attributes, CountOptions, CountWithOptions, FindOptions, GroupedCountResultItem, Model as SequelizeModel, ModelStatic, QueryOptions, ScopeOptions, WhereAttributeHash } from 'sequelize';
+import { CountOptions, CountWithOptions, FindOptions, Model as SequelizeModel, ModelStatic, QueryOptions, ScopeOptions, WhereAttributeHash } from 'sequelize';
 import { Model as TSModel } from 'sequelize-typescript';
 declare type UnusedOptionsAttribute = 'lock' | 'skipLocked' | keyof Omit<QueryOptions, 'replacements' | 'bind' | 'type' | 'nest' | 'raw'>;
 export interface DefaultOptionsCache {
@@ -38,7 +38,11 @@ export declare class Model<TAttributes extends {} = any, TCreate extends {} = TA
     static scopes<M extends SequelizeModel>(this: ModelStatic<M>, options?: string | ScopeOptions | readonly (string | ScopeOptions)[] | WhereAttributeHash<M>): typeof Model & {
         new (): M;
     };
-    static countCache<M extends Model>(this: ModelStatic<M>, ttl: number, options?: Omit<CountOptions<Attributes<M>>, 'group'>): Promise<number>;
-    static countCache<M extends Model>(this: ModelStatic<M>, ttl: number, options: CountWithOptions<Attributes<M>>): Promise<GroupedCountResultItem[]>;
+    static countCache<M extends Model>(this: {
+        new (): M;
+    }, ttl: number, options?: Omit<CountOptions<M['_attributes']>, 'group'>): Promise<number>;
+    static countCache<M extends Model>(this: {
+        new (): M;
+    }, ttl: number, options: CountWithOptions<M['_attributes']>): Promise<any[]>;
 }
 export {};

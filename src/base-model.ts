@@ -5,11 +5,9 @@ import * as crypto from 'crypto';
 import { RepositoryModule } from 'repository.module';
 import {
   AggregateOptions,
-  Attributes,
   CountOptions,
   CountWithOptions,
   FindOptions,
-  GroupedCountResultItem,
   Includeable,
   Model as SequelizeModel,
   ModelStatic,
@@ -160,7 +158,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     const defaultOptions = this['_defaultsOptions']({...options, limit: 1 }, scope)
 
     const optionsString = CacheUtility.setOneQueryOptions(defaultOptions)
-    const keys = await RepositoryModule.catchKeyGetter({ keyPattern: `*${this.name}*_${optionsString}*` })
+    const keys = await RepositoryModule.catchKeyGetter({ keyPattern: `*:${this.name}_*${optionsString}*` })
     const firstKey = keys?.[0];
     const key = firstKey?.substring(firstKey?.indexOf(":"))
 
@@ -333,24 +331,24 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
   }
 
   static async countCache<M extends Model>(
-    this: ModelStatic<M>,
+    this: { new(): M },
     ttl: number,
-    options?: Omit<CountOptions<Attributes<M>>, 'group'>
+    options?: Omit<CountOptions<M['_attributes']>, 'group'>
   ): Promise<number>;
   static async countCache<M extends Model>(
-    this: ModelStatic<M>,
+    this: { new(): M },
     ttl: number,
-    options: CountWithOptions<Attributes<M>>
-  ): Promise<GroupedCountResultItem[]>;
+    options: CountWithOptions<M['_attributes']>
+  ): Promise<any[]>;
   static async countCache<M extends Model>(
-    this: ModelStatic<M>,
+    this: { new(): M },
     ttl: number,
-    options?: Omit<CountOptions<Attributes<M>>, 'group'> | CountWithOptions<Attributes<M>>
-  ): Promise<number | GroupedCountResultItem[]> {
+    options?: Omit<CountOptions<M['_attributes']>, 'group'> | CountWithOptions<M['_attributes']>
+  ): Promise<number | any[]> {
     return getCustomCache({
       key: 'count',
       options,
-    }, ttl, () =>  this.count(options))
+    }, ttl, () =>  this['count'](options))
   }
 }
 
