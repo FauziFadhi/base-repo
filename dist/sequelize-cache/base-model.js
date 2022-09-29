@@ -117,7 +117,7 @@ class Model extends sequelize_typescript_1.Model {
         const maxUpdateOptions = getMaxUpdateOptions(options);
         const onUpdateAttribute = this['getAttributes']()?.[this['onUpdateAttribute']];
         const maxUpdatedAtPromise = onUpdateAttribute?.field
-            ? getCustomCache({ key: 'max', maxUpdateOptions }, 2, () => (this['max'](`${this.name}.${onUpdateAttribute?.field}`, maxUpdateOptions)))
+            ? getCustomCache({ key: 'max', maxUpdateOptions, model: `${this.name}` }, 2, () => (this['max'](`${this.name}.${onUpdateAttribute?.field}`, maxUpdateOptions)))
             : undefined;
         const [maxUpdatedAt, count] = await Promise.all([
             maxUpdatedAtPromise,
@@ -155,6 +155,7 @@ class Model extends sequelize_typescript_1.Model {
         return getCustomCache({
             key: 'count',
             options,
+            model: `${this.name}`,
         }, ttl, () => this.count(options));
     }
 }

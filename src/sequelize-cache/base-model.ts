@@ -273,7 +273,10 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
     const onUpdateAttribute = this['getAttributes']()?.[this['onUpdateAttribute']];
     const maxUpdatedAtPromise = onUpdateAttribute?.field
-    ? getCustomCache({key: 'max', maxUpdateOptions}, 2, () => (this['max'](`${this.name}.${onUpdateAttribute?.field}`, maxUpdateOptions))) 
+    ? getCustomCache(
+    { key: 'max', maxUpdateOptions, model: `${this.name}` }, 
+    2, 
+    () => (this['max'](`${this.name}.${onUpdateAttribute?.field}`, maxUpdateOptions))) 
     : undefined
 
     // get max updatedAt on model
@@ -350,6 +353,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     return getCustomCache({
       key: 'count',
       options,
+      model: `${this.name}`,
     }, ttl, () =>  this.count(options))
   }
 }
