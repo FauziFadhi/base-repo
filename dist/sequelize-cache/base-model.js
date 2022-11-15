@@ -62,18 +62,19 @@ class Model extends sequelize_typescript_1.Model {
         let modelString = key ? await sequelize_cache_1.SequelizeCache.catchGetter({ key: key }) : null;
         if (!modelString) {
             const newModel = await this['findOne'](options);
-            modelString = JSON.stringify(newModel);
             if (newModel) {
+                modelString = JSON.stringify(newModel);
                 const key = cache_utilty_1.default.setKey(this.name, optionsString, newModel[this['primaryKeyAttribute']]);
                 sequelize_cache_1.SequelizeCache.catchSetter({ key, value: modelString, ttl: TTL });
+                return newModel;
             }
         }
-        const include = options && 'include' in options ? options?.include : undefined;
-        const model = transformCacheToModel(this, modelString, include);
-        if (!model) {
+        if (!modelString) {
             const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name);
             this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message));
         }
+        const include = options && 'include' in options ? options?.include : undefined;
+        const model = transformCacheToModel(this, modelString, include);
         return model;
     }
     static async findByPkCache(identifier, options = {}) {
@@ -90,17 +91,18 @@ class Model extends sequelize_typescript_1.Model {
         let modelString = await sequelize_cache_1.SequelizeCache.catchGetter({ key });
         if (!modelString) {
             const newModel = await this['findByPk'](identifier, options);
-            modelString = JSON.stringify(newModel);
             if (newModel) {
+                modelString = JSON.stringify(newModel);
                 sequelize_cache_1.SequelizeCache.catchSetter({ key, value: modelString, ttl: TTL });
+                return newModel;
             }
         }
-        const include = options && 'include' in options ? options?.include : undefined;
-        const model = transformCacheToModel(this, modelString, include);
-        if (!model) {
+        if (!modelString) {
             const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name);
             this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message));
         }
+        const include = options && 'include' in options ? options?.include : undefined;
+        const model = transformCacheToModel(this, modelString, include);
         return model;
     }
     static rejectOnEmptyMode(options, modelException) {

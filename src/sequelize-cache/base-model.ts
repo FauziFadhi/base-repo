@@ -169,21 +169,22 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
     if (!modelString) {
       const newModel = await this['findOne'](options)
-      modelString = JSON.stringify(newModel)
-
-
+      
       if (newModel) {
+        modelString = JSON.stringify(newModel)
         const key = CacheUtility.setKey(this.name, optionsString, newModel[this['primaryKeyAttribute']])
         SequelizeCache.catchSetter({ key, value: modelString, ttl: TTL })
+        return newModel;
       }
     }
-    const include = options && 'include' in options ? options?.include : undefined
-    const model = transformCacheToModel(this, modelString, include)
 
-    if (!model) {
+    if (!modelString) {
       const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name)
       this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message))
     }
+
+    const include = options && 'include' in options ? options?.include : undefined
+    const model = transformCacheToModel(this, modelString, include)
 
     return model
   }
@@ -228,20 +229,21 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     if (!modelString) {
 
       const newModel = await this['findByPk'](identifier, options)
-      modelString = JSON.stringify(newModel)
-
+      
       if (newModel) {
+        modelString = JSON.stringify(newModel)
         SequelizeCache.catchSetter({ key, value: modelString, ttl: TTL })
+        return newModel;
       }
+    }
+    if (!modelString) {
+      const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name)
+      this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message))
     }
 
     const include = options && 'include' in options ? options?.include : undefined
     const model = transformCacheToModel(this, modelString, include)
 
-    if (!model) {
-      const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name)
-      this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message))
-    }
 
     return model
   }

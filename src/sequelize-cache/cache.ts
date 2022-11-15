@@ -24,9 +24,9 @@ function annotate(target, options: { hooks }) {
   addOptions(target.prototype, options)
 }
 async function invalidationCache(previousModel, modelClass) {
-  const keys: string[] = await SequelizeCache.catchKeyGetter({ keyPattern: `*:${modelClass.name}*:${previousModel[modelClass['primaryKeyAttribute']]}` })
+  const keys: string[] = await SequelizeCache.catchKeyGetter({ keyPattern: `*:${modelClass.name}_*:${previousModel[modelClass['primaryKeyAttribute']]}` })
   const invalidation = SequelizeCache.cacheInvalidate;
-  await Promise.all(keys.map(async (key) => {
+  await Promise.all(keys?.map(async (key) => {
     const usedKey = key?.substring(key?.indexOf(":"))
     if(usedKey)
       return await invalidation({ key: usedKey })
