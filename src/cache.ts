@@ -6,16 +6,16 @@ import { addOptions } from 'sequelize-typescript';
 async function invalidateCache(model, options, modelClass) {
   const previousModel = { ...model['dataValues'], ...circularToJSON(model['_previousDataValues']) }
 
-  console.log('previousModel', previousModel);
+  // console.log('previousModel', previousModel);
   if (options?.transaction) {
     options.transaction.afterCommit(() => {
       invalidationCache(previousModel, modelClass)
     })
-    console.log('hooks after update transaction');
+    // console.log('hooks after update transaction');
     return model
   }
   invalidationCache(previousModel, modelClass)
-  console.log('hooks after update');
+  // console.log('hooks after update');
   return model
 
 }
