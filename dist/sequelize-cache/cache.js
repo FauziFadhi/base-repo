@@ -36,6 +36,40 @@ async function invalidationCache(previousModel, modelClass) {
             return await invalidation({ key: usedKey });
     }));
 }
+async function afterBulkInvalidation(options, modelClass) {
+    const id = options.where?.id;
+    if (!id) {
+        return;
+    }
+    if (Array.isArray(id)) {
+        const ids = [...new Set(id)];
+        Promise.all(ids?.map((i) => {
+            invalidationCache({
+                [modelClass['primaryKeyAttribute']]: i,
+            }, modelClass);
+        }));
+        return;
+    }
+    if (typeof id !== 'object') {
+        invalidationCache({
+            [modelClass['primaryKeyAttribute']]: id,
+        }, modelClass);
+    }
+    return;
+}
+async function beforeBulkInvalidation(options, modelClass) {
+    if (options.where?.id?.length || (options?.where?.id && typeof options?.where?.id !== 'object')) {
+        return;
+    }
+    const { transaction, ...customOptions } = options || { transaction: undefined };
+    modelClass?.['findAll']?.(customOptions).then(async (models) => {
+        await Promise.all((models || []).map(async (model) => {
+            if (model) {
+                invalidateCache(model, options, modelClass);
+            }
+        }));
+    });
+}
 function Cache(cacheOptions) {
     return (target) => {
         const options = Object.assign({}, {
@@ -49,38 +83,16 @@ function Cache(cacheOptions) {
                     return instance;
                 },
                 beforeBulkUpdate: async (options) => {
-                    if (options.where?.id?.length || (options?.where?.id && typeof options?.where?.id !== 'object')) {
-                        return;
-                    }
-                    const { transaction, ...customOptions } = options || { transaction: undefined };
-                    target?.['findAll']?.(customOptions).then(async (models) => {
-                        await Promise.all((models || []).map(async (model) => {
-                            if (model) {
-                                invalidateCache(model, options, target);
-                            }
-                        }));
-                    });
+                    beforeBulkInvalidation(options, target);
                 },
                 AfterBulkUpdate: async (options) => {
-                    const id = options.where?.id;
-                    if (!id) {
-                        return;
-                    }
-                    if (Array.isArray(id)) {
-                        const ids = [...new Set(id)];
-                        Promise.all(ids?.map((i) => {
-                            invalidationCache({
-                                [target['primaryKeyAttribute']]: i,
-                            }, target);
-                        }));
-                        return;
-                    }
-                    if (typeof id !== 'object') {
-                        invalidationCache({
-                            [target['primaryKeyAttribute']]: id,
-                        }, target);
-                    }
-                    return;
+                    return afterBulkInvalidation(options, target);
+                },
+                beforeBulkDestroy: async (options) => {
+                    beforeBulkInvalidation(options, target);
+                },
+                AfterBulkDestroy: async (options) => {
+                    return afterBulkInvalidation(options, target);
                 }
             },
         });
