@@ -1,20 +1,26 @@
 import { circularToJSON } from 'helpers';
 import { SequelizeCache } from './sequelize-cache';
-import { addOptions } from 'sequelize-typescript';
+import { addOptions, AfterBulkUpdate } from 'sequelize-typescript';
 
 
 async function invalidateCache(model, options, modelClass) {
-  const previousModel = { ...model['dataValues'], ...circularToJSON(model['_previousDataValues']) }
+  if (SequelizeCache.showLog) {
+    const previousModel = { ...model['dataValues'], ...circularToJSON(model['_previousDataValues']) }
+    SequelizeCache.logging(previousModel)
+  }
 
-  SequelizeCache.logging(previousModel)
   if (options?.transaction) {
     options.transaction.afterCommit(() => {
-      invalidationCache(previousModel, modelClass)
+      invalidationCache({
+        [modelClass['primaryKeyAttribute']]: model['_previousDataValues']?.[modelClass['primaryKeyAttribute']],
+      }, modelClass)
     })
     SequelizeCache.logging('hooks after update transaction')
     return model
   }
-  invalidationCache(previousModel, modelClass)
+  invalidationCache({
+    [modelClass['primaryKeyAttribute']]: model['_previousDataValues']?.[modelClass['primaryKeyAttribute']],
+  }, modelClass)
   SequelizeCache.logging('hooks after update')
   return model
 
@@ -47,6 +53,9 @@ export function Cache(cacheOptions?: { ttl?: number }) {
             return instance
           },
           beforeBulkUpdate: async (options) => {
+            if (options.where?.id?.length || (options?.where?.id && typeof options?.where?.id !== 'object')) {
+              return;
+            }
             const { transaction, ...customOptions } = options || { transaction: undefined }
             target?.['findAll']?.(customOptions).then(async (models: any[]) => {
               await Promise.all((models || []).map(async(model) => {
@@ -55,6 +64,30 @@ export function Cache(cacheOptions?: { ttl?: number }) {
                 }
               }))
             });
+          },
+          AfterBulkUpdate: async (options) => {
+            const id = options.where?.id;
+            if (!id) {
+              return;
+            }
+
+            if (Array.isArray(id)) {
+              const ids = [...new Set(id)];
+              Promise.all(ids?.map((i) => {
+                invalidationCache({
+                  [target['primaryKeyAttribute']]: i,
+                }, target)
+              }))
+              return;
+            }
+
+            if (typeof id !== 'object') {
+              invalidationCache({
+                [target['primaryKeyAttribute']]: id,
+              }, target)
+            }
+
+            return;
           }
         },
       });

@@ -5,16 +5,22 @@ const helpers_1 = require("../helpers");
 const sequelize_cache_1 = require("./sequelize-cache");
 const sequelize_typescript_1 = require("sequelize-typescript");
 async function invalidateCache(model, options, modelClass) {
-    const previousModel = { ...model['dataValues'], ...(0, helpers_1.circularToJSON)(model['_previousDataValues']) };
-    sequelize_cache_1.SequelizeCache.logging(previousModel);
+    if (sequelize_cache_1.SequelizeCache.showLog) {
+        const previousModel = { ...model['dataValues'], ...(0, helpers_1.circularToJSON)(model['_previousDataValues']) };
+        sequelize_cache_1.SequelizeCache.logging(previousModel);
+    }
     if (options?.transaction) {
         options.transaction.afterCommit(() => {
-            invalidationCache(previousModel, modelClass);
+            invalidationCache({
+                [modelClass['primaryKeyAttribute']]: model['_previousDataValues']?.[modelClass['primaryKeyAttribute']],
+            }, modelClass);
         });
         sequelize_cache_1.SequelizeCache.logging('hooks after update transaction');
         return model;
     }
-    invalidationCache(previousModel, modelClass);
+    invalidationCache({
+        [modelClass['primaryKeyAttribute']]: model['_previousDataValues']?.[modelClass['primaryKeyAttribute']],
+    }, modelClass);
     sequelize_cache_1.SequelizeCache.logging('hooks after update');
     return model;
 }
@@ -43,6 +49,9 @@ function Cache(cacheOptions) {
                     return instance;
                 },
                 beforeBulkUpdate: async (options) => {
+                    if (options.where?.id?.length || (options?.where?.id && typeof options?.where?.id !== 'object')) {
+                        return;
+                    }
                     const { transaction, ...customOptions } = options || { transaction: undefined };
                     target?.['findAll']?.(customOptions).then(async (models) => {
                         await Promise.all((models || []).map(async (model) => {
@@ -51,6 +60,27 @@ function Cache(cacheOptions) {
                             }
                         }));
                     });
+                },
+                AfterBulkUpdate: async (options) => {
+                    const id = options.where?.id;
+                    if (!id) {
+                        return;
+                    }
+                    if (Array.isArray(id)) {
+                        const ids = [...new Set(id)];
+                        Promise.all(ids?.map((i) => {
+                            invalidationCache({
+                                [target['primaryKeyAttribute']]: i,
+                            }, target);
+                        }));
+                        return;
+                    }
+                    if (typeof id !== 'object') {
+                        invalidationCache({
+                            [target['primaryKeyAttribute']]: id,
+                        }, target);
+                    }
+                    return;
                 }
             },
         });
