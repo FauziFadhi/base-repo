@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Model = void 0;
 const common_1 = require("@nestjs/common");
-const date_utility_1 = require("../date-utility");
 const lodash_1 = require("lodash");
 const crypto = require("crypto");
 const sequelize_cache_1 = require("./sequelize-cache");
@@ -111,38 +110,21 @@ class Model extends sequelize_typescript_1.Model {
             throw options.rejectOnEmpty;
         }
     }
-    static async findAllCache(options = {}) {
+    static async findAllCache(options) {
         const TTL = options?.ttl || this['modelTTL'] || sequelize_cache_1.SequelizeCache.defaultTTL;
         delete options?.ttl;
-        const maxUpdateOptions = getMaxUpdateOptions(options);
-        const onUpdateAttribute = this['getAttributes']()?.[this['onUpdateAttribute']];
-        const maxUpdatedAtPromise = onUpdateAttribute?.field
-            ? getCustomCache({ key: 'max', maxUpdateOptions, model: `${this.name}` }, 2, () => (this['max'](`${this.name}.${onUpdateAttribute?.field}`, maxUpdateOptions)))
-            : undefined;
-        const [maxUpdatedAt, count] = await Promise.all([
-            maxUpdatedAtPromise,
-            this['countCache'](2, options),
-        ]);
-        if (!count && !maxUpdatedAt)
-            return TransformCacheToModels(this, '[]');
-        const max = date_utility_1.DateUtility.convertDateTimeToEpoch(new Date(maxUpdatedAt)) + +count;
         const scope = (0, lodash_1.cloneDeep)(this['_scope']);
         const defaultOptions = this['_defaultsOptions'](options, scope);
         const keyOpts = cache_utilty_1.default.setQueryOptions(defaultOptions);
-        const keyTime = cache_utilty_1.default.setKey(this.name, keyOpts);
-        let timeCached = await sequelize_cache_1.SequelizeCache.catchGetter({ key: keyTime });
-        let canFetch = false;
-        if (!timeCached || max.toString() != timeCached) {
-            canFetch = true;
-            await sequelize_cache_1.SequelizeCache.catchSetter({ key: keyTime, value: max.toString(), ttl: TTL });
-            timeCached = max.toString();
-        }
-        const keyModel = cache_utilty_1.default.setKey(this.name, timeCached, keyOpts);
+        const keyModel = cache_utilty_1.default.setKey(this.name, keyOpts);
         let modelString = await sequelize_cache_1.SequelizeCache.catchGetter({ key: keyModel });
-        if (canFetch || !modelString) {
+        if (!modelString) {
             const newModels = await this['findAll'](options);
+            if (!newModels?.length) {
+                return [];
+            }
             modelString = JSON.stringify(newModels);
-            const newKeyModel = cache_utilty_1.default.setKey(this.name, max, keyOpts);
+            const newKeyModel = cache_utilty_1.default.setKey(this.name, keyModel);
             sequelize_cache_1.SequelizeCache.catchSetter({ key: newKeyModel, value: modelString, ttl: TTL });
         }
         const include = options && 'include' in options ? options?.include : undefined;

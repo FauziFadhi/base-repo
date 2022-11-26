@@ -31,10 +31,7 @@ export declare class Model<TAttributes extends {} = any, TCreate extends {} = TA
     private static rejectOnEmptyMode;
     static findAllCache<T extends Model>(this: {
         new (): T;
-    }, options?: FindAllNestedOptionsCache<T['_attributes']>): Promise<T[]>;
-    static findAllCache<T extends Model>(this: {
-        new (): T;
-    }, options?: FindAllOptionsCache<T['_attributes']>): Promise<T[]>;
+    }, options: FindAllNestedOptionsCache<T['_attributes']>): Promise<T[]>;
     static scopes<M extends SequelizeModel>(this: ModelStatic<M>, options?: string | ScopeOptions | readonly (string | ScopeOptions)[] | WhereAttributeHash<M>): typeof Model & {
         new (): M;
     };
