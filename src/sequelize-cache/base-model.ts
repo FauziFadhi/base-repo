@@ -287,8 +287,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
       modelString = JSON.stringify(newModels)
 
       // set cache model based on new key
-      const newKeyModel = CacheUtility.setKey(this.name, keyModel)
-      SequelizeCache.catchSetter({ key: newKeyModel, value: modelString, ttl: TTL })
+      SequelizeCache.catchSetter({ key: keyModel, value: modelString, ttl: TTL })
     }
 
     const include = options && 'include' in options ? options?.include : undefined

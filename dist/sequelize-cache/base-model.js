@@ -124,8 +124,7 @@ class Model extends sequelize_typescript_1.Model {
                 return [];
             }
             modelString = JSON.stringify(newModels);
-            const newKeyModel = cache_utilty_1.default.setKey(this.name, keyModel);
-            sequelize_cache_1.SequelizeCache.catchSetter({ key: newKeyModel, value: modelString, ttl: TTL });
+            sequelize_cache_1.SequelizeCache.catchSetter({ key: keyModel, value: modelString, ttl: TTL });
         }
         const include = options && 'include' in options ? options?.include : undefined;
         return TransformCacheToModels(this, modelString, include);
