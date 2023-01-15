@@ -85,13 +85,13 @@ function Cache(cacheOptions) {
                 beforeBulkUpdate: async (options) => {
                     beforeBulkInvalidation(options, target);
                 },
-                AfterBulkUpdate: async (options) => {
+                afterBulkUpdate: async (options) => {
                     return afterBulkInvalidation(options, target);
                 },
                 beforeBulkDestroy: async (options) => {
                     beforeBulkInvalidation(options, target);
                 },
-                AfterBulkDestroy: async (options) => {
+                afterBulkDestroy: async (options) => {
                     return afterBulkInvalidation(options, target);
                 }
             },
