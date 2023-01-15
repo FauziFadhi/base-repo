@@ -1,5 +1,6 @@
 import * as crypto from 'crypto';
 import { FindOptions, IncludeOptions } from 'sequelize';
+import { h64 } from 'xxhashjs';
 
 export interface CacheKeyAtt {
   readonly attributes: readonly string[]
@@ -19,9 +20,10 @@ export class CacheUtility {
   }
 
   static setQueryOptions(options?: FindOptions): string {
-    const hash = crypto.createHash('md5');
+    // const hash = crypto.createHash('md5');
     CacheUtility.cleanOptions(options)
-    return ((Object.keys(options).length === 0) ? 'all' : hash.update(JSON.stringify(options)).digest('base64'));
+    // return ((Object.keys(options).length === 0) ? 'all' : hash.update(JSON.stringify(options)).digest('base64'));
+    return ((Object.keys(options).length === 0) ? 'all' : h64(JSON.stringify(options), 0xABCD ).toString(16));
   }
 
   static getKeyTime(key: string): number {
@@ -36,9 +38,10 @@ export class CacheUtility {
 
 
   static setOneQueryOptions(options?: FindOptions): string {
-    const hash = crypto.createHash('md5');
+    // const hash = crypto.createHash('md5');
     CacheUtility.cleanOptions(options)
-    return ((Object.keys(options).length === 0) ? 'one' : hash.update(JSON.stringify(options)).digest('base64'));
+    // return ((Object.keys(options).length === 0) ? 'one' : hash.update(JSON.stringify(options)).digest('base64'));
+    return ((Object.keys(options).length === 0) ? 'one' : h64(JSON.stringify(options), 0xABCD ).toString(16));
   }
 
   private static cleanOptions(options?: FindOptions) {

@@ -4,13 +4,12 @@ exports.Model = void 0;
 const common_1 = require("@nestjs/common");
 const date_utility_1 = require("../date-utility");
 const lodash_1 = require("lodash");
-const crypto = require("crypto");
 const sequelize_cache_1 = require("./sequelize-cache");
 const sequelize_typescript_1 = require("sequelize-typescript");
 const cache_utilty_1 = require("./cache-utilty");
+const xxhashjs_1 = require("xxhashjs");
 async function getCustomCache(key, ttl, setValue) {
-    const hash = crypto.createHash('md5');
-    const generatedKey = hash.update(JSON.stringify(key)).digest('base64');
+    const generatedKey = (0, xxhashjs_1.h64)(JSON.stringify(key), 0xABCD).toString(16);
     let cacheValue = await sequelize_cache_1.SequelizeCache.catchGetter({ key: generatedKey });
     if (cacheValue) {
         return JSON.parse(cacheValue);

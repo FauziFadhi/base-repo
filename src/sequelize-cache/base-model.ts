@@ -20,14 +20,14 @@ import {
 import { DataType, Model as TSModel } from 'sequelize-typescript';
 
 import CacheUtility from './cache-utilty';
+import { h64 } from 'xxhashjs';
 
 async function getCustomCache<T>(
   key: unknown,
   ttl: number,
   setValue: () => T | Promise<T>,
 ): Promise<T | null> {
-  const hash = crypto.createHash('md5');
-  const generatedKey = hash.update(JSON.stringify(key)).digest('base64');
+  const generatedKey = h64(JSON.stringify(key), 0xABCD ).toString(16);
 
   let cacheValue = await SequelizeCache.catchGetter({ key: generatedKey })
 
