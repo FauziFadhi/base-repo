@@ -258,71 +258,36 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
   }
 
   static async findAllCache<T extends Model>(this: { new(): T },
-    options?: FindAllNestedOptionsCache<T['_attributes']>,
-  ): Promise<T[]> 
-  static async findAllCache<T extends Model>(this: { new(): T },
-    options?: FindAllOptionsCache<T['_attributes']>,
-  ): Promise<T[]> 
-  static async findAllCache<T extends Model>(this: { new(): T },
-    options: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']> = {},
+    options: FindAllNestedOptionsCache<T['_attributes']>,
   ): Promise<T[]> 
   {
 
     const TTL = options?.ttl || this['modelTTL'] || SequelizeCache.defaultTTL
     delete options?.ttl
 
-    const maxUpdateOptions = getMaxUpdateOptions(options);
-
-    const onUpdateAttribute = this['getAttributes']()?.[this['onUpdateAttribute']];
-    const maxUpdatedAtPromise = onUpdateAttribute?.field
-    ? getCustomCache(
-    { key: 'max', maxUpdateOptions, model: `${this.name}` }, 
-    2, 
-    () => (this['max'](`${this.name}.${onUpdateAttribute?.field}`, maxUpdateOptions))) 
-    : undefined
-
-    // get max updatedAt on model
-    const [maxUpdatedAt, count] = await Promise.all([
-      maxUpdatedAtPromise,
-      this['countCache'](2, options),
-    ])
-
-    if (!count && !maxUpdatedAt) return TransformCacheToModels(this, '[]')
-
-    const max = DateUtility.convertDateTimeToEpoch(new Date(maxUpdatedAt)) + +count
-
     const scope = cloneDeep(this['_scope'])
+
     const defaultOptions = this['_defaultsOptions'](options, scope)
     // setting up key for FindOptions
     const keyOpts = CacheUtility.setQueryOptions(defaultOptions);
 
-    // get what time is cached on this model based on keyOpts
-    const keyTime = CacheUtility.setKey(this.name, keyOpts)
-    let timeCached = await SequelizeCache.catchGetter({ key: keyTime })
-
-    let canFetch = false
-    // set time cache if timeCached is null
-    if (!timeCached || max.toString() != timeCached) {
-      canFetch = true
-
-      await SequelizeCache.catchSetter({ key: keyTime, value: max.toString(), ttl: TTL })
-      timeCached = max.toString()
-    }
-
     // set key for get model
-    const keyModel = CacheUtility.setKey(this.name, timeCached, keyOpts)
+    const keyModel = CacheUtility.setKey(this.name, keyOpts)
     // get the model result based on key
     let modelString = await SequelizeCache.catchGetter({ key: keyModel })
 
     // check if result is null or can fetch
     // then can fetch row on database
-    if (canFetch || !modelString) {
+    if (!modelString) {
       // fetch row on models
       const newModels = await this['findAll'](options)
+      if (!newModels?.length) {
+        return [];
+      }
       modelString = JSON.stringify(newModels)
 
       // set cache model based on new key
-      const newKeyModel = CacheUtility.setKey(this.name, max, keyOpts)
+      const newKeyModel = CacheUtility.setKey(this.name, keyModel)
       SequelizeCache.catchSetter({ key: newKeyModel, value: modelString, ttl: TTL })
     }
 
