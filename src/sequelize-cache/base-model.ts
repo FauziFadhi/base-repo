@@ -60,22 +60,26 @@ export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>,
 export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'>, DefaultOptionsCache {
   ttl?: number
 }
-function transformCacheToModel(modelClass: any, dataCache: string, include?: Includeable | Includeable[]) {
+function transformCacheToModel(modelClass: any, dataCache: string, options: { include?: Includeable | Includeable[], raw?: boolean }) {
   const modelData = JSON.parse(dataCache)
 
   if (!modelData) return null
 
-  const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include })
+  if (options.raw) return modelData;
+
+  const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include: options.include })
 
   return model
 }
 
-function TransformCacheToModels(modelClass: any, dataCache: string, include?: Includeable | Includeable[]) {
+function TransformCacheToModels(modelClass: any, dataCache: string, options: { include?: Includeable | Includeable[], raw?: boolean }) {
   const modelData = JSON.parse(dataCache)
 
   if (!modelData?.length) return []
 
-  const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include })
+  if (options.raw) return modelData;
+
+  const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include: options.include })
 
   return models
 }
@@ -184,7 +188,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     }
 
     const include = options && 'include' in options ? options?.include : undefined
-    const model = transformCacheToModel(this, modelString, include)
+    const model = transformCacheToModel(this, modelString, { include, raw: options.raw })
 
     return model
   }
@@ -242,7 +246,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     }
 
     const include = options && 'include' in options ? options?.include : undefined
-    const model = transformCacheToModel(this, modelString, include)
+    const model = transformCacheToModel(this, modelString, { include, raw: options.raw })
 
 
     return model
@@ -288,10 +292,12 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
       // set cache model based on new key
       SequelizeCache.catchSetter({ key: keyModel, value: modelString, ttl: TTL })
+
+      return newModels
     }
 
     const include = options && 'include' in options ? options?.include : undefined
-    return TransformCacheToModels(this, modelString, include)
+    return TransformCacheToModels(this, modelString, { include, raw: options.raw })
   }
 
   static scopes<M extends SequelizeModel>(

@@ -19,18 +19,22 @@ async function getCustomCache(key, ttl, setValue) {
     sequelize_cache_1.SequelizeCache.catchSetter({ key: generatedKey, value: cacheValue, ttl });
     return value;
 }
-function transformCacheToModel(modelClass, dataCache, include) {
+function transformCacheToModel(modelClass, dataCache, options) {
     const modelData = JSON.parse(dataCache);
     if (!modelData)
         return null;
-    const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include });
+    if (options.raw)
+        return modelData;
+    const model = modelClass.build(modelData, { isNewRecord: false, raw: true, include: options.include });
     return model;
 }
-function TransformCacheToModels(modelClass, dataCache, include) {
+function TransformCacheToModels(modelClass, dataCache, options) {
     const modelData = JSON.parse(dataCache);
     if (!modelData?.length)
         return [];
-    const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include });
+    if (options.raw)
+        return modelData;
+    const models = modelClass.bulkBuild(modelData, { isNewRecord: false, raw: true, include: options.include });
     return models;
 }
 function getMaxUpdateOptions(options) {
@@ -71,7 +75,7 @@ class Model extends sequelize_typescript_1.Model {
             this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message));
         }
         const include = options && 'include' in options ? options?.include : undefined;
-        const model = transformCacheToModel(this, modelString, include);
+        const model = transformCacheToModel(this, modelString, { include, raw: options.raw });
         return model;
     }
     static async findByPkCache(identifier, options = {}) {
@@ -99,7 +103,7 @@ class Model extends sequelize_typescript_1.Model {
             this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message));
         }
         const include = options && 'include' in options ? options?.include : undefined;
-        const model = transformCacheToModel(this, modelString, include);
+        const model = transformCacheToModel(this, modelString, { include, raw: options.raw });
         return model;
     }
     static rejectOnEmptyMode(options, modelException) {
@@ -125,9 +129,10 @@ class Model extends sequelize_typescript_1.Model {
             }
             modelString = JSON.stringify(newModels);
             sequelize_cache_1.SequelizeCache.catchSetter({ key: keyModel, value: modelString, ttl: TTL });
+            return newModels;
         }
         const include = options && 'include' in options ? options?.include : undefined;
-        return TransformCacheToModels(this, modelString, include);
+        return TransformCacheToModels(this, modelString, { include, raw: options.raw });
     }
     static scopes(options) {
         return this['scope'](options);
