@@ -9,7 +9,7 @@ class CacheUtility {
     }
     static setQueryOptions(options) {
         CacheUtility.cleanOptions(options);
-        return ((Object.keys(options).length === 0) ? 'all' : (0, xxhashjs_1.h64)(JSON.stringify(options), 0xABCD).toString(16));
+        return ((Object.keys(options).length === 0) ? 'all' : this.hash.update(JSON.stringify(options)).digest().toString(16));
     }
     static getKeyTime(key) {
         const str = key.split('_');
@@ -20,7 +20,7 @@ class CacheUtility {
     }
     static setOneQueryOptions(options) {
         CacheUtility.cleanOptions(options);
-        return ((Object.keys(options).length === 0) ? 'one' : (0, xxhashjs_1.h64)(JSON.stringify(options), 0xABCD).toString(16));
+        return ((Object.keys(options).length === 0) ? 'one' : this.hash.update(JSON.stringify(options)).digest().toString(16));
     }
     static cleanOptions(options) {
         CacheUtility.cleanIncludeOptions(options?.include);
@@ -43,5 +43,6 @@ class CacheUtility {
     }
 }
 exports.CacheUtility = CacheUtility;
+CacheUtility.hash = (0, xxhashjs_1.h64)(0xABCD);
 exports.default = CacheUtility;
 //# sourceMappingURL=cache-utilty.js.map

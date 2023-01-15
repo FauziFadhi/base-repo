@@ -7,9 +7,8 @@ const lodash_1 = require("lodash");
 const sequelize_cache_1 = require("./sequelize-cache");
 const sequelize_typescript_1 = require("sequelize-typescript");
 const cache_utilty_1 = require("./cache-utilty");
-const xxhashjs_1 = require("xxhashjs");
 async function getCustomCache(key, ttl, setValue) {
-    const generatedKey = (0, xxhashjs_1.h64)(JSON.stringify(key), 0xABCD).toString(16);
+    const generatedKey = cache_utilty_1.default.hash.update(JSON.stringify(key)).digest().toString(16);
     let cacheValue = await sequelize_cache_1.SequelizeCache.catchGetter({ key: generatedKey });
     if (cacheValue) {
         return JSON.parse(cacheValue);

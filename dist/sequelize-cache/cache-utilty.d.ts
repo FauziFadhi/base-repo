@@ -9,6 +9,7 @@ export interface CacheKey {
     readonly [key: string]: CacheKeyAtt;
 }
 export declare class CacheUtility {
+    static hash: import("xxhashjs").HashObject;
     static setKey(name: string, key: string | number, options?: string): string;
     static setQueryOptions(options?: FindOptions): string;
     static getKeyTime(key: string): number;

@@ -27,7 +27,7 @@ async function getCustomCache<T>(
   ttl: number,
   setValue: () => T | Promise<T>,
 ): Promise<T | null> {
-  const generatedKey = h64(JSON.stringify(key), 0xABCD ).toString(16);
+  const generatedKey = CacheUtility.hash.update(JSON.stringify(key)).digest().toString(16);
 
   let cacheValue = await SequelizeCache.catchGetter({ key: generatedKey })
 
