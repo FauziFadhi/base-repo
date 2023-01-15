@@ -1,20 +1,26 @@
 import { circularToJSON } from 'helpers';
 import { SequelizeCache } from './sequelize-cache';
-import { addOptions } from 'sequelize-typescript';
+import { addOptions, AfterBulkUpdate } from 'sequelize-typescript';
 
 
 async function invalidateCache(model, options, modelClass) {
-  const previousModel = { ...model['dataValues'], ...circularToJSON(model['_previousDataValues']) }
+  if (SequelizeCache.showLog) {
+    const previousModel = { ...model['dataValues'], ...circularToJSON(model['_previousDataValues']) }
+    SequelizeCache.logging(previousModel)
+  }
 
-  SequelizeCache.logging(previousModel)
   if (options?.transaction) {
     options.transaction.afterCommit(() => {
-      invalidationCache(previousModel, modelClass)
+      invalidationCache({
+        [modelClass['primaryKeyAttribute']]: model['_previousDataValues']?.[modelClass['primaryKeyAttribute']],
+      }, modelClass)
     })
     SequelizeCache.logging('hooks after update transaction')
     return model
   }
-  invalidationCache(previousModel, modelClass)
+  invalidationCache({
+    [modelClass['primaryKeyAttribute']]: model['_previousDataValues']?.[modelClass['primaryKeyAttribute']],
+  }, modelClass)
   SequelizeCache.logging('hooks after update')
   return model
 
@@ -33,6 +39,44 @@ async function invalidationCache(previousModel, modelClass) {
   }))
 }
 
+async function afterBulkInvalidation(options, modelClass) {
+  const id = options.where?.id;
+  if (!id) {
+    return;
+  }
+
+  if (Array.isArray(id)) {
+    const ids = [...new Set(id)];
+    Promise.all(ids?.map((i) => {
+      invalidationCache({
+        [modelClass['primaryKeyAttribute']]: i,
+      }, modelClass)
+    }))
+    return;
+  }
+
+  if (typeof id !== 'object') {
+    invalidationCache({
+      [modelClass['primaryKeyAttribute']]: id,
+    }, modelClass)
+  }
+  return;
+}
+
+async function beforeBulkInvalidation(options, modelClass) {
+  if (options.where?.id?.length || (options?.where?.id && typeof options?.where?.id !== 'object')) {
+    return;
+  }
+  const { transaction, ...customOptions } = options || { transaction: undefined }
+  modelClass?.['findAll']?.(customOptions).then(async (models: any[]) => {
+    await Promise.all((models || []).map(async(model) => {
+      if(model) {
+        invalidateCache(model, options, modelClass)
+      }
+    }))
+  });
+}
+
 export function Cache(cacheOptions?: { ttl?: number }) {
   return (target) => {
     const options: { hooks } = Object.assign({},
@@ -47,14 +91,16 @@ export function Cache(cacheOptions?: { ttl?: number }) {
             return instance
           },
           beforeBulkUpdate: async (options) => {
-            const { transaction, ...customOptions } = options || { transaction: undefined }
-            target?.['findAll']?.(customOptions).then(async (models: any[]) => {
-              await Promise.all((models || []).map(async(model) => {
-                if(model) {
-                  invalidateCache(model, options, target)
-                }
-              }))
-            });
+            beforeBulkInvalidation(options, target)
+          },
+          AfterBulkUpdate: async (options) => {
+            return afterBulkInvalidation(options, target)
+          },
+          beforeBulkDestroy: async (options) => {
+            beforeBulkInvalidation(options, target)
+          },
+          AfterBulkDestroy: async (options) => {
+            return afterBulkInvalidation(options, target)
           }
         },
       });
@@ -63,5 +109,4 @@ export function Cache(cacheOptions?: { ttl?: number }) {
     target[`modelTTL`] = cacheOptions?.ttl || 0
     annotate(target, options);
   }
-
 }
