@@ -26,7 +26,8 @@
     "@nestjs/platform-express": "^9.0.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.5.6"
+    "rxjs": "^7.5.6",
+    "xxhashjs": "^0.2.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
@@ -37,6 +38,7 @@
     "@types/node": "^16.11.45",
     "@types/sequelize": "^4.28.14",
     "@types/supertest": "^2.0.12",
+    "@types/xxhashjs": "^0.2.2",
     "@typescript-eslint/eslint-plugin": "5.30.6",
     "@typescript-eslint/parser": "5.30.6",
     "eslint": "8.20.0",

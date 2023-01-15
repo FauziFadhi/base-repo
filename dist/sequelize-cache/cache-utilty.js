@@ -1,16 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CacheUtility = void 0;
-const crypto = require("crypto");
+const xxhashjs_1 = require("xxhashjs");
 class CacheUtility {
     static setKey(name, key, options) {
         const opt = (options) ? `:${options}` : '';
         return `:${name}_${key}${opt}`;
     }
     static setQueryOptions(options) {
-        const hash = crypto.createHash('md5');
         CacheUtility.cleanOptions(options);
-        return ((Object.keys(options).length === 0) ? 'all' : hash.update(JSON.stringify(options)).digest('base64'));
+        return ((Object.keys(options).length === 0) ? 'all' : this.hash.update(JSON.stringify(options)).digest().toString(16));
     }
     static getKeyTime(key) {
         const str = key.split('_');
@@ -20,9 +19,8 @@ class CacheUtility {
         return JSON.parse(result);
     }
     static setOneQueryOptions(options) {
-        const hash = crypto.createHash('md5');
         CacheUtility.cleanOptions(options);
-        return ((Object.keys(options).length === 0) ? 'one' : hash.update(JSON.stringify(options)).digest('base64'));
+        return ((Object.keys(options).length === 0) ? 'one' : this.hash.update(JSON.stringify(options)).digest().toString(16));
     }
     static cleanOptions(options) {
         CacheUtility.cleanIncludeOptions(options?.include);
@@ -45,5 +43,6 @@ class CacheUtility {
     }
 }
 exports.CacheUtility = CacheUtility;
+CacheUtility.hash = (0, xxhashjs_1.h64)(0xABCD);
 exports.default = CacheUtility;
 //# sourceMappingURL=cache-utilty.js.map

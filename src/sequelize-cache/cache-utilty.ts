@@ -1,5 +1,6 @@
 import * as crypto from 'crypto';
 import { FindOptions, IncludeOptions } from 'sequelize';
+import { h64 } from 'xxhashjs';
 
 export interface CacheKeyAtt {
   readonly attributes: readonly string[]
@@ -13,15 +14,17 @@ export interface CacheKey {
 
 export class CacheUtility {
 
+  static hash = h64(0xABCD)
   static setKey(name: string, key: string | number, options?: string): string {
     const opt = (options) ? `:${options}` : '';
     return `:${name}_${key}${opt}`;
   }
 
   static setQueryOptions(options?: FindOptions): string {
-    const hash = crypto.createHash('md5');
+    // const hash = crypto.createHash('md5');
     CacheUtility.cleanOptions(options)
-    return ((Object.keys(options).length === 0) ? 'all' : hash.update(JSON.stringify(options)).digest('base64'));
+    // return ((Object.keys(options).length === 0) ? 'all' : hash.update(JSON.stringify(options)).digest('base64'));
+    return ((Object.keys(options).length === 0) ? 'all' : this.hash.update(JSON.stringify(options)).digest().toString(16));
   }
 
   static getKeyTime(key: string): number {
@@ -36,9 +39,10 @@ export class CacheUtility {
 
 
   static setOneQueryOptions(options?: FindOptions): string {
-    const hash = crypto.createHash('md5');
+    // const hash = crypto.createHash('md5');
     CacheUtility.cleanOptions(options)
-    return ((Object.keys(options).length === 0) ? 'one' : hash.update(JSON.stringify(options)).digest('base64'));
+    // return ((Object.keys(options).length === 0) ? 'one' : hash.update(JSON.stringify(options)).digest('base64'));
+    return ((Object.keys(options).length === 0) ? 'one' : this.hash.update(JSON.stringify(options)).digest().toString(16));
   }
 
   private static cleanOptions(options?: FindOptions) {
