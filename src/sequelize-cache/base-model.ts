@@ -51,14 +51,16 @@ export interface DefaultOptionsCache {
   /**
      * Throw if nothing was found.
    */
+  rejectOnEmpty: boolean | Error
+}
+export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute> {
+  ttl: number
   rejectOnEmpty?: boolean | Error
 }
-export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute>, DefaultOptionsCache {
-  ttl: number
-}
 
-export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'>, DefaultOptionsCache {
+export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'> {
   ttl?: number
+  rejectOnEmpty?: boolean | Error
 }
 function transformCacheToModel(modelClass: any, dataCache: string, options: { include?: Includeable | Includeable[], raw?: boolean }) {
   const modelData = JSON.parse(dataCache)
@@ -145,9 +147,15 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
    */
   static async findOneCache<T extends Model>(this: { new(): T },
     options?: FindAllNestedOptionsCache<T['_attributes']>,
-  ): Promise<T> 
+  ): Promise<T | null> 
   static async findOneCache<T extends Model>(this: { new(): T },
     options?: FindAllOptionsCache<T['_attributes']>,
+  ): Promise<T | null> 
+  static async findOneCache<T extends Model>(this: { new(): T },
+    options?: FindAllNestedOptionsCache<T['_attributes']> & DefaultOptionsCache,
+  ): Promise<T> 
+  static async findOneCache<T extends Model>(this: { new(): T },
+    options?: FindAllOptionsCache<T['_attributes']> & DefaultOptionsCache,
   ): Promise<T> 
   static async findOneCache<T extends Model>(this: { new(): T },
     options: FindAllNestedOptionsCache<T['_attributes']> | FindAllOptionsCache<T['_attributes']> = {},
@@ -203,10 +211,18 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
   static async findByPkCache<T extends Model>(this: { new(): T },
     identifier: string | number,
     options?: Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'>,
-  ): Promise<T>
+  ): Promise<T | null>
   static async findByPkCache<T extends Model>(this: { new(): T },
     identifier: string | number,
     options?: Omit<FindAllOptionsCache<T['_attributes']>, 'where'>,
+  ): Promise<T | null>
+  static async findByPkCache<T extends Model>(this: { new(): T },
+    identifier: string | number,
+    options?: Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'> & DefaultOptionsCache,
+  ): Promise<T>
+  static async findByPkCache<T extends Model>(this: { new(): T },
+    identifier: string | number,
+    options?: Omit<FindAllOptionsCache<T['_attributes']>, 'where'> & DefaultOptionsCache,
   ): Promise<T>
   static async findByPkCache<T extends Model>(this: { new(): T },
     identifier: string | number,

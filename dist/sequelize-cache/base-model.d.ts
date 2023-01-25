@@ -2,13 +2,15 @@ import { Attributes, CountOptions, CountWithOptions, FindOptions, GroupedCountRe
 import { Model as TSModel } from 'sequelize-typescript';
 declare type UnusedOptionsAttribute = 'lock' | 'skipLocked' | keyof Omit<QueryOptions, 'replacements' | 'bind' | 'type' | 'nest' | 'raw'>;
 export interface DefaultOptionsCache {
+    rejectOnEmpty: boolean | Error;
+}
+export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute> {
+    ttl: number;
     rejectOnEmpty?: boolean | Error;
 }
-export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute>, DefaultOptionsCache {
-    ttl: number;
-}
-export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'>, DefaultOptionsCache {
+export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'> {
     ttl?: number;
+    rejectOnEmpty?: boolean | Error;
 }
 export declare class Model<TAttributes extends {} = any, TCreate extends {} = TAttributes> extends TSModel<TAttributes, TCreate> {
     static modelTTL: number;
@@ -18,16 +20,28 @@ export declare class Model<TAttributes extends {} = any, TCreate extends {} = TA
     static notFoundMessage: any;
     static findOneCache<T extends Model>(this: {
         new (): T;
-    }, options?: FindAllNestedOptionsCache<T['_attributes']>): Promise<T>;
+    }, options?: FindAllNestedOptionsCache<T['_attributes']>): Promise<T | null>;
     static findOneCache<T extends Model>(this: {
         new (): T;
-    }, options?: FindAllOptionsCache<T['_attributes']>): Promise<T>;
+    }, options?: FindAllOptionsCache<T['_attributes']>): Promise<T | null>;
+    static findOneCache<T extends Model>(this: {
+        new (): T;
+    }, options?: FindAllNestedOptionsCache<T['_attributes']> & DefaultOptionsCache): Promise<T>;
+    static findOneCache<T extends Model>(this: {
+        new (): T;
+    }, options?: FindAllOptionsCache<T['_attributes']> & DefaultOptionsCache): Promise<T>;
     static findByPkCache<T extends Model>(this: {
         new (): T;
-    }, identifier: string | number, options?: Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'>): Promise<T>;
+    }, identifier: string | number, options?: Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'>): Promise<T | null>;
     static findByPkCache<T extends Model>(this: {
         new (): T;
-    }, identifier: string | number, options?: Omit<FindAllOptionsCache<T['_attributes']>, 'where'>): Promise<T>;
+    }, identifier: string | number, options?: Omit<FindAllOptionsCache<T['_attributes']>, 'where'>): Promise<T | null>;
+    static findByPkCache<T extends Model>(this: {
+        new (): T;
+    }, identifier: string | number, options?: Omit<FindAllNestedOptionsCache<T['_attributes']>, 'where'> & DefaultOptionsCache): Promise<T>;
+    static findByPkCache<T extends Model>(this: {
+        new (): T;
+    }, identifier: string | number, options?: Omit<FindAllOptionsCache<T['_attributes']>, 'where'> & DefaultOptionsCache): Promise<T>;
     private static rejectOnEmptyMode;
     static findAllCache<T extends Model>(this: {
         new (): T;
