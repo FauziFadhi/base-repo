@@ -52,8 +52,6 @@ class Model extends sequelize_typescript_1.Model {
         options = options ?? {};
         const TTL = options?.ttl || this['modelTTL'] || sequelize_cache_1.SequelizeCache.defaultTTL;
         delete options?.ttl;
-        const rejectOnEmpty = options?.rejectOnEmpty;
-        delete options?.rejectOnEmpty;
         const scope = (0, lodash_1.cloneDeep)(this['_scope']);
         const defaultOptions = this['_defaultsOptions']({ ...options, limit: 1 }, scope);
         const optionsString = cache_utilty_1.default.setOneQueryOptions(defaultOptions);
@@ -72,7 +70,7 @@ class Model extends sequelize_typescript_1.Model {
         }
         if (!modelString) {
             const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name);
-            this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message));
+            this['rejectOnEmptyMode'](options, this['notFoundException'](message));
         }
         const include = options && 'include' in options ? options?.include : undefined;
         const model = transformCacheToModel(this, modelString, { include, raw: options.raw });
@@ -82,8 +80,6 @@ class Model extends sequelize_typescript_1.Model {
         options = options ?? {};
         const TTL = options?.ttl || this['modelTTL'] || sequelize_cache_1.SequelizeCache.defaultTTL;
         delete options?.ttl;
-        const rejectOnEmpty = options?.rejectOnEmpty;
-        delete options?.rejectOnEmpty;
         const scope = (0, lodash_1.cloneDeep)(this['_scope']);
         const defaultOptions = this['_defaultsOptions'](options, scope);
         const optionsString = cache_utilty_1.default
@@ -100,13 +96,15 @@ class Model extends sequelize_typescript_1.Model {
         }
         if (!modelString) {
             const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name);
-            this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message));
+            this['rejectOnEmptyMode'](options, this['notFoundException'](message));
         }
         const include = options && 'include' in options ? options?.include : undefined;
         const model = transformCacheToModel(this, modelString, { include, raw: options.raw });
         return model;
     }
     static rejectOnEmptyMode(options, modelException) {
+        if (options.rejectOnEmpty)
+            return;
         if (typeof options?.rejectOnEmpty == 'boolean' && options?.rejectOnEmpty) {
             throw modelException;
         }

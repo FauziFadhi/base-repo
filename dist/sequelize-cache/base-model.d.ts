@@ -6,11 +6,9 @@ export interface DefaultOptionsCache {
 }
 export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute> {
     ttl: number;
-    rejectOnEmpty?: boolean | Error;
 }
 export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'> {
     ttl?: number;
-    rejectOnEmpty?: boolean | Error;
 }
 export declare class Model<TAttributes extends {} = any, TCreate extends {} = TAttributes> extends TSModel<TAttributes, TCreate> {
     static modelTTL: number;

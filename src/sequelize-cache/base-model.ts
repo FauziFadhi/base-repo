@@ -55,12 +55,10 @@ export interface DefaultOptionsCache {
 }
 export interface FindAllNestedOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute> {
   ttl: number
-  rejectOnEmpty?: boolean | Error
 }
 
 export interface FindAllOptionsCache<T = any> extends Omit<FindOptions<T>, UnusedOptionsAttribute | 'include'> {
   ttl?: number
-  rejectOnEmpty?: boolean | Error
 }
 function transformCacheToModel(modelClass: any, dataCache: string, options: { include?: Includeable | Includeable[], raw?: boolean }) {
   const modelData = JSON.parse(dataCache)
@@ -165,8 +163,6 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     options = options ?? {} as any
     const TTL = options?.ttl || this['modelTTL'] || SequelizeCache.defaultTTL
     delete options?.ttl
-    const rejectOnEmpty = options?.rejectOnEmpty
-    delete options?.rejectOnEmpty
 
     const scope = cloneDeep(this['_scope'])
     const defaultOptions = this['_defaultsOptions']({...options, limit: 1 }, scope)
@@ -192,7 +188,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
     if (!modelString) {
       const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name)
-      this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message))
+      this['rejectOnEmptyMode'](options, this['notFoundException'](message))
     }
 
     const include = options && 'include' in options ? options?.include : undefined
@@ -235,8 +231,6 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
 
     const TTL = options?.ttl || this['modelTTL'] || SequelizeCache.defaultTTL
     delete options?.ttl
-    const rejectOnEmpty = options?.rejectOnEmpty
-    delete options?.rejectOnEmpty
 
     const scope = cloneDeep(this['_scope'])
     const defaultOptions = this['_defaultsOptions'](options, scope)
@@ -258,7 +252,7 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     }
     if (!modelString) {
       const message = this['notFoundMessage'] || this['defaultNotFoundMessage'](this.name)
-      this['rejectOnEmptyMode']({ rejectOnEmpty }, this['notFoundException'](message))
+      this['rejectOnEmptyMode'](options, this['notFoundException'](message))
     }
 
     const include = options && 'include' in options ? options?.include : undefined
@@ -268,7 +262,9 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     return model
   }
 
-  private static rejectOnEmptyMode(options: { rejectOnEmpty: boolean | Error }, modelException: Error): void {
+  private static rejectOnEmptyMode(options: { rejectOnEmpty?: boolean | Error }, modelException: Error): void {
+    if (options.rejectOnEmpty) return;
+    
     if (typeof options?.rejectOnEmpty == 'boolean' && options?.rejectOnEmpty) {
       throw modelException
     }
