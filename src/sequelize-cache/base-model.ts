@@ -20,7 +20,6 @@ import {
 import { DataType, Model as TSModel } from 'sequelize-typescript';
 
 import CacheUtility from './cache-utilty';
-import { h64 } from 'xxhashjs';
 
 async function getCustomCache<T>(
   key: unknown,

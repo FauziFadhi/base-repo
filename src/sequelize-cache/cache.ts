@@ -77,7 +77,7 @@ async function beforeBulkInvalidation(options, modelClass) {
   });
 }
 
-export function Cache(cacheOptions?: { ttl?: number }) {
+export function AutoInvalidate(cacheOptions?: { ttl?: number }) {
   return (target) => {
     const options: { hooks } = Object.assign({},
       {

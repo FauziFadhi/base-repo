@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Cache = void 0;
+exports.AutoInvalidate = void 0;
 const helpers_1 = require("../helpers");
 const sequelize_cache_1 = require("./sequelize-cache");
 const sequelize_typescript_1 = require("sequelize-typescript");
@@ -70,7 +70,7 @@ async function beforeBulkInvalidation(options, modelClass) {
         }));
     });
 }
-function Cache(cacheOptions) {
+function AutoInvalidate(cacheOptions) {
     return (target) => {
         const options = Object.assign({}, {
             hooks: {
@@ -100,5 +100,5 @@ function Cache(cacheOptions) {
         annotate(target, options);
     };
 }
-exports.Cache = Cache;
+exports.AutoInvalidate = AutoInvalidate;
 //# sourceMappingURL=cache.js.map
