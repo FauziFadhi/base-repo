@@ -167,7 +167,9 @@ export class Model<TAttributes extends {} = any, TCreate extends {} = TAttribute
     const defaultOptions = this['_defaultsOptions']({...options, limit: 1 }, scope)
 
     const optionsString = CacheUtility.setOneQueryOptions(defaultOptions)
-    const key = CacheUtility.setKey(this.name, optionsString, '*')
+    const keys = await SequelizeCache.catchKeyGetter({ keyPattern: `:${this.name}_${optionsString}:*` })
+    const firstKey = keys?.[0];
+    const key = firstKey?.substring(firstKey?.indexOf(":"))
 
 
     let modelString = key ? await SequelizeCache.catchGetter({ key: key }) : null

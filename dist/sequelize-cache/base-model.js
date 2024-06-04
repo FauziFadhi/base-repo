@@ -55,7 +55,9 @@ class Model extends sequelize_typescript_1.Model {
         const scope = (0, lodash_1.cloneDeep)(this['_scope']);
         const defaultOptions = this['_defaultsOptions']({ ...options, limit: 1 }, scope);
         const optionsString = cache_utilty_1.default.setOneQueryOptions(defaultOptions);
-        const key = cache_utilty_1.default.setKey(this.name, optionsString, '*');
+        const keys = await sequelize_cache_1.SequelizeCache.catchKeyGetter({ keyPattern: `:${this.name}_${optionsString}:*` });
+        const firstKey = keys?.[0];
+        const key = firstKey?.substring(firstKey?.indexOf(":"));
         let modelString = key ? await sequelize_cache_1.SequelizeCache.catchGetter({ key: key }) : null;
         if (!modelString) {
             const newModel = await this['findOne'](options);
