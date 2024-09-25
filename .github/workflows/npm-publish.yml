@@ -53,7 +53,8 @@ jobs:
 
     - name: Export all secrets
       run: |
-        printenv
+          echo "DATABASE_URL: $DO_SPACE_ENDPOINT"
+          echo "API_KEY: $API_KEY"
       env:
         NODE_ENV: test
     
