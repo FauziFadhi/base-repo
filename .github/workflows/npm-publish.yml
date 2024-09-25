@@ -67,7 +67,7 @@ jobs:
         value="${!var}"
 
         # Write the key-value pair to the file
-        echo "$key = '$value'" >> ".env"
+        echo "$key = '$value'" >> .env
         done
         
     - name: check file
