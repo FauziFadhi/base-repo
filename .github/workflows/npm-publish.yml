@@ -59,5 +59,6 @@ jobs:
     - name: Print specific environment variables from 'test' environment
       run: |
         echo "DO_SPACES_ENDPOINT=${{ vars.DO_SPACES_ENDPOINT }}"
+        echo ${{vars}}
 
 
