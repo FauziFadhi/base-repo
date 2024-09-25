@@ -59,16 +59,7 @@ jobs:
     
     - name: Print specific environment variables from 'test' environment
       run: |
-        for var in $(compgen -v | grep '^vars_'); do
-        # Extract the key by removing the 'vars_' prefix
-        key="${var#vars_}"
-  
-        # Get the value of the variable using indirect reference
-        value="${!var}"
-
-        # Write the key-value pair to the file
-        echo "$key = '$value'" >> .env
-        done
+        echo "${{ vars }}" > .env
         
     - name: check file
       run: |
