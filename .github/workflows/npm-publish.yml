@@ -59,9 +59,9 @@ jobs:
       
 
     - name: Check Node.js environment variables
-      run: node -e 'console.log("DATABASE_URL:", process.env);'
-      env:
-        NODE_ENV: test
+      run: | 
+        printenv
+      env: ${{ toJson(vars) }}
     
 
         
