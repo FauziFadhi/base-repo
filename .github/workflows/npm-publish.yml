@@ -53,17 +53,8 @@ jobs:
 
     - name: Export all secrets
       run: |
-        for var in $(printenv | grep 'SECRET_'); do
-          echo "Exporting $var as environment variable"
-          export ${var%%=*}="${!var}"
-        done
-      env:
-        # Load all secrets using this shorthand without explicitly defining each one
-        $(for var in $(env | grep 'secrets'); do echo "$var: \${{ secrets.${var} }}"; done)
+        printenv
 
         
-    - name: inject vars
-      run: |
-        node -e "console.log(process.env)"
 
 
