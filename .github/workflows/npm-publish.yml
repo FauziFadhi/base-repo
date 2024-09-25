@@ -54,6 +54,9 @@ jobs:
     - name: Export all secrets
       run: |
         printenv
+      env:
+        NODE_ENV: test
+    
 
         
 
