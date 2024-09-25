@@ -1,0 +1,63 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: NestJS CI - Run Lint & tests
+
+on:
+  push:
+    branches: [ "develop", "main", "master" ]
+  pull_request:
+    branches: [ "develop", "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: test
+
+    # services:
+      # postgres:
+      #   image: postgres:16
+      #   env:
+      #     POSTGRES_USER: postgres
+      #     POSTGRES_PASSWORD: password
+      #     POSTGRES_DB: tessera_test
+      #   ports:
+      #     - 5433:5432
+      #   options: >-
+      #     --health-cmd pg_isready
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
+
+      # redis:
+      #   image: redis:latest
+      #   env:
+      #     CACHE_HOST: localhost
+      #     CACHE_PORT: 6379
+      #     CACHE_PASSWORD: password
+      #   ports:
+      #     - 6379:6379
+      #   options: >-
+      #     --health-cmd "redis-cli ping"
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Print all environment variables
+      run: |
+        # Print all environment variables available in the 'test' environment
+        printenv
+
+    - name: Print specific environment variables from 'test' environment
+      run: |
+        echo "DO_SPACES_ENDPOINT=${{ vars.DO_SPACES_ENDPOINT }}"
+
+
