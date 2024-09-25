@@ -58,9 +58,8 @@ jobs:
       env:
         NODE_ENV: test
 
-    - name: Print env
-      run: |
-        printenv
+    - name: Check Node.js environment variables
+      run: node -e 'console.log("DATABASE_URL:", process.env);'
     
 
         
