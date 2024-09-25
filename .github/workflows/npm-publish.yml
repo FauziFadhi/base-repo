@@ -51,12 +51,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Export all secrets
-      run: |
-          echo "DATABASE_URL: $DO_SPACE_ENDPOINT"
-          echo "API_KEY: $API_KEY"
-      env:
-        NODE_ENV: test
+    - name: Show env
+      run: printenv
 
     - name: Check Node.js environment variables
       run: node -e 'console.log("DATABASE_URL:", process.env);'
