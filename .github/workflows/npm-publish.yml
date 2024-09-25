@@ -61,7 +61,7 @@ jobs:
     - name: Check Node.js environment variables
       run: | 
         printenv
-      env: ${{ toJson(vars) }}
+      env: ${{ vars }}
     
 
         
