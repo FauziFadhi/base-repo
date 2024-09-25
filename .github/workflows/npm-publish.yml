@@ -51,19 +51,16 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Print all environment variables
+    - name: Export all secrets
       run: |
-        # Print all environment variables available in the 'test' environment
-        printenv
+        for var in $(printenv | grep 'SECRET_'); do
+          echo "Exporting $var as environment variable"
+          export ${var%%=*}="${!var}"
+        done
+      env:
+        # Load all secrets using this shorthand without explicitly defining each one
+        $(for var in $(env | grep 'secrets'); do echo "$var: \${{ secrets.${var} }}"; done)
 
-    
-    - name: Print specific environment variables from 'test' environment
-      run: |
-        echo "${{ vars }}" > .env
-        
-    - name: check file
-      run: |
-        cat .env
         
     - name: inject vars
       run: |
