@@ -53,6 +53,10 @@ jobs:
 
     - name: Show env
       run: printenv
+      
+    - name: Show env
+      run: echo "${{vars.DO_SPACES_ENDPOINT}}"
+      
 
     - name: Check Node.js environment variables
       run: node -e 'console.log("DATABASE_URL:", process.env);'
