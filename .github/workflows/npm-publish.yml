@@ -58,7 +58,7 @@ jobs:
 
     - name: Print specific environment variables from 'test' environment
       run: |
-        echo "DO_SPACES_ENDPOINT=${{ vars.DO_SPACES_ENDPOINT }}"
-        echo ${{vars}}
+        for var in $(compgen -v | grep '^vars_'); do key="${var#vars_}" value="${!var}" echo "$key = '$value'" >> ".env" done
+        | node -e "console.log(process.env)"
 
 
