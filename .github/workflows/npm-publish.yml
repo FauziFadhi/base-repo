@@ -57,6 +57,10 @@ jobs:
           echo "API_KEY: $API_KEY"
       env:
         NODE_ENV: test
+
+    - name: Print env
+      run: |
+        printenv
     
 
         
